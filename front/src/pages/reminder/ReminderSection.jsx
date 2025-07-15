@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import {
   Calendar, Clock, Plus, ChevronRight, Stethoscope, Syringe, Pill, AlertCircle, Heart, Weight
 } from 'lucide-react';
-import AddReminderForm from './AddReminderForm';
+import AddReminderForm from './ReminderAdd';
 
 const healthTypes = [
   { value: 'vaccination', label: 'Vaccination', icon: Syringe, color: 'bg-blue-100 text-blue-700' },

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import { Plus, Edit, Trash2, Utensils, ArrowLeft, BarChart3, Calendar, GlassWater, ChevronRight } from 'lucide-react';
-import ConfirmModal from '../components/ConfirmModal';
+import ConfirmModal from '../../components/ConfirmModal';
 
 function usePetId() {
   const location = useLocation();

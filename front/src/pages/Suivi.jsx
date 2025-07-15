@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import RappelSanteSection from '../components/RappelSanteSection';
-import PromenadeSection from '../components/PromenadeSection';
-import AlimentationSection from '../components/AlimentationSection';
-import PoidsSection from '../components/PoidsSection';
+import ReminderSection from './reminder/ReminderSection';
+import PromenadeSection from './walk/WalkSection';
+import MealsSection from './meal/MealSection';
+import WeightSection from './weight/WeightSection';
 import { useNavigate } from 'react-router-dom';
 import axios from '../utils/axiosInstance';
 import ModalPlaceholder from '../components/ModalPlaceholder';
 import PetSelector from '../components/PetSelector';
-import AddMealForm from '../components/AlimentationSection';
-import AddManualWalkForm from '../components/PromenadeSection';
-import AddReminderForm from '../components/AddReminderForm';
-import SymptomSection from '../components/SymptomSection';
+import AddMealForm from './meal/MealSection';
+import AddManualWalkForm from './walk/WalkSection';
+import ReminderAdd from './reminder/ReminderAdd';
+import SymptomSection from './symptom/SymptomSection';
 
 export default function Suivi() {
   const [pet, setPet] = useState(null);
@@ -54,7 +54,7 @@ export default function Suivi() {
         />
       </div>
       <div>
-        <RappelSanteSection
+        <ReminderSection
           petId={pet?.id}
           onShowAll={() => navigate(`/suivi/rappels?pet=${pet?.id}`)}
         />
@@ -65,7 +65,7 @@ export default function Suivi() {
           onStartWalk={() => setModal('startWalk')}
           key={refreshWalk}
         />
-        <AlimentationSection
+        <MealsSection
           petId={pet?.id}
           onShowHistory={() => navigate(`/suivi/alimentation?pet=${pet?.id}`)}
           onAddMeal={() => setModal('repas')}
@@ -78,7 +78,7 @@ export default function Suivi() {
           onShowHistory={() => navigate(`/suivi/symptomes?pet=${pet?.id}`)}
         />
         {pet?.id && (
-          <PoidsSection
+          <WeightSection
             petId={pet.id}
             onShowHistory={() => navigate(`/suivi/poids?pet=${pet.id}`)}
           />

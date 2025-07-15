@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import {
   Stethoscope, Syringe, Pill, AlertCircle, Heart, Weight, Plus, Edit, Trash2, ChevronRight, Calendar, Clock, ArrowLeft
 } from 'lucide-react';
-import AddReminderForm from '../components/AddReminderForm';
-import ConfirmModal from '../components/ConfirmModal';
+import AddReminderForm from './ReminderAdd';
+import ConfirmModal from '../../components/ConfirmModal';
 
 function usePetId() {
   const location = useLocation();

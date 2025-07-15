@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import { ArrowLeft, AlertCircle } from 'lucide-react';
-import ConfirmModal from '../components/ConfirmModal';
+import ConfirmModal from '../../components/ConfirmModal';
 
 export default function SymptomEdit() {
   const { id } = useParams();

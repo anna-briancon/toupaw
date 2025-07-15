@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';

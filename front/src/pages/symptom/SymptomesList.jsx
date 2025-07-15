@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import { AlertCircle, ArrowLeft, Calendar, Camera, Plus, Edit, Trash2, ChevronRight } from 'lucide-react';
-import SymptomSection from '../components/SymptomSection';
-import ConfirmModal from '../components/ConfirmModal';
+import SymptomSection from './SymptomSection';
+import ConfirmModal from '../../components/ConfirmModal';
 
 function groupSymptomsByDate(symptoms) {
   return symptoms.reduce((acc, s) => {

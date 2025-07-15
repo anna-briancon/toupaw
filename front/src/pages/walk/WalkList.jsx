@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import {
   Footprints, Route, Clock, Plus, Edit, Trash2, Eye, EyeOff, Calendar, Navigation, ArrowLeft
 } from 'lucide-react';
 import { MapContainer, TileLayer, Polyline, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import ConfirmModal from '../components/ConfirmModal';
-import WalkForm from '../components/WalkForm';
+import ConfirmModal from '../../components/ConfirmModal';
+import WalkForm from './WalkForm';
 
 function usePetId() {
   const location = useLocation();

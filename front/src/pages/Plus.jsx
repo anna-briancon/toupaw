@@ -166,11 +166,11 @@ export default function Plus() {
   return (
     <div className="min-h-screen bg-couleur-fond p-6 pb-24">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-6 flex items-center justify-between">
           <h1 className="font-ranille text-3xl font-bold text-gray-900 sm:text-left">Plus</h1>
           <Button
             variant="solid"
-            className="bg-red-100 text-red-800 border border-red-300 hover:bg-red-200 px-5 py-2 rounded-xl text-base font-bold flex items-center gap-2 shadow-none"
+            className="bg-red-100 !text-red-800 border border-red-300 hover:bg-red-200 px-5 py-2 rounded-xl text-base font-bold flex items-center gap-2 shadow-none"
             onClick={handleLogout}
           >
             <LogOut className="h-5 w-5 mr-2 text-red-800 " />

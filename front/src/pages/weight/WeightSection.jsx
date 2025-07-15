@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import { Weight, Plus, ChevronRight, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 function AddWeightForm({ petId, onSave, onCancel }) {

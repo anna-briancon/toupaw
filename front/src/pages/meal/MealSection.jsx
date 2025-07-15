@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import {
   UtensilsCrossed, Plus, ChevronRight, GlassWater, Calendar
 } from 'lucide-react';

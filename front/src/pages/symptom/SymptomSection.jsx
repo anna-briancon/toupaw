@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import { Plus, ChevronRight, AlertCircle, Calendar, Camera } from 'lucide-react';
-import ConfirmModal from './ConfirmModal';
+import ConfirmModal from '../../components/ConfirmModal';
 import { useNavigate } from 'react-router-dom';
 
 function AddSymptomForm({ petId, onSave, onCancel, initial }) {

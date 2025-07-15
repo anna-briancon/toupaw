@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from '../utils/axiosInstance';
+import axios from '../../utils/axiosInstance';
 import { Footprints } from 'lucide-react';
 
 export default function WalkForm({ petId, initial, onSave, onCancel }) {
