@@ -1,0 +1,232 @@
+import React from "react";
+import {
+  ArrowLeft,
+  ChevronRight,
+  Lightbulb,
+  Settings,
+  Users,
+  Camera,
+  Heart,
+  Shield,
+  Bell,
+  HelpCircle,
+  LogOut,
+} from "lucide-react";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+
+// Card component
+function Card({ className = "", children, ...props }) {
+  return (
+    <div className={`rounded-2xl border bg-white ${className}`} {...props}>{children}</div>
+  );
+}
+function CardContent({ className = "", children, ...props }) {
+  return (
+    <div className={`p-6 ${className}`} {...props}>{children}</div>
+  );
+}
+// Button component
+function Button({ variant = "solid", className = "", children, ...props }) {
+  let base =
+    "inline-flex items-center justify-center font-semibold rounded-lg px-4 py-2 transition focus:outline-none focus:ring-2 focus:ring-emerald-400";
+  let variants = {
+    solid:
+      "bg-emerald-600 text-white hover:bg-emerald-700",
+    outline:
+      "border border-emerald-200 text-emerald-700 hover:bg-emerald-50 bg-transparent",
+    ghost:
+      "bg-transparent text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100",
+  };
+  return (
+    <button className={`${base} ${variants[variant]} ${className}`} {...props}>
+      {children}
+    </button>
+  );
+}
+
+function SectionCard({ icon, title, description, onClick }) {
+  return (
+    <Card className="mb-4 hover:shadow-md transition-all duration-200 cursor-pointer border-emerald-100" onClick={onClick}>
+      <CardContent className="p-6">
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-xl text-emerald-600">{icon}</div>
+          <div className="flex-1">
+            <h3 className="font-semibold text-base text-gray-900 mb-1">{title}</h3>
+            <p className="text-sm text-gray-500">{description}</p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-emerald-500" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function AdviceSection({ onClick }) {
+  return (
+    <SectionCard
+      icon={<Lightbulb className="h-6 w-6" />}
+      title="Conseils bien-être & éducation"
+      description="Astuces, guides et ressources pour ton animal."
+      onClick={onClick}
+    />
+  );
+}
+function SettingsSection({ onClick }) {
+  return (
+    <SectionCard
+      icon={<Settings className="h-6 w-6" />}
+      title="Paramètres du compte"
+      description="Gérer ton profil, sécurité, préférences."
+      onClick={onClick}
+    />
+  );
+}
+function MultiPetsSection({ onClick }) {
+  return (
+    <SectionCard
+      icon={<Users className="h-6 w-6" />}
+      title="Multi-animaux"
+      description="Voir, ajouter ou gérer d'autres animaux."
+      onClick={onClick}
+    />
+  );
+}
+function GallerySection({ onClick }) {
+  return (
+    <SectionCard
+      icon={<Camera className="h-6 w-6" />}
+      title="Galerie souvenirs"
+      description="Voir toutes les photos et souvenirs."
+      onClick={onClick}
+    />
+  );
+}
+function SupportSection({ onClick }) {
+  return (
+    <SectionCard
+      icon={<HelpCircle className="h-6 w-6" />}
+      title="Aide & Support"
+      description="FAQ, contact support, signaler un problème."
+      onClick={onClick}
+    />
+  );
+}
+function NotificationsSection({ onClick }) {
+  return (
+    <SectionCard
+      icon={<Bell className="h-6 w-6" />}
+      title="Notifications"
+      description="Gérer les rappels et alertes."
+      onClick={onClick}
+    />
+  );
+}
+function PrivacySection({ onClick }) {
+  return (
+    <SectionCard
+      icon={<Shield className="h-6 w-6" />}
+      title="Confidentialité & Sécurité"
+      description="Paramètres de confidentialité et sécurité."
+      onClick={onClick}
+    />
+  );
+}
+
+export default function Plus() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleAdviceClick = () => {
+    alert("Fonctionnalité à venir : Conseils bien-être & éducation");
+  };
+  const handleSettingsClick = () => {
+    alert("Fonctionnalité à venir : Paramètres du compte");
+  };
+  const handleMultiPetsClick = () => {
+    alert("Fonctionnalité à venir : Gestion multi-animaux");
+  };
+  const handleGalleryClick = () => {
+    alert("Fonctionnalité à venir : Galerie de photos");
+  };
+  const handleSupportClick = () => {
+    alert("Fonctionnalité à venir : Centre d'aide");
+  };
+  const handleNotificationsClick = () => {
+    alert("Fonctionnalité à venir : Paramètres de notifications");
+  };
+  const handlePrivacyClick = () => {
+    alert("Fonctionnalité à venir : Paramètres de confidentialité");
+  };
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
+  return (
+    <div className="min-h-screen bg-couleur-fond p-6 pb-24">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="font-ranille text-3xl font-bold text-gray-900 sm:text-left">Plus</h1>
+          <Button
+            variant="solid"
+            className="bg-red-100 text-red-800 border border-red-300 hover:bg-red-200 px-5 py-2 rounded-xl text-base font-bold flex items-center gap-2 shadow-none"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-5 w-5 mr-2 text-red-800 " />
+            Déconnexion
+          </Button>
+        </div>
+        {/* Sections principales */}
+        <div className="space-y-2 mb-8">
+          <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-4">Fonctionnalités</h2>
+          <AdviceSection onClick={handleAdviceClick} />
+          <MultiPetsSection onClick={handleMultiPetsClick} />
+          <GallerySection onClick={handleGalleryClick} />
+        </div>
+        {/* Paramètres */}
+        <div className="space-y-2 mb-8">
+          <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-4">Paramètres</h2>
+          <SettingsSection onClick={handleSettingsClick} />
+          <NotificationsSection onClick={handleNotificationsClick} />
+          <PrivacySection onClick={handlePrivacyClick} />
+        </div>
+        {/* Support */}
+        <div className="space-y-2 mb-8">
+          <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-4">Aide</h2>
+          <SupportSection onClick={handleSupportClick} />
+        </div>
+        {/* Informations de l'app */}
+        {/* <Card className="bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200">
+          <CardContent className="p-6 text-center">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
+                <Heart className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-lg font-bold text-gray-900">Toupaw</span>
+            </div>
+            <p className="text-sm text-gray-600 mb-2">Version 1.0.0</p>
+            <p className="text-xs text-gray-500">Fait avec ❤️ pour nos compagnons à quatre pattes</p>
+          </CardContent>
+        </Card> */}
+        {/* Actions rapides */}
+        <div className="mt-8 grid grid-cols-2 gap-4">
+          <Button
+            variant="outline"
+            className="border-emerald-200 text-emerald-700 hover:bg-emerald-50 bg-transparent"
+            onClick={() => alert("Fonctionnalité à venir : Partager l'app")}
+          >
+            Partager l'app
+          </Button>
+          <Button
+            variant="outline"
+            className="border-emerald-200 text-emerald-700 hover:bg-emerald-50 bg-transparent"
+            onClick={() => alert("Fonctionnalité à venir : Noter l'app")}
+          >
+            Noter l'app
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+} 

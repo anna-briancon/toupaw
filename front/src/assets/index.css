@@ -1,0 +1,58 @@
+
+/* Déclaration des polices personnalisées */
+  @font-face {
+    font-family: 'Open Sauce';
+    src: url('/fonts/OpenSauceOne-Regular.ttf') format('truetype');
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'Open Sauce';
+    src: url('/fonts/OpenSauceOne-Light.ttf') format('truetype');
+    font-weight: 300;
+  }
+  @font-face {
+    font-family: 'Open Sauce';
+    src: url('/fonts/OpenSauceOne-Medium.ttf') format('truetype');
+    font-weight: 500;
+  }
+  @font-face {
+    font-family: 'Open Sauce';
+    src: url('/fonts/OpenSauceOne-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+  }
+  @font-face {
+    font-family: 'Open Sauce';
+    src: url('/fonts/OpenSauceOne-Bold.ttf') format('truetype');
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'Open Sauce';
+    src: url('/fonts/OpenSauceOne-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+  }
+  @font-face {
+    font-family: 'Open Sauce';
+    src: url('/fonts/OpenSauceOne-Black.ttf') format('truetype');
+    font-weight: 900;
+  }
+  @font-face {
+    font-family: 'Open Sauce';
+    src: url('/fonts/OpenSauceOne-Italic.ttf') format('truetype');
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'Ranille';
+    src: url('/fonts/Ranille.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  body {
+    font-family: 'Open Sauce', sans-serif;
+  }
+  /* Tailwind directives */
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  
