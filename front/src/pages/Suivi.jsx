@@ -11,6 +11,7 @@ import AddMealForm from './meal/MealSection';
 import AddManualWalkForm from './walk/WalkSection';
 import ReminderAdd from './reminder/ReminderAdd';
 import SymptomSection from './symptom/SymptomSection';
+import SectionTitle from '../components/SectionTitle';
 
 export default function Suivi() {
   const [pet, setPet] = useState(null);
@@ -45,7 +46,7 @@ export default function Suivi() {
     <div className="min-h-screen bg-couleur-fond p-6 pb-24">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6 sm:mb-8">
-          <h1 className="font-ranille text-3xl font-bold text-gray-900 sm:text-left">Suivi</h1>
+          <SectionTitle>Suivi</SectionTitle>
         </div>
         <PetSelector
           pets={pets}

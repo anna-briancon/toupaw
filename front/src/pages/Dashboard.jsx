@@ -7,6 +7,7 @@ import {
   Utensils, Footprints, Droplet, Bell, GlassWater, Sprout
 } from 'lucide-react';
 import PetSelector from '../components/PetSelector';
+import SectionTitle from '../components/SectionTitle';
 
 // Header avec nom et photo du pet principal
 function DashboardHeader({ pet, user }) {
@@ -466,9 +467,7 @@ export default function Dashboard() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-6 sm:mb-4">
-          <h1 className="font-ranille text-3xl font-bold text-gray-900 sm:text-left">
-            Tableau de bord
-          </h1>
+          <SectionTitle>Tableau de bord</SectionTitle>
         </div>
 
         {/* Sélecteur de pet */}
