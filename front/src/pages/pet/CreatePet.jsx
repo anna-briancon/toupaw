@@ -8,23 +8,40 @@ export function CreatePetForm({ onSuccess, onCancel }) {
   const [birthdate, setBirthdate] = useState('');
   const [species, setSpecies] = useState('dog');
   const [breed, setBreed] = useState('');
-  const [photo_url, setPhotoUrl] = useState('');
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
   const [gender, setGender] = useState('male');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    setPhotoFile(file);
+    if (file) {
+      setPhotoPreview(URL.createObjectURL(file));
+    } else {
+      setPhotoPreview(null);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      await axios.post('/pets', {
-        name,
-        birthdate,
-        species,
-        breed,
-        photo_url,
-        gender,
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('birthdate', birthdate);
+      formData.append('species', species);
+      formData.append('breed', breed);
+      formData.append('gender', gender);
+      if (photoFile) {
+        formData.append('photo', photoFile);
+      }
+      await axios.post('/pets', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
       if (onSuccess) onSuccess();
     } catch (err) {
@@ -102,14 +119,16 @@ export function CreatePetForm({ onSuccess, onCancel }) {
         />
       </div>
       <div>
-        <label className="text-sm font-medium">Photo (URL)</label>
+        <label className="text-sm font-medium">Photo</label>
         <input
-          type="url"
-          placeholder="Photo (URL)"
-          value={photo_url}
-          onChange={e => setPhotoUrl(e.target.value)}
+          type="file"
+          accept="image/*"
+          onChange={handlePhotoChange}
           className="w-full border rounded p-2 mt-1"
         />
+        {photoPreview && (
+          <img src={photoPreview} alt="Aperçu" className="mt-2 rounded-lg max-h-40 mx-auto" />
+        )}
       </div>
       <div className="flex gap-3 pt-4">
         <button type="submit" disabled={loading} className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-2 rounded-xl shadow hover:from-emerald-600 hover:to-teal-600 transition">

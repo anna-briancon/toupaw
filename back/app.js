@@ -9,6 +9,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Servir les fichiers uploadés
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
 // Auth routes (non protégées)
 app.use('/api/auth', require('./src/routes/auth'));
 

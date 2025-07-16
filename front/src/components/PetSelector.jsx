@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreatePetModal } from '../pages/pet/CreatePet';
+import { Dog, Cat, PawPrint } from 'lucide-react';
 
 export default function PetSelector({ pets, selectedPet, onSelectPet }) {
   const [open, setOpen] = useState(false);
@@ -45,11 +46,21 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
         onClick={() => setOpen(o => !o)}
       >
         {selectedPet && (
-          <img
-            src={selectedPet.photo_url || 'https://placekitten.com/40/40'}
-            alt={selectedPet.name}
-            className="w-10 h-10 rounded-full object-cover border border-emerald-200"
-          />
+          selectedPet.photo_url ? (
+            <img
+              src={selectedPet.photo_url.startsWith('/uploads')
+                ? `http://localhost:8081${selectedPet.photo_url}`
+                : selectedPet.photo_url}
+              alt={selectedPet.name}
+              className="w-10 h-10 rounded-full object-cover border border-emerald-200"
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-emerald-50 border border-emerald-200">
+              {selectedPet.species === 'dog' && <Dog className="w-6 h-6 text-emerald-400" />}
+              {selectedPet.species === 'cat' && <Cat className="w-6 h-6 text-emerald-400" />}
+              {selectedPet.species === 'other' && <PawPrint className="w-6 h-6 text-emerald-400" />}
+            </div>
+          )
         )}
         <h1 className="text-xl sm:text-xl font-bold text-couleur-titre font-ranille">
           {selectedPet ? selectedPet.name : 'Sélectionner un animal'}
@@ -76,7 +87,24 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
                     setOpen(false);
                   }}
                 >
-                  {pet.name}
+                  <span className="inline-flex items-center gap-2">
+                    {pet.photo_url ? (
+                      <img
+                        src={pet.photo_url.startsWith('/uploads')
+                          ? `http://localhost:8081${pet.photo_url}`
+                          : pet.photo_url}
+                        alt={pet.name}
+                        className="w-8 h-8 rounded-full object-cover border border-emerald-200"
+                      />
+                    ) : (
+                      <span className="w-8 h-8 rounded-full flex items-center justify-center bg-emerald-50 border border-emerald-200">
+                        {pet.species === 'dog' && <Dog className="w-5 h-5 text-emerald-400" />}
+                        {pet.species === 'cat' && <Cat className="w-5 h-5 text-emerald-400" />}
+                        {pet.species === 'other' && <PawPrint className="w-5 h-5 text-emerald-400" />}
+                      </span>
+                    )}
+                    {pet.name}
+                  </span>
                 </button>
               )) : (
                 <div className="px-6 py-4 text-couleur-texte">Aucun animal</div>

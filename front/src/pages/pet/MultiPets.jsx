@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../utils/axiosInstance';
-import { Plus, Edit, Trash2, PawPrint } from 'lucide-react';
+import { Plus, Edit, Trash2, PawPrint, Dog, Cat } from 'lucide-react';
 import { CreatePetModal } from './CreatePet';
+import EditPetModal from './EditPet';
 
 export default function MultiPets() {
   const [pets, setPets] = useState([]);
@@ -13,6 +14,8 @@ export default function MultiPets() {
   const [deleting, setDeleting] = useState(false);
   const navigate = useNavigate();
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editPetId, setEditPetId] = useState(null);
 
   const fetchPets = async () => {
     setLoading(true);
@@ -41,7 +44,8 @@ export default function MultiPets() {
   };
 
   const handleEdit = (pet) => {
-    navigate(`/edit-pet/${pet.id}`); // À implémenter : page d'édition
+    setEditPetId(pet.id);
+    setShowEditModal(true);
   };
 
   const handleDelete = async (pet) => {
@@ -146,17 +150,31 @@ export default function MultiPets() {
             {pets.map(pet => {
               const isSelected = String(selectedPetId) === String(pet.id);
               const onlyOne = pets.length === 1;
+              let imageSrc = null;
+              if (pet.photo_url) {
+                imageSrc = pet.photo_url.startsWith('/uploads')
+                  ? `http://localhost:8081${pet.photo_url}`
+                  : pet.photo_url;
+              }
               return (
                 <div
                   key={pet.id}
                   className={`flex items-center gap-4 bg-white border rounded-xl p-4 shadow-sm transition cursor-pointer ${!onlyOne && isSelected ? 'border-emerald-400 ring-2 ring-emerald-200' : 'border-emerald-100'}`}
                   onClick={() => handleSelect(pet)}
                 >
-                  <img
-                    src={pet.photo_url || 'https://placekitten.com/80/80'}
-                    alt={pet.name}
-                    className="w-16 h-16 rounded-full object-cover border border-emerald-200"
-                  />
+                  {imageSrc ? (
+                    <img
+                      src={imageSrc}
+                      alt={pet.name}
+                      className="w-16 h-16 rounded-full object-cover border border-emerald-200"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center bg-emerald-50 border border-emerald-200">
+                      {pet.species === 'dog' && <Dog className="w-8 h-8 text-emerald-400" />}
+                      {pet.species === 'cat' && <Cat className="w-8 h-8 text-emerald-400" />}
+                      {pet.species === 'other' && <PawPrint className="w-8 h-8 text-emerald-400" />}
+                    </div>
+                  )}
                   <div className="flex-1">
                     <div className="font-bold text-lg text-gray-900">{pet.name} <span className="text-gray-500 font-normal text-sm">{getAgeString(pet.birthdate)}</span></div>
                     <div className="text-gray-500 text-sm">
@@ -216,6 +234,12 @@ export default function MultiPets() {
           open={showCreateModal}
           onClose={() => setShowCreateModal(false)}
           onSuccess={() => { setShowCreateModal(false); fetchPets(); }}
+        />
+        <EditPetModal
+          open={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          petId={editPetId}
+          onSuccess={() => { setShowEditModal(false); fetchPets(); }}
         />
       </div>
     </div>

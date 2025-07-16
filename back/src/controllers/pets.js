@@ -27,7 +27,12 @@ exports.list = async (req, res) => {
 exports.create = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { name, birthdate, species, breed, photo_url, gender } = req.body;
+    let { name, birthdate, species, breed, gender } = req.body;
+    let photo_url = req.body.photo_url;
+    if (req.file) {
+      // Construire l'URL d'accès à l'image
+      photo_url = `/uploads/${req.file.filename}`;
+    }
     if (!name || !birthdate || !species || !breed)
       return res.status(400).json({ error: 'Champs requis manquants' });
     const pet = await models.Pet.create({ name, birthdate, species, breed, photo_url, gender });
@@ -45,7 +50,11 @@ exports.update = async (req, res) => {
       include: [{ model: models.User, as: 'users', where: { id: userId } }]
     });
     if (!pet) return res.status(404).json({ error: 'Pet not found or forbidden' });
-    const { name, birthdate, species, breed, photo_url, gender } = req.body;
+    let { name, birthdate, species, breed, gender } = req.body;
+    let photo_url = req.body.photo_url;
+    if (req.file) {
+      photo_url = `/uploads/${req.file.filename}`;
+    }
     await pet.update({ name, birthdate, species, breed, photo_url, gender });
     res.json(pet);
   } catch (err) {
