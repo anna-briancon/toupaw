@@ -79,7 +79,7 @@ function SettingsSection({ onClick }) {
     <SectionCard
       icon={<Settings className="h-6 w-6" />}
       title="Paramètres du compte"
-      description="Gérer ton profil, sécurité, préférences."
+      description="Gérer ton profil."
       onClick={onClick}
     />
   );
@@ -142,7 +142,7 @@ export default function Plus() {
     alert("Fonctionnalité à venir : Conseils bien-être & éducation");
   };
   const handleSettingsClick = () => {
-    alert("Fonctionnalité à venir : Paramètres du compte");
+    navigate('/account-settings');
   };
   const handleMultiPetsClick = () => {
     navigate('/multi-pets');

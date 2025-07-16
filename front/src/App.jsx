@@ -18,7 +18,7 @@ import SymptomesList from './pages/symptom/SymptomesList';
 import SymptomEdit from './pages/symptom/SymptomEdit';
 import MultiPets from './pages/pet/MultiPets.jsx';
 import EditPet from './pages/pet/EditPet.jsx';
-
+import AccountSettings from './pages/auth/AccountSettings';
 
 
 function PrivateRoute({ children }) {
@@ -34,21 +34,21 @@ function AppRoutes() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/plus" element={<Plus />} />
-        <Route path="/create-pet" element={<CreatePet />} />
-        <Route path="/multi-pets" element={<MultiPets />} />
-        <Route path="/edit-pet/:id" element={<EditPet />} />
-        <Route path="/suivi" element={<Suivi />} />
-        <Route path="/suivi/rappels" element={<ReminderList />} />
-        <Route path="/suivi/promenade" element={<WalkList />} />
-        <Route path="/suivi/alimentation" element={<MealsList />} />
-        <Route path="/suivi/health-event/:id" element={<ReminderEdit />} />
-        <Route path="/suivi/poids" element={<WeightList />} />
-        <Route path="/suivi/symptomes" element={<SymptomesList />} />
-        <Route path="/suivi/symptome/:id" element={<SymptomEdit />} />
-        <Route path="/suivi/repas/:id" element={<MealsEdit />} />
-
+        <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/plus" element={<PrivateRoute><Plus /></PrivateRoute>} />
+        <Route path="/create-pet" element={<PrivateRoute><CreatePet /></PrivateRoute>} />
+        <Route path="/multi-pets" element={<PrivateRoute><MultiPets /></PrivateRoute>} />
+        <Route path="/edit-pet/:id" element={<PrivateRoute><EditPet /></PrivateRoute>} />
+        <Route path="/suivi" element={<PrivateRoute><Suivi /></PrivateRoute>} />
+        <Route path="/suivi/rappels" element={<PrivateRoute><ReminderList /></PrivateRoute>} />
+        <Route path="/suivi/promenade" element={<PrivateRoute><WalkList /></PrivateRoute>} />
+        <Route path="/suivi/alimentation" element={<PrivateRoute><MealsList /></PrivateRoute>} />
+        <Route path="/suivi/health-event/:id" element={<PrivateRoute><ReminderEdit /></PrivateRoute>} />
+        <Route path="/suivi/poids" element={<PrivateRoute><WeightList /></PrivateRoute>} />
+        <Route path="/suivi/symptomes" element={<PrivateRoute><SymptomesList /></PrivateRoute>} />
+        <Route path="/suivi/symptome/:id" element={<PrivateRoute><SymptomEdit /></PrivateRoute>} />
+        <Route path="/suivi/repas/:id" element={<PrivateRoute><MealsEdit /></PrivateRoute>} />
+        <Route path="/account-settings" element={<PrivateRoute><AccountSettings /></PrivateRoute>} />
         {/* ...autres routes */}
       </Routes>
       {!hideNav && <BottomNav />}
