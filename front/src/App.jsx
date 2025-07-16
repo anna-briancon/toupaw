@@ -19,6 +19,8 @@ import SymptomEdit from './pages/symptom/SymptomEdit';
 import MultiPets from './pages/pet/MultiPets.jsx';
 import EditPet from './pages/pet/EditPet.jsx';
 import AccountSettings from './pages/auth/AccountSettings';
+import FAQSupport from './pages/FAQSupport';
+import Advice from './pages/Advice';
 
 
 function PrivateRoute({ children }) {
@@ -49,6 +51,8 @@ function AppRoutes() {
         <Route path="/suivi/symptome/:id" element={<PrivateRoute><SymptomEdit /></PrivateRoute>} />
         <Route path="/suivi/repas/:id" element={<PrivateRoute><MealsEdit /></PrivateRoute>} />
         <Route path="/account-settings" element={<PrivateRoute><AccountSettings /></PrivateRoute>} />
+        <Route path="/faq-support" element={<PrivateRoute><FAQSupport /></PrivateRoute>} />
+        <Route path="/advice" element={<PrivateRoute><Advice /></PrivateRoute>} />
         {/* ...autres routes */}
       </Routes>
       {!hideNav && <BottomNav />}

@@ -139,7 +139,7 @@ export default function Plus() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleAdviceClick = () => {
-    alert("Fonctionnalité à venir : Conseils bien-être & éducation");
+    navigate('/advice');
   };
   const handleSettingsClick = () => {
     navigate('/account-settings');
@@ -151,7 +151,7 @@ export default function Plus() {
     alert("Fonctionnalité à venir : Galerie de photos");
   };
   const handleSupportClick = () => {
-    alert("Fonctionnalité à venir : Centre d'aide");
+    navigate('/faq-support');
   };
   const handleNotificationsClick = () => {
     alert("Fonctionnalité à venir : Paramètres de notifications");
@@ -183,7 +183,7 @@ export default function Plus() {
           <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-4">Fonctionnalités</h2>
           <AdviceSection onClick={handleAdviceClick} />
           <MultiPetsSection onClick={handleMultiPetsClick} />
-          <GallerySection onClick={handleGalleryClick} />
+          {/* <GallerySection onClick={handleGalleryClick} /> */}
         </div>
         {/* Paramètres */}
         <div className="space-y-2 mb-8">
