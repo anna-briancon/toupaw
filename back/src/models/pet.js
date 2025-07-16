@@ -44,6 +44,13 @@ module.exports = (sequelize) => {
     photo_url: {
       type: DataTypes.STRING,
     },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isIn: [['male', 'female', 'other', null]]
+      }
+    },
   }, {
     sequelize,
     modelName: 'Pet',

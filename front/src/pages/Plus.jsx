@@ -145,7 +145,7 @@ export default function Plus() {
     alert("Fonctionnalité à venir : Paramètres du compte");
   };
   const handleMultiPetsClick = () => {
-    alert("Fonctionnalité à venir : Gestion multi-animaux");
+    navigate('/multi-pets');
   };
   const handleGalleryClick = () => {
     alert("Fonctionnalité à venir : Galerie de photos");

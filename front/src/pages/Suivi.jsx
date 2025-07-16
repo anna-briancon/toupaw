@@ -12,6 +12,7 @@ import AddManualWalkForm from './walk/WalkSection';
 import ReminderAdd from './reminder/ReminderAdd';
 import SymptomSection from './symptom/SymptomSection';
 import SectionTitle from '../components/SectionTitle';
+import Header from "../components/Header";
 
 export default function Suivi() {
   const [pet, setPet] = useState(null);
@@ -43,16 +44,20 @@ export default function Suivi() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-couleur-fond p-6 pb-24">
+    <div className="min-h-screen bg-couleur-fond p-6 pb-24 pt-24">
+       <Header pets={pets} selectedPet={pet} onSelectPet={p => {
+        setPet(p);
+        localStorage.setItem('selectedPetId', p.id);
+      }} />
       <div className="max-w-4xl mx-auto">
         <div className="mb-6 sm:mb-8">
           <SectionTitle>Suivi</SectionTitle>
         </div>
-        <PetSelector
+        {/* <PetSelector
           pets={pets}
           selectedPet={pet}
           onSelectPet={setPet}
-        />
+        /> */}
       </div>
       <div>
         <ReminderSection

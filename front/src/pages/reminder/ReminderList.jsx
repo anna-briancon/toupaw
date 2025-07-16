@@ -130,22 +130,22 @@ export default function RappelsList() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-orange-50 p-2 sm:p-4 md:p-6 pb-24">
+    <div className="min-h-screen bg-gradient-to-br p-6 sm:p-4 md:p-6 pb-24">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 mb-6 sm:mb-8">
           <button
             onClick={() => navigate(-1)}
-            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 rounded transition text-base sm:text-lg"
+            className="mb-4 flex items-center gap-2 text-emerald-700 hover:text-emerald-900 font-semibold px-3 py-2 rounded-lg hover:bg-emerald-50 transition"
           >
-            <ArrowLeft className="h-5 w-5 mr-2" />
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
             Retour
           </button>
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
               <Stethoscope className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
-            <h1 className="text-xl sm:text-3xl font-bold text-gray-900 whitespace-pre-line font-ranille">Événements santé</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 whitespace-pre-line font-ranille">Événements santé</h1>
           </div>
         </div>
         {/* Stats rapides */}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from '../../utils/axiosInstance';
-import { AlertCircle, ArrowLeft, Calendar, Camera, Plus, Edit, Trash2, ChevronRight } from 'lucide-react';
+import { AlertCircle, ArrowLeft, Calendar, Camera, Plus, Edit, Trash2, ChevronRight, ChevronLeft } from 'lucide-react';
 import SymptomSection from './SymptomSection';
 import ConfirmModal from '../../components/ConfirmModal';
 
@@ -160,23 +160,21 @@ export default function SymptomesList() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-orange-50 p-6 pb-24">
+    <div className="min-h-screen bg-gradient-to-br p-6 pb-24">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <button
-            onClick={() => navigate(-1)}
-            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 rounded transition text-base sm:text-lg"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Retour
-          </button>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-              <AlertCircle className="h-6 w-6 text-white" />
-            </div>
-            <h1 className="text-xl sm:text-3xl font-bold text-gray-900 whitespace-pre-line font-ranille">Historique des symptômes</h1>
+        <button
+          onClick={() => navigate(-1)}
+          className="mb-4 flex items-center gap-2 text-emerald-700 hover:text-emerald-900 font-semibold px-3 py-2 rounded-lg hover:bg-emerald-50 transition"
+        >
+          <ChevronLeft className="h-5 w-5" />
+          Retour
+        </button>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
+            <AlertCircle className="h-6 w-6 text-white" />
           </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 whitespace-pre-line font-ranille">Historique des symptômes</h1>
         </div>
         {/* Stats rapides */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-8">

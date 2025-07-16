@@ -93,7 +93,7 @@ export default function PoidsSection({ petId, onShowHistory }) {
             <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
               <Weight className="h-6 w-6 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">Poids</h2>
+            <h2 className="text-2xl font-bold text-gray-900 font-ranille">Poids</h2>
           </div>
           <button
             onClick={onShowHistory}

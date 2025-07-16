@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CreatePetModal } from '../pages/pet/CreatePet';
 
 export default function PetSelector({ pets, selectedPet, onSelectPet }) {
   const [open, setOpen] = useState(false);
   const ref = useRef();
   const navigate = useNavigate();
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   // Fermer le menu si on clique en dehors du menu OU du titre
   useEffect(() => {
@@ -39,10 +41,17 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
     <div ref={ref}>
       {/* Titre cliquable sans encadrement */}
       <div
-        className="flex items-center gap-3 cursor-pointer select-none mb-4"
+        className="flex items-center gap-3 cursor-pointer select-none"
         onClick={() => setOpen(o => !o)}
       >
-        <h1 className="text-2xl sm:text-3xl font-bold text-couleur-titre font-ranille">
+        {selectedPet && (
+          <img
+            src={selectedPet.photo_url || 'https://placekitten.com/40/40'}
+            alt={selectedPet.name}
+            className="w-10 h-10 rounded-full object-cover border border-emerald-200"
+          />
+        )}
+        <h1 className="text-xl sm:text-xl font-bold text-couleur-titre font-ranille">
           {selectedPet ? selectedPet.name : 'Sélectionner un animal'}
         </h1>
         <svg className={`h-7 w-7 transition-transform ${open ? 'rotate-180' : ''} ml-2`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -77,15 +86,36 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
                 className="w-full text-left px-6 py-4 hover:bg-couleur-principale/10 text-couleur-principale font-bold flex items-center gap-2 text-lg"
                 onClick={() => {
                   setOpen(false);
-                  navigate('/create-pet');
+                  setShowCreateModal(true);
                 }}
               >
                 <span>+ Ajouter un animal</span>
+              </button>
+              <button
+                className="w-full text-left px-6 py-4 hover:bg-couleur-principale/10 text-emerald-700 font-bold flex items-center gap-2 text-lg border-t"
+                onClick={() => {
+                  setOpen(false);
+                  navigate('/multi-pets');
+                }}
+              >
+                <span>Gérer mes animaux</span>
               </button>
             </div>
           </div>
         </>
       )}
+      {/* Modal d'ajout d'animal */}
+      <CreatePetModal
+        open={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onSuccess={() => {
+          setShowCreateModal(false);
+          if (typeof onSelectPet === 'function') {
+            // Optionnel : recharger la liste des animaux côté parent si possible
+            // Ici, on pourrait appeler une prop de rafraîchissement si elle existe
+          }
+        }}
+      />
     </div>
   );
 } 

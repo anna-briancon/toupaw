@@ -16,6 +16,9 @@ import MealsEdit from './pages/meal/MealEdit';
 import WeightList from './pages/weight/WeightList';
 import SymptomesList from './pages/symptom/SymptomesList';
 import SymptomEdit from './pages/symptom/SymptomEdit';
+import MultiPets from './pages/pet/MultiPets.jsx';
+import EditPet from './pages/pet/EditPet.jsx';
+
 
 
 function PrivateRoute({ children }) {
@@ -34,6 +37,8 @@ function AppRoutes() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/plus" element={<Plus />} />
         <Route path="/create-pet" element={<CreatePet />} />
+        <Route path="/multi-pets" element={<MultiPets />} />
+        <Route path="/edit-pet/:id" element={<EditPet />} />
         <Route path="/suivi" element={<Suivi />} />
         <Route path="/suivi/rappels" element={<ReminderList />} />
         <Route path="/suivi/promenade" element={<WalkList />} />

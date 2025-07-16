@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from '../../utils/axiosInstance';
 import {
-  Footprints, Route, Clock, Plus, Edit, Trash2, Eye, EyeOff, Calendar, Navigation, ArrowLeft
+  Footprints, Route, Clock, Plus, Edit, Trash2, Eye, EyeOff, Calendar, Navigation, ArrowLeft, ChevronLeft
 } from 'lucide-react';
 import { MapContainer, TileLayer, Polyline, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
@@ -127,35 +127,33 @@ export default function PromenadesList() {
   const dayDuration = walksOfDay.reduce((sum, w) => sum + Math.floor((new Date(w.end_time) - new Date(w.start_time))/1000), 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-orange-50 p-2 sm:p-4 md:p-6 pb-24">
+    <div className="min-h-screen bg-gradient-to-br  p-6 sm:p-4 md:p-6 pb-24">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 mb-6 sm:mb-8">
-          <button
-            onClick={() => navigate(-1)}
-            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 rounded transition text-base sm:text-lg"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Retour
-          </button>
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-              <Footprints className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-            </div>
-            <h1 className="text-xl sm:text-3xl font-bold text-gray-900 whitespace-pre-line font-ranille">Historique des promenades</h1>
+        <button
+          onClick={() => navigate(-1)}
+          className="mb-4 flex items-center gap-2 text-emerald-700 hover:text-emerald-900 font-semibold px-3 py-2 rounded-lg hover:bg-emerald-50 transition"
+        >
+          <ChevronLeft className="h-5 w-5" />
+          Retour
+        </button>
+        <div className="flex items-center gap-2 sm:gap-3 mb-6">
+          <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
+            <Footprints className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
           </div>
-          {/* Sélecteur de date */}
-          <div className="ml-auto flex items-center gap-2 mt-2 sm:mt-0">
-            <label htmlFor="date-select" className="text-sm font-medium text-gray-700">Jour :</label>
-            <input
-              id="date-select"
-              type="date"
-              value={selectedDate}
-              onChange={e => setSelectedDate(e.target.value)}
-              className="border rounded px-2 py-1 text-sm"
-              max={todayStr}
-            />
-          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 whitespace-pre-line font-ranille">Historique des promenades</h1>
+        </div>
+        {/* Sélecteur de date */}
+        <div className="ml-auto flex items-center gap-2 mt-2 sm:mt-0 mb-2">
+          <label htmlFor="date-select" className="text-sm font-medium text-gray-700">Jour :</label>
+          <input
+            id="date-select"
+            type="date"
+            value={selectedDate}
+            onChange={e => setSelectedDate(e.target.value)}
+            className="border rounded px-2 py-1 text-sm"
+            max={todayStr}
+          />
         </div>
         {/* Stats du jour sélectionné */}
         <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">

@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import PetSelector from '../components/PetSelector';
 import SectionTitle from '../components/SectionTitle';
+import React from "react";
+import Header from "../components/Header";
 
 // Header avec nom et photo du pet principal
 function DashboardHeader({ pet, user }) {
@@ -92,7 +94,7 @@ const EVENT_ICONS = {
   weight: '⚖️',
   Deworming: '��',
   Vaccination: '🩺',
-  Consultation: '🩺',
+  Consultation: '��',
   Surgery: '🩺',
   Grooming: '🩺',
   Other: '🩺',
@@ -463,7 +465,11 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-couleur-fond p-6 pb-24">
+    <div className="min-h-screen bg-couleur-fond p-6 pb-24 pt-24">
+      <Header pets={pets} selectedPet={pet} onSelectPet={p => {
+        setPet(p);
+        localStorage.setItem('selectedPetId', p.id);
+      }} />
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-6 sm:mb-4">
@@ -471,7 +477,7 @@ export default function Dashboard() {
         </div>
 
         {/* Sélecteur de pet */}
-        {pets.length > 0 && (
+        {/* {pets.length > 0 && (
           <div className=" flex justify-start sm:justify-start">
             <PetSelector
               pets={pets}
@@ -482,9 +488,9 @@ export default function Dashboard() {
               }}
             />
           </div>
-        )}
+        )} */}
 
-        {pet && <DashboardHeader pet={pet} user={user} />}
+        {/* {pet && <DashboardHeader pet={pet} user={user} />} */}
 
         {/* À venir */}
         <div className="mb-4 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow">
