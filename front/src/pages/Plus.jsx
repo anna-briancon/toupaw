@@ -164,6 +164,21 @@ export default function Plus() {
     navigate("/login");
   };
 
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: "Toupaw",
+        text: "Découvre Toupaw, l'app pour gérer le bien-être de ton animal !",
+        url: window.location.origin,
+      }).catch((error) => {
+        // Optionnel : gérer l'annulation ou l'erreur
+        console.log("Erreur lors du partage :", error);
+      });
+    } else {
+      alert("La fonctionnalité de partage n'est pas supportée sur cet appareil.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-couleur-fond p-6 pb-24">
       <div className="max-w-4xl mx-auto">
@@ -189,8 +204,8 @@ export default function Plus() {
         <div className="space-y-2 mb-8">
           <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-4">Paramètres</h2>
           <SettingsSection onClick={handleSettingsClick} />
-          <NotificationsSection onClick={handleNotificationsClick} />
-          <PrivacySection onClick={handlePrivacyClick} />
+          {/* <NotificationsSection onClick={handleNotificationsClick} /> */}
+          {/* <PrivacySection onClick={handlePrivacyClick} /> */}
         </div>
         {/* Support */}
         <div className="space-y-2 mb-8">
@@ -215,7 +230,7 @@ export default function Plus() {
           <Button
             variant="outline"
             className="border-emerald-200 text-emerald-700 hover:bg-emerald-50 bg-transparent"
-            onClick={() => alert("Fonctionnalité à venir : Partager l'app")}
+            onClick={handleShare}
           >
             Partager l'app
           </Button>
