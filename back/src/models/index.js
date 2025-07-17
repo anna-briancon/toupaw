@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
 
 const models = {};
@@ -8,7 +9,7 @@ const models = {};
 fs.readdirSync(__dirname)
   .filter(file => file !== 'index.js' && file.endsWith('.js'))
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize);
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     models[model.name] = model;
   });
 

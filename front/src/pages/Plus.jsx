@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowLeft,
   ChevronRight,
@@ -11,11 +11,19 @@ import {
   Bell,
   HelpCircle,
   LogOut,
+  Dog,
+  Cat,
+  PawPrint,
+  Share2,
+  Eye,
 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { logout } from "../store/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import SectionTitle from '../components/SectionTitle';
+import InviteUser from "../components/InviteUser";
+import PetMembers from "../components/PetMembers";
+import axios from "../utils/axiosInstance";
 
 // Card component
 function Card({ className = "", children, ...props }) {
@@ -179,6 +187,24 @@ export default function Plus() {
     }
   };
 
+  const [pets, setPets] = useState([]);
+  const [selectedPetId, setSelectedPetId] = useState(null);
+  const [showMembersPetId, setShowMembersPetId] = useState(null);
+
+  useEffect(() => {
+    // Récupère la liste des animaux de l'utilisateur connecté
+    const fetchPets = async () => {
+      try {
+        console.log("Token utilisé :", localStorage.getItem('token'));
+        const res = await axios.get("/pets");
+        setPets(res.data);
+      } catch (err) {
+        setPets([]);
+      }
+    };
+    fetchPets();
+  }, []);
+
   return (
     <div className="min-h-screen bg-couleur-fond p-6 pb-24">
       <div className="max-w-4xl mx-auto">
@@ -221,8 +247,16 @@ export default function Plus() {
               </div>
               <span className="text-lg font-bold text-gray-900">Toupaw</span>
             </div>
-            <p className="text-sm text-gray-600 mb-2">Version 1.0.0</p>
-            <p className="text-xs text-gray-500">Fait avec ❤️ pour nos compagnons à quatre pattes</p>
+            <p className="text-base font-semibold text-emerald-700 mb-1">Gérez le bien-être de vos animaux en famille ou entre amis</p>
+            <p className="text-sm text-gray-600 mb-2">L'application collaborative pour suivre, partager et chouchouter vos compagnons à quatre pattes.</p>
+            <p className="text-xs text-gray-500 mb-2">Version 1.0.0</p>
+            Optionnel : nombre d'animaux gérés si tu veux l'afficher
+            <p className="text-xs text-gray-500 mb-2">{pets.length} animaux gérés</p>
+           
+            <p className="text-xs text-gray-500">Fait avec ❤️ par la communauté Toupaw</p>
+            <div className="mt-3">
+              <a href="/faq-support" className="text-emerald-600 hover:underline text-xs">Besoin d'aide ? FAQ & Support</a>
+            </div>
           </CardContent>
         </Card> */}
         {/* Actions rapides */}
@@ -234,13 +268,13 @@ export default function Plus() {
           >
             Partager l'app
           </Button>
-          <Button
+          {/* <Button
             variant="outline"
             className="border-emerald-200 text-emerald-700 hover:bg-emerald-50 bg-transparent"
             onClick={() => alert("Fonctionnalité à venir : Noter l'app")}
           >
             Noter l'app
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

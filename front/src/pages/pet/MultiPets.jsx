@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../utils/axiosInstance';
-import { Plus, Edit, Trash2, PawPrint, Dog, Cat, ChevronDown, ChevronUp, Info, Users, Lightbulb } from 'lucide-react';
+import { Plus, Edit, Trash2, PawPrint, Dog, Cat, ChevronDown, ChevronUp, Info, Users, Lightbulb, Share2, Eye } from 'lucide-react';
 import { CreatePetModal } from './CreatePet';
 import EditPetModal from './EditPet';
+import InviteUser from '../../components/InviteUser';
+import PetMembers from '../../components/PetMembers';
+import { useSelector } from "react-redux";
 
 const TIPS = [
   "Chaque animal a sa personnalité : apprends à les observer et à respecter leurs différences.",
@@ -30,6 +33,10 @@ const FAQ = [
     q: "Comment supprimer un animal ?",
     a: "Clique sur l’icône poubelle sur la carte de l’animal. Attention, cette action est irréversible.",
   },
+  {
+    q: "Comment partager un animal avec d'autres utilisateurs ?",
+    a: "Clique sur le bouton 'Partager' sous la carte de l'animal, saisis l'email de la personne à inviter. Tu peux voir la liste des membres avec 'Membres'. Seul le propriétaire (créateur de l'animal) peut retirer un membre, et il ne peut pas se retirer lui-même. Les membres invités ne peuvent pas gérer les autres membres.",
+  },
 ];
 
 function Accordion({ title, icon, children }) {
@@ -52,7 +59,8 @@ function Accordion({ title, icon, children }) {
 
 export default function MultiPets() {
   const [pets, setPets] = useState([]);
-  const [selectedPetId, setSelectedPetId] = useState(() => localStorage.getItem('selectedPetId'));
+  const [selectedPetId, setSelectedPetId] = useState(null);
+  const [showMembersPetId, setShowMembersPetId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showConfirmDelete, setShowConfirmDelete] = useState(null);
@@ -62,6 +70,8 @@ export default function MultiPets() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editPetId, setEditPetId] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [openedSection, setOpenedSection] = useState({}); // { [petId]: 'share' | 'members' | null }
+  const auth = useSelector(state => state.auth);
 
   const fetchPets = async () => {
     setLoading(true);
@@ -174,7 +184,7 @@ export default function MultiPets() {
             <Plus className="h-5 w-5" /> Ajouter
           </button>
         </div>
-       
+
         {/* Filtres */}
         {speciesList.length > 1 && (
           <div className="flex gap-2 mb-6">
@@ -226,22 +236,6 @@ export default function MultiPets() {
                   className={`relative group bg-white border rounded-2xl p-5 shadow-md transition cursor-pointer hover:shadow-lg ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-200' : 'border-emerald-100'}`}
                   onClick={() => handleSelect(pet)}
                 >
-                  <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition">
-                    <button
-                      className="p-2 rounded-lg hover:bg-emerald-50 text-emerald-600"
-                      onClick={e => { e.stopPropagation(); handleEdit(pet); }}
-                      title="Éditer"
-                    >
-                      <Edit className="h-5 w-5" />
-                    </button>
-                    <button
-                      className="p-2 rounded-lg hover:bg-red-50 text-red-600"
-                      onClick={e => { e.stopPropagation(); handleDelete(pet); }}
-                      title="Supprimer"
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </button>
-                  </div>
                   <div className="flex items-center gap-4">
                     {imageSrc ? (
                       <img
@@ -256,21 +250,71 @@ export default function MultiPets() {
                         {pet.species === 'other' && <PawPrint className="w-10 h-10 text-emerald-400" />}
                       </div>
                     )}
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div className="font-bold text-xl text-gray-900 flex items-center gap-2">{pet.name} <span className="text-gray-500 font-normal text-base">{getAgeString(pet.birthdate)}</span></div>
-                      <div className="text-gray-500 text-sm flex items-center gap-2">
+                      <div className="text-gray-500 text-sm">
                         {getSpeciesLabel(pet.species, pet.gender)}
                         {pet.gender && (
                           <span className="ml-2">{getGenderSymbol(pet.gender)}</span>
                         )}
-                        {pet.breed && <span className="ml-2">{pet.breed}</span>}
                       </div>
+                      <div className="text-gray-500 text-sm">
+                        {pet.breed && <span>{pet.breed}</span>}
+                      </div>
+
                       {pet.birthdate && (
                         <div className="text-gray-400 text-xs">
                           {pet.gender === 'female' ? 'Née le' : 'Né le'} {new Date(pet.birthdate).toLocaleDateString('fr-FR')}
                         </div>
                       )}
                     </div>
+                    {/* Boutons modifier/supprimer toujours visibles */}
+                    <div className="flex flex-col gap-2 ml-2 items-end">
+                      <button
+                        className="p-2 rounded-lg hover:bg-emerald-50 text-emerald-600"
+                        onClick={e => { e.stopPropagation(); handleEdit(pet); }}
+                        title="Éditer"
+                      >
+                        <Edit className="h-5 w-5" />
+                      </button>
+                      <button
+                        className="p-2 rounded-lg hover:bg-red-50 text-red-600"
+                        onClick={e => { e.stopPropagation(); handleDelete(pet); }}
+                        title="Supprimer"
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Boutons Partager / Membres côte à côte, même style */}
+                  <div className="flex gap-3 mt-3 mb-1">
+                    <button
+                      className={`flex-1 flex items-center gap-1 justify-center border rounded-md px-2 py-1 text-sm font-medium transition
+                        ${openedSection[pet.id] === 'share' ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'border-emerald-100 text-emerald-600 hover:bg-emerald-50'}`}
+                      style={{ minWidth: 0 }}
+                      onClick={e => { e.stopPropagation(); setOpenedSection(s => ({ ...s, [pet.id]: s[pet.id] === 'share' ? null : 'share' })); }}
+                    >
+                      <Share2 className="h-4 w-4" /> Partager
+                    </button>
+                    <button
+                      className={`flex-1 flex items-center gap-1 justify-center border rounded-md px-2 py-1 text-sm font-medium transition
+                        ${openedSection[pet.id] === 'members' ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'border-emerald-100 text-emerald-600 hover:bg-emerald-50'}`}
+                      style={{ minWidth: 0 }}
+                      onClick={e => { e.stopPropagation(); setOpenedSection(s => ({ ...s, [pet.id]: s[pet.id] === 'members' ? null : 'members' })); }}
+                    >
+                      <Eye className="h-4 w-4" /> Membres
+                    </button>
+                  </div>
+                  {/* Animation d'apparition, un seul ouvert à la fois */}
+                  <div className={`transition-all duration-300 ${openedSection[pet.id] === 'share' ? 'opacity-100 max-h-[400px] mt-2' : 'opacity-0 max-h-0 overflow-hidden'}`}>
+                    {openedSection[pet.id] === 'share' && (
+                      <InviteUser petId={pet.id} onInvite={() => setOpenedSection(s => ({ ...s, [pet.id]: null }))} />
+                    )}
+                  </div>
+                  <div className={`transition-all duration-300 ${openedSection[pet.id] === 'members' ? 'opacity-100 max-h-[400px] mt-2' : 'opacity-0 max-h-0 overflow-hidden'}`}>
+                    {openedSection[pet.id] === 'members' && (
+                      <PetMembers petId={pet.id} currentUserId={auth.user?.id} />
+                    )}
                   </div>
                 </div>
               );
@@ -332,7 +376,11 @@ export default function MultiPets() {
           petId={editPetId}
           onSuccess={() => { setShowEditModal(false); fetchPets(); }}
         />
-       
+
+      </div>
+      <div className="mt-6 text-xs text-gray-500 flex items-center gap-2">
+        <Lightbulb className="h-4 w-4 text-emerald-400" />
+        Astuce : tu peux partager un animal avec plusieurs personnes (famille, pet-sitter, etc.) et retirer l'accès à tout moment.
       </div>
     </div>
   );

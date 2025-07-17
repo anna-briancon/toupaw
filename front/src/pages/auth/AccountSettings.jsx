@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../utils/axiosInstance';
 import SectionTitle from '../../components/SectionTitle';
-import { ArrowLeft, User, Mail as MailIcon, Lock, Sun, Moon, Bell, Trash2, ChevronDown, ChevronUp, Info, HelpCircle } from 'lucide-react';
+import { ArrowLeft, User, Mail as MailIcon, Lock, Sun, Moon, Bell, Trash2, ChevronDown, ChevronUp, Info, HelpCircle, LogOut } from 'lucide-react';
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/features/auth/authSlice";
 
 const FAQ = [
   {
@@ -71,6 +73,7 @@ export default function AccountSettings() {
     const [deleteError, setDeleteError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setLoading(true);
@@ -136,16 +139,30 @@ export default function AccountSettings() {
         }
     };
 
+    const handleLogout = () => {
+      dispatch(logout());
+      navigate("/login");
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-white to-teal-50 p-6 pb-24">
             <div className="max-w-2xl mx-auto">
-                <button
+                <div className="flex items-center justify-between mb-4">
+                  <button
                     onClick={() => navigate(-1)}
-                    className="mb-4 flex items-center gap-2 text-emerald-700 hover:text-emerald-900 font-semibold px-3 py-2 rounded-lg hover:bg-emerald-50 transition"
-                >
+                    className="flex items-center gap-2 text-emerald-700 hover:text-emerald-900 font-semibold px-3 py-2 rounded-lg hover:bg-emerald-50 transition"
+                  >
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
                     Retour
-                </button>
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-red-100 text-red-800 border border-red-300 hover:bg-red-200 px-5 py-2 rounded-xl text-base font-bold flex items-center gap-2 shadow-none"
+                  >
+                    <LogOut className="h-5 w-5 mr-2 text-red-800" />
+                    Déconnexion
+                  </button>
+                </div>
                 <div className="flex items-center gap-3 mb-6">
                   <User className="h-8 w-8 text-emerald-500" />
                   <h1 className="text-2xl sm:text-3xl font-bold text-couleur-titre font-ranille">Paramètres du compte</h1>

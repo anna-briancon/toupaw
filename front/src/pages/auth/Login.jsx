@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from '../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from '../../store/features/auth/authActions';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -9,6 +11,14 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (auth.user) {
+      navigate("/");
+    }
+  }, [auth.user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +27,8 @@ export default function Login() {
     try {
       const res = await axios.post('/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
-      navigate('/');
+      await dispatch(getUser()); // Récupère l'utilisateur connecté et le stocke dans Redux
+      // La redirection sera déclenchée par le useEffect
     } catch (err) {
       setError(err.response?.data?.error || 'Erreur de connexion');
     } finally {

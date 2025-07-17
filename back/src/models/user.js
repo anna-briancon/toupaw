@@ -1,6 +1,6 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model } = require('sequelize');
 
-module.exports = (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.belongsToMany(models.Pet, {
@@ -38,4 +38,4 @@ module.exports = (sequelize) => {
     timestamps: true,
   });
   return User;
-}; 
+};
