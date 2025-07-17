@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { sequelize } = require('./src/models');
 const authMiddleware = require('./src/middlewares/auth');
-const seed = require('./src/seeds/seed');
+// const seed = require('./src/seeds/seed');
 
 const app = express();
 app.use(cors());
@@ -39,7 +39,7 @@ const shouldSeed = process.env.SEED_DB === 'true';
     await sequelize.authenticate();
     await sequelize.sync();
     if (shouldSeed) {
-      await seed();
+      // await seed();
     }
     console.log('Connexion DB OK');
     app.listen(PORT, () => console.log(`API sur http://localhost:${PORT}`));
