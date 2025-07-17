@@ -337,179 +337,205 @@ export default function AlimentationList() {
   }
 
   return (
-    <div className="min-h-screen p-6 pb-24">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-100 p-3 sm:p-4 md:p-6 pb-24">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-4 flex items-center gap-2 text-emerald-700 hover:text-emerald-900 font-semibold px-3 py-2 rounded-lg hover:bg-emerald-50 transition"
-        >
-          <ChevronLeft className="h-5 w-5" />
-          Retour
-        </button>
-        <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-            <Utensils className="h-6 w-6 text-white" />
+        {/* Header harmonisé WalkList/ReminderList */}
+        <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-4 mb-6 sm:mb-10 bg-gradient-to-r from-emerald-400/80 to-teal-400/80 rounded-xl sm:rounded-2xl shadow-lg px-3 sm:px-6 py-4 sm:py-8 border border-emerald-200 overflow-hidden">
+          <div className="absolute right-0 top-0 opacity-10 pointer-events-none select-none">
+            <Utensils className="h-20 w-20 sm:h-32 sm:w-32 text-white" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 whitespace-pre-line font-ranille">Historique des repas</h1>
-        </div>
-        {/* Sélecteur de date aligné à droite */}
-        <div className="ml-auto flex items-center gap-2 mt-2 sm:mt-0 mb-2">
-          <label htmlFor="date-select" className="text-sm font-medium text-gray-700">Jour :</label>
-          <input
-            id="date-select"
-            type="date"
-            value={selectedDate}
-            onChange={e => setSelectedDate(e.target.value)}
-            className="border rounded px-2 py-1 text-sm"
-            max={todayStr}
-          />
-        </div>
-        {/* Stats du jour sélectionné */}
-        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-6">
-          <div className="flex-1 min-w-[110px] bg-gradient-to-br from-emerald-100 to-teal-50 border border-emerald-200 rounded-lg p-3 text-center">
-            <div className="flex items-center justify-center gap-1 text-emerald-700 mb-1">
-              <Utensils className="h-4 w-4" />
-              <span className="text-xs font-medium">Repas du jour</span>
+          <button
+            onClick={() => navigate(-1)}
+            className="mb-2 sm:mb-4 flex items-center gap-2 text-white hover:text-emerald-100 font-semibold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-emerald-500/30 transition z-10 text-sm sm:text-base"
+          >
+            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+            Retour
+          </button>
+          <div className="flex items-center gap-2 sm:gap-3 z-10">
+            <div className="p-2 sm:p-3 bg-white/30 rounded-lg sm:rounded-xl shadow">
+              <Utensils className="h-6 w-6 sm:h-10 sm:w-10 text-emerald-700" />
             </div>
-            <div className="text-lg font-bold text-gray-900">{totalMealsOfDay}</div>
-          </div>
-          <div className="flex-1 min-w-[110px] bg-gradient-to-br from-violet-100 to-violet-50 border border-violet-200 rounded-lg p-3 text-center">
-            <div className="flex items-center justify-center gap-1 text-violet-700 mb-1">
-              <BarChart3 className="h-4 w-4" />
-              <span className="text-xs font-medium">Quantité du jour</span>
+            <div>
+              <h1 className="text-2xl sm:text-4xl font-extrabold text-white font-ranille drop-shadow leading-tight">Historique des repas</h1>
+              <p className="text-white/80 text-xs sm:text-sm mt-0.5 sm:mt-1 font-medium">Suivez l'alimentation de votre animal</p>
             </div>
-            <div className="text-lg font-bold text-violet-800">{totalQuantityOfDay.toFixed(0)} g</div>
-          </div>
-          <div className="flex-1 min-w-[110px] bg-gradient-to-br from-blue-100 to-cyan-50 border border-blue-200 rounded-lg p-3 text-center">
-            <div className="flex items-center justify-center gap-1 text-blue-700 mb-1">
-              <GlassWater className="h-6 w-6" />
-              <span className="text-xs font-medium">Verres du jour</span>
-            </div>
-            <div className="text-lg font-bold text-gray-900">{totalDrinksOfDay}</div>
-          </div>
-          <div className="flex-1 min-w-[110px] bg-gradient-to-br from-orange-100 to-amber-50 border border-orange-200 rounded-lg p-3 text-center">
-            <div className="flex items-center justify-center gap-1 text-orange-700 mb-1">
-              <Calendar className="h-4 w-4" />
-              <span className="text-xs font-medium">Moyenne/repas</span>
-            </div>
-            <div className="text-lg font-bold text-gray-900">{averageQuantityAll.toFixed(0)} g</div>
           </div>
         </div>
-
-        {/* Liste des repas */}
-        <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-3 sm:p-6 space-y-3 sm:space-y-4">
-          <div className="flex justify-end mb-4 gap-2">
-            <button
-              onClick={() => setEditMeal({})}
-              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 py-2 rounded-xl shadow flex items-center gap-2 text-sm sm:text-base"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Ajouter
-            </button>
-            <button
-              onClick={() => setShowAddDrink(true)}
-              className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold px-3 py-2 rounded-xl shadow flex items-center gap-2 text-sm sm:text-base"
-            >
-              <GlassWater className="h-4 w-4 mr-2" />
-              Ajouter un verre
-            </button>
+        {/* Stats + Sélecteur de date harmonisés */}
+        <div className="bg-white/80 border border-emerald-200 rounded-xl shadow p-3 sm:p-5 mb-4 flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <Calendar className="h-5 w-5 text-emerald-500" />
+            <label htmlFor="date-select" className="text-sm font-semibold text-emerald-700">Stats du jour :</label>
+            <input
+              id="date-select"
+              type="date"
+              value={selectedDate}
+              onChange={e => setSelectedDate(e.target.value)}
+              className="border border-emerald-200 rounded px-2 py-1 text-sm bg-white focus:ring-2 focus:ring-emerald-400 shadow-sm ml-2"
+              max={todayStr}
+            />
           </div>
-          {/* Grouper les repas par date et afficher chaque groupe */}
-          {loading ? (
-            <div className="flex items-center justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
-              <span className="ml-3 text-gray-600">Chargement...</span>
+          <div className="flex-1 w-full">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4">
+              <div className="bg-gradient-to-br from-emerald-200/80 to-teal-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
+                <div className="flex items-center justify-center gap-1 sm:gap-2 text-emerald-700 mb-1 sm:mb-2">
+                  <Utensils className="h-4 w-4 sm:h-6 sm:w-6" />
+                  <span className="text-[10px] sm:text-xs font-semibold">Repas du jour</span>
+                </div>
+                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{totalMealsOfDay}</div>
+              </div>
+              <div className="bg-gradient-to-br from-violet-200/80 to-violet-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
+                <div className="flex items-center justify-center gap-1 sm:gap-2 text-violet-700 mb-1 sm:mb-2">
+                  <BarChart3 className="h-4 w-4 sm:h-6 sm:w-6" />
+                  <span className="text-[10px] sm:text-xs font-semibold">Quantité du jour</span>
+                </div>
+                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{totalQuantityOfDay.toFixed(0)} g</div>
+              </div>
+              <div className="bg-gradient-to-br from-blue-200/80 to-cyan-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
+                <div className="flex items-center justify-center gap-1 sm:gap-2 text-blue-700 mb-1 sm:mb-2">
+                  <GlassWater className="h-4 w-4 sm:h-6 sm:w-6" />
+                  <span className="text-[10px] sm:text-xs font-semibold">Verres du jour</span>
+                </div>
+                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{totalDrinksOfDay}</div>
+              </div>
+              <div className="bg-gradient-to-br from-orange-200/80 to-amber-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
+                <div className="flex items-center justify-center gap-1 sm:gap-2 text-orange-700 mb-1 sm:mb-2">
+                  <Calendar className="h-4 w-4 sm:h-6 sm:w-6" />
+                  <span className="text-[10px] sm:text-xs font-semibold">Moyenne/repas</span>
+                </div>
+                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{averageQuantityAll.toFixed(0)} g</div>
+              </div>
             </div>
-          ) : meals.length === 0 && drinks.length === 0 ? (
-            <div className="text-center py-12">
-              <Utensils className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 font-medium text-lg">Aucun repas ou verre enregistré</p>
-              <p className="text-sm text-gray-500 mt-2">Ajoutez le premier repas ou verre de votre animal !</p>
+          </div>
+        </div>
+        {/* Liste des repas modernisée */}
+        <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl sm:rounded-2xl shadow-xl">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 p-3 sm:p-6 border-b border-emerald-100">
+            <span className="font-semibold text-base sm:text-lg text-emerald-700">Repas & boissons récents</span>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setEditMeal({})}
+                className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
+              >
+                <Plus className="h-4 w-4 sm:h-5 sm:w-5 mr-1" />
+                Ajouter
+              </button>
+              <button
+                onClick={() => setShowAddDrink(true)}
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
+              >
+                <GlassWater className="h-4 w-4 sm:h-5 sm:w-5 mr-1" />
+                Ajouter un verre
+              </button>
             </div>
-          ) : (
-            // Grouper les repas et drinks par date et afficher chaque groupe
-            Object.entries(groupMealsByDate(meals)).concat(
-              Object.entries(groupDrinksByDate(drinks)).filter(([dateKey]) => !meals.some(m => new Date(m.datetime).toISOString().slice(0,10) === dateKey))
-            )
-            .sort((a, b) => b[0].localeCompare(a[0]))
-            .map(([dateKey, items]) => {
-              const mealsForDate = groupMealsByDate(meals)[dateKey] || [];
-              const drinksForDate = groupDrinksByDate(drinks)[dateKey] || [];
-              return (
-                <div key={dateKey} className="mb-6">
-                  <div className="font-semibold text-lg mb-2 text-emerald-700 flex items-center gap-3">
-                    {getDateLabel(dateKey)}
-                    {drinksForDate.length > 0 && (
-                      <span className="flex items-center gap-1 text-blue-600 text-base ml-2">
-                        <GlassWater className="h-5 w-5" />
-                        {drinksForDate.length} verre{drinksForDate.length > 1 ? 's' : ''}
-                      </span>
-                    )}
-                    {/* Ajout : total g du jour */}
-                    {mealsForDate.length > 0 && (
-                      <span className="flex items-center gap-1 text-violet-700 text-base ml-2">
-                        <BarChart3 className="h-5 w-5" />
-                        {mealsForDate.reduce((sum, meal) => {
-                          let q = meal.quantity;
-                          if (meal.unit === 'kg') q *= 1000;
-                          else if (meal.unit === 'l') q *= 1000;
-                          else if (meal.unit === 'ml') q *= 1;
-                          return sum + q;
-                        }, 0)} g
-                      </span>
-                    )}
-                  </div>
-                  <div className="space-y-3">
-                    {mealsForDate.map((meal) => (
-                      <div
-                        key={meal.id}
-                        className="border-l-4 border-l-emerald-500 bg-white rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer"
-                        onClick={() => navigate(`/suivi/repas/${meal.id}`)}
-                      >
-                        <div className="p-3 sm:p-6 flex items-center justify-between">
-                          <div className="flex items-center gap-3 sm:gap-4">
-                            <div className="p-2 sm:p-3 rounded-lg bg-orange-100 text-orange-700">
-                              <Utensils className="h-5 w-5 sm:h-6 sm:w-6" />
+          </div>
+          <div className="p-2 sm:p-6 space-y-3 sm:space-y-4">
+            {loading ? (
+              <div className="flex items-center justify-center py-8 sm:py-12">
+                <div className="animate-spin rounded-full h-7 w-7 sm:h-10 sm:w-10 border-b-2 border-emerald-500"></div>
+                <span className="ml-2 sm:ml-4 text-gray-600 text-base sm:text-lg font-semibold">Chargement...</span>
+              </div>
+            ) : meals.length === 0 && drinks.length === 0 ? (
+              <div className="text-center py-10 sm:py-16 flex flex-col items-center">
+                <Utensils className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-700 font-bold text-lg sm:text-xl mb-1">Aucun repas ou verre enregistré</p>
+                <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-4">Ajoutez le premier repas ou verre de votre animal !</p>
+                <button
+                  onClick={() => setEditMeal({})}
+                  className="mt-1 sm:mt-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 sm:px-5 py-1.5 sm:py-2 rounded-full font-semibold shadow hover:scale-105 transition-transform text-xs sm:text-base"
+                >
+                  Ajouter un repas
+                </button>
+              </div>
+            ) : (
+              // Grouper les repas et drinks par date et afficher chaque groupe
+              Object.entries(groupMealsByDate(meals)).concat(
+                Object.entries(groupDrinksByDate(drinks)).filter(([dateKey]) => !meals.some(m => new Date(m.datetime).toISOString().slice(0,10) === dateKey))
+              )
+              .sort((a, b) => b[0].localeCompare(a[0]))
+              .map(([dateKey, items]) => {
+                const mealsForDate = groupMealsByDate(meals)[dateKey] || [];
+                const drinksForDate = groupDrinksByDate(drinks)[dateKey] || [];
+                return (
+                  <div key={dateKey} className="mb-6">
+                    <div className="font-semibold text-lg mb-2 text-emerald-700 flex items-center gap-3">
+                      {getDateLabel(dateKey)}
+                      {drinksForDate.length > 0 && (
+                        <span className="flex items-center gap-1 text-blue-600 text-base ml-2">
+                          <GlassWater className="h-5 w-5" />
+                          {drinksForDate.length} verre{drinksForDate.length > 1 ? 's' : ''}
+                        </span>
+                      )}
+                      {mealsForDate.length > 0 && (
+                        <span className="flex items-center gap-1 text-violet-700 text-base ml-2">
+                          <BarChart3 className="h-5 w-5" />
+                          {mealsForDate.reduce((sum, meal) => {
+                            let q = meal.quantity;
+                            if (meal.unit === 'kg') q *= 1000;
+                            else if (meal.unit === 'l') q *= 1000;
+                            else if (meal.unit === 'ml') q *= 1;
+                            return sum + q;
+                          }, 0)} g
+                        </span>
+                      )}
+                    </div>
+                    <div className="space-y-3">
+                      {mealsForDate.map((meal) => (
+                        <div
+                          key={meal.id}
+                          className="group border border-emerald-100 border-l-4 border-l-emerald-400 bg-white/90 rounded-xl shadow-sm hover:shadow-lg transition-all cursor-pointer hover:-translate-y-0.5 sm:hover:-translate-y-1 duration-200 px-2 sm:px-4 py-3 sm:py-4"
+                          onClick={() => setEditMeal(meal)}
+                        >
+                          <div className="flex items-center gap-3 sm:gap-5">
+                            <div className="flex-shrink-0 p-2 sm:p-3 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center transition-transform group-hover:scale-105">
+                              <Utensils className="h-6 w-6 sm:h-7 sm:w-7" />
                             </div>
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <span className="font-semibold text-gray-900">{meal.food_type}</span>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-0.5">
+                                <span className="font-semibold text-base sm:text-lg text-gray-900 truncate">{meal.food_type}</span>
                                 <span className="text-lg">🍽️</span>
                               </div>
-                              <div className="flex items-center gap-1 text-sm text-gray-600 mt-1">
+                              <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 mb-1">
                                 <Calendar className="h-3 w-3" />
                                 {meal.quantity} {meal.unit} • {formatDate(meal.datetime)}
                               </div>
-                              {meal.note && <p className="text-sm mt-2 text-gray-500">{meal.note}</p>}
+                              {meal.note && <p className="text-xs sm:text-sm text-gray-500 mt-1 line-clamp-2">{meal.note}</p>}
+                            </div>
+                            <div className="flex flex-col gap-2 items-end ml-2">
+                              <button
+                                onClick={e => { e.stopPropagation(); setEditMeal(meal); }}
+                                className="text-emerald-500 hover:text-emerald-700 hover:bg-emerald-50 rounded p-1 text-xs flex items-center transition"
+                                title="Modifier"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </button>
+                              <button
+                                onClick={e => { e.stopPropagation(); handleDelete(meal.id); }}
+                                className="text-red-500 hover:text-red-700 hover:bg-red-50 rounded p-1 text-xs flex items-center transition"
+                                title="Supprimer"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={e => { e.stopPropagation(); setEditMeal(meal); }}
-                              className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded px-2 py-1 text-xs sm:text-sm flex items-center gap-1"
-                            >
-                              <Edit className="h-4 w-4" />
-                            </button>
-                            <button
-                              onClick={e => { e.stopPropagation(); handleDelete(meal.id); }}
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded px-2 py-1 text-xs sm:text-sm flex items-center gap-1"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </button>
-                            <ChevronRight className="h-5 w-5 text-emerald-400 ml-1" />
-                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
-            })
-          )}
+                );
+              })
+            )}
+          </div>
         </div>
         {/* Modale d'édition/ajout repas */}
-        {editMeal && navigate(`/suivi/repas/${editMeal.id}`)}
+        {editMeal && (
+          <EditMealForm
+            petId={petId}
+            initial={editMeal.id ? editMeal : undefined}
+            onSave={() => { setEditMeal(null); reload(); }}
+            onCancel={() => setEditMeal(null)}
+          />
+        )}
         {/* Modale d'ajout de verre */}
         {showAddDrink && (
           <AddDrinkForm

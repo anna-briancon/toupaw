@@ -4,6 +4,7 @@ import {
   UtensilsCrossed, Plus, ChevronRight, GlassWater, Calendar
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 function AddMealForm({ petId, onSave, onCancel, initial }) {
   const [foodType, setFoodType] = useState(initial?.food_type || '');
@@ -53,7 +54,7 @@ function AddMealForm({ petId, onSave, onCancel, initial }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <UtensilsCrossed className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">Ajouter un repas</span>
+          <span className="text-lg font-semibold">{initial && initial.id ? 'Modifier un repas' : 'Ajouter un repas'}</span>
         </div>
         <div>
           <label className="text-sm font-medium">Type d'aliment</label>
@@ -195,15 +196,11 @@ export default function AlimentationSection({ petId, onShowHistory, onAddDrink, 
 
         {/* Dernier repas */}
         <div className="space-y-4 mb-6">
-          {loading ? (
-            <div className="flex items-center justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
-              <span className="ml-3 text-gray-600">Chargement...</span>
-            </div>
-          ) : lastMeal ? (
+          {loading && <LoadingSpinner overlay />}
+          {lastMeal ? (
             <div
               className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-6 flex items-center justify-between cursor-pointer hover:shadow-md"
-              onClick={() => navigate(`/suivi/repas/${lastMeal.id}`)}
+              onClick={() => setEditMeal(lastMeal)}
             >
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-lg bg-orange-100 text-orange-700">

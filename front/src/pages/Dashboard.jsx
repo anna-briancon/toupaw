@@ -10,6 +10,7 @@ import PetSelector from '../components/PetSelector';
 import SectionTitle from '../components/SectionTitle';
 import React from "react";
 import Header from "../components/Header";
+import ReminderEdit from './reminder/ReminderEdit';
 
 // Header avec nom et photo du pet principal
 function DashboardHeader({ pet, user }) {
@@ -284,6 +285,8 @@ export default function Dashboard() {
 
   const [selectedSummaryDate, setSelectedSummaryDate] = useState(new Date());
 
+  const [editEvent, setEditEvent] = useState(null); // <-- Ajout état modale
+
   const navigate = useNavigate();
 
   // Charger la liste des animaux et les données du pet sélectionné
@@ -497,22 +500,43 @@ export default function Dashboard() {
           <div className="p-4 sm:p-6">
             <h2 className="font-semibold text-lg mb-4 text-gray-900">À venir</h2>
             <div className="space-y-3">
-              {futureEvents.length === 0 && <span className="text-gray-400">Aucun événement à venir</span>}
-              {futureEvents.map((evt, idx) => {
-                // Détermine la route d'édition selon le type
-                let editRoute = null;
-                if (evt.type === 'rappel') editRoute = `/rappels/edit/${evt.id}`;
-                else if ([
-                  'vaccination', 'vet_visit', 'medication', 'symptom', 'deworming', 'soins', 'weight'
-                ].includes(evt.type)) editRoute = `/suivi/health-event/${evt.id || evt.event_id}`;
-                else if (evt.type === 'repas' || evt.type === 'meal') editRoute = `/alimentation/edit/${evt.id || evt.meal_id}`;
-                else if (evt.type === 'balade' || evt.type === 'walk') editRoute = `/promenades/edit/${evt.id || evt.walk_id}`;
-                else if (evt.type === 'quotidien' || evt.type === 'daily') editRoute = `/daily-events/edit/${evt.id || evt.daily_event_id}`;
-                // Ajoute d'autres types si besoin
+              {(() => {
+                // Séparer événements en retard et à venir
+                const now = new Date();
+                const lateEvents = futureEvents.filter(evt => new Date(evt.date) < now && !evt.completed);
+                const upcomingEvents = futureEvents.filter(evt => new Date(evt.date) >= now);
+                let displayEvents = [];
+                let isLate = false;
+                if (lateEvents.length > 0) {
+                  displayEvents = lateEvents.slice(0, 3);
+                  isLate = true;
+                } else {
+                  displayEvents = upcomingEvents.slice(0, 3);
+                }
+                if (futureEvents.length === 0) {
+                  return <span className="text-gray-400">Aucun événement à venir</span>;
+                }
                 return (
-                  <EventCard key={idx} event={evt} onClick={editRoute ? () => navigate(editRoute) : undefined} />
+                  <>
+                    {displayEvents.map((evt, idx) => {
+                      // Détermine la route d'édition selon le type
+                      return (
+                        <EventCard key={idx} event={evt} onClick={() => setEditEvent(evt)} />
+                      );
+                    })}
+                    {(isLate ? lateEvents.length : upcomingEvents.length) > 3 && (
+                      <div className="flex justify-center mt-2">
+                        <button
+                          className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
+                          onClick={() => navigate(`/suivi/rappels${pet ? `?pet=${pet.id}` : ''}`)}
+                        >
+                          Voir plus
+                        </button>
+                      </div>
+                    )}
+                  </>
                 );
-              })}
+              })()}
             </div>
           </div>
         </div>
@@ -933,6 +957,36 @@ export default function Dashboard() {
             )}
           </div>
         </div>
+
+        {/* Modale d'édition d'événement */}
+        {editEvent && (
+          <>
+            {/* Rappel (reminder) */}
+            {editEvent.type === 'rappel' && (
+              <ReminderEdit
+                open={true}
+                id={editEvent.id}
+                onSave={() => { setEditEvent(null); /* refresh data */ setLoading(true); setTimeout(() => setLoading(false), 500); }}
+                onCancel={() => setEditEvent(null)}
+              />
+            )}
+            {/* Health event */}
+            {[
+              'vaccination', 'vet_visit', 'medication', 'symptom', 'deworming', 'soins', 'weight'
+            ].includes(editEvent.type) && (
+              <ReminderEdit
+                open={true}
+                id={editEvent.id || editEvent.event_id}
+                onSave={() => { setEditEvent(null); setLoading(true); setTimeout(() => setLoading(false), 500); }}
+                onCancel={() => setEditEvent(null)}
+              />
+            )}
+            {/* Repas */}
+          
+            {/* Daily event (à adapter si tu as une modale) */}
+            {/* ... */}
+          </>
+        )}
 
         {loading && (
           <div className="fixed inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50">

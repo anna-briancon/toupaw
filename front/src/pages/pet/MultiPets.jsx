@@ -70,7 +70,7 @@ export default function MultiPets() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editPetId, setEditPetId] = useState(null);
   const [filter, setFilter] = useState('all');
-  const [openedSection, setOpenedSection] = useState({}); // { [petId]: 'share' | 'members' | null }
+  const [openedSection, setOpenedSection] = useState({});
   const auth = useSelector(state => state.auth);
 
   const fetchPets = async () => {
@@ -161,7 +161,6 @@ export default function MultiPets() {
     return 'Autre';
   }
 
-  // Filtres par espèce
   const speciesList = Array.from(new Set(pets.map(p => p.species))).filter(Boolean);
   const filteredPets = filter === 'all' ? pets : pets.filter(p => p.species === filter);
 

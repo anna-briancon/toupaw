@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../../utils/axiosInstance';
-import { ArrowLeft, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import ConfirmModal from '../../components/ConfirmModal';
 
-export default function SymptomEdit() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+export default function SymptomEdit({ open, id, onSave, onCancel }) {
   const [symptom, setSymptom] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -14,12 +11,13 @@ export default function SymptomEdit() {
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   useEffect(() => {
+    if (!open || !id) return;
     setLoading(true);
     axios.get(`/symptoms/id/${id}`)
       .then(res => setSymptom(res.data))
       .catch(() => setSymptom(null))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, open]);
 
   const handleChange = e => {
     setSymptom(s => ({ ...s, [e.target.name]: e.target.value }));
@@ -37,7 +35,7 @@ export default function SymptomEdit() {
         location: symptom.location,
         photo_url: symptom.photo_url,
       });
-      navigate(-1);
+      if (onSave) onSave();
     } catch (err) {
       setError(err.response?.data?.error || 'Erreur lors de la sauvegarde');
     } finally {
@@ -51,32 +49,29 @@ export default function SymptomEdit() {
   const confirmDelete = async () => {
     await axios.delete(`/symptoms/${id}`);
     setConfirmDeleteOpen(false);
-    navigate(-1);
+    if (onSave) onSave();
   };
 
-  if (loading) return <div className="p-4">Chargement...</div>;
-  if (!symptom) return <div className="p-4 text-red-500">Symptôme introuvable</div>;
+  if (!open) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-orange-50 p-2 sm:p-4 md:p-6">
-      <div className="max-w-xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <button
-            onClick={() => navigate(-1)}
-            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 rounded transition text-base sm:text-lg"
-          >
-            <ArrowLeft className="w-6 h-6" />
-            Retour
-          </button>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-              <AlertCircle className="text-white w-6 h-6" />
-            </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 whitespace-pre-line font-ranille">Éditer le symptôme</h1>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+      <form onSubmit={handleSave} className="bg-white rounded-2xl shadow-xl p-8 w-96 max-w-full space-y-4 relative">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
+            <AlertCircle className="h-5 w-5 text-white" />
           </div>
+          <span className="text-lg font-semibold">Éditer le symptôme</span>
         </div>
-        <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-6">
-          <form onSubmit={handleSave} className="flex flex-col gap-4">
+        {loading ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
+            <span className="ml-3 text-gray-600">Chargement...</span>
+          </div>
+        ) : !symptom ? (
+          <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">Symptôme introuvable</div>
+        ) : (
+          <>
             <div>
               <label className="text-sm font-medium">Description</label>
               <input name="description" value={symptom.description || ''} onChange={handleChange} className="w-full border rounded p-2 mt-1" required />
@@ -105,16 +100,20 @@ export default function SymptomEdit() {
               <button type="submit" disabled={saving} className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-2 rounded-xl shadow hover:from-emerald-600 hover:to-teal-600 transition">
                 {saving ? 'Enregistrement...' : 'Enregistrer'}
               </button>
+              <button type="button" onClick={onCancel} className="flex-1 bg-gray-100 text-gray-700 font-semibold py-2 rounded-xl border border-gray-300 hover:bg-gray-200 transition">
+                Annuler
+              </button>
             </div>
-          </form>
-          <button
-            onClick={handleDelete}
-            className="w-full mt-6 bg-red-100 text-red-700 font-semibold py-2 rounded-xl border border-red-200 hover:bg-red-200 transition"
-          >
-            Supprimer le symptôme
-          </button>
-        </div>
-      </div>
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="w-full mt-4 bg-red-100 text-red-700 font-semibold py-2 rounded-xl border border-red-200 hover:bg-red-200 transition"
+            >
+              Supprimer le symptôme
+            </button>
+          </>
+        )}
+      </form>
       <ConfirmModal
         open={confirmDeleteOpen}
         title="Supprimer ce symptôme ?"

@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 const Header = ({ pets, selectedPet, onSelectPet }) => {
   const user = useSelector(state => state.auth.user);
   const navigate = useNavigate();
-  // Prend la première lettre du nom ou de l'email
   const initial = user?.name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || '?';
 
   return (

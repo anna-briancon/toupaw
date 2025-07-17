@@ -7,8 +7,8 @@ import {
   Footprints, Clock, MapPin, Plus, ChevronRight, Play, Square, Route, Navigation
 } from 'lucide-react';
 import WalkForm from './WalkForm';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
-// Icônes personnalisées pour pipi/caca
 const pipiIcon = L.divIcon({
   className: '',
   html: '<div style="background:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:2px solid #3b82f6;font-size:1.5rem;box-shadow:0 2px 6px #0002;">💧</div>',
@@ -50,7 +50,6 @@ export default function PromenadeSection({ petId, onShowHistory }) {
   const [lastWalk, setLastWalk] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
-  // Tracking states
   const [isTracking, setIsTracking] = useState(false);
   const [positions, setPositions] = useState([]);
   const [startTime, setStartTime] = useState(null);
@@ -302,6 +301,7 @@ export default function PromenadeSection({ petId, onShowHistory }) {
         )}
         {!isTracking && (
           <div className="flex gap-6 text-lg justify-center">
+            {loading && <LoadingSpinner overlay />}
             {loading ? (
               <div className="text-gray-500 text-sm">Chargement...</div>
             ) : lastWalk ? (

@@ -54,7 +54,6 @@ export default function Calendar() {
           axios.get(`/health-events/${pet.id}`),
           axios.get(`/symptoms/${pet.id}`),
         ]);
-        // Regrouper par date (yyyy-mm-dd)
         const evts = {};
         walksRes.data.forEach(w => {
           const d = new Date(w.start_time).toISOString().slice(0, 10);

@@ -5,6 +5,8 @@ import {
   Calendar, Clock, Plus, ChevronRight, Stethoscope, Syringe, Pill, AlertCircle, Heart, Weight
 } from 'lucide-react';
 import AddReminderForm from './ReminderAdd';
+import ReminderEdit from './ReminderEdit';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 const healthTypes = [
   { value: 'vaccination', label: 'Vaccination', icon: Syringe, color: 'bg-blue-100 text-blue-700' },
@@ -26,6 +28,7 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
+  const [editEventId, setEditEventId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +36,6 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
     setLoading(true);
     axios.get(`/health-events/${petId}`)
       .then(res => {
-        // Afficher tous les événements non complétés, même passés
         const actifs = res.data.filter(e => !e.completed);
         setEvents(actifs.sort((a, b) => new Date(a.date) - new Date(b.date)));
       })
@@ -97,12 +99,8 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
           </button>
         </div>
         <div className="space-y-3 mb-6">
-          {loading ? (
-            <div className="flex items-center justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
-              <span className="ml-3 text-gray-600">Chargement...</span>
-            </div>
-          ) : events.length === 0 ? (
+          {loading && <LoadingSpinner overlay />}
+          {events.length === 0 ? (
             <div className="border-dashed border-2 border-gray-300 rounded-xl flex flex-col items-center justify-center py-8 text-center bg-white/80">
               <Calendar className="h-12 w-12 text-gray-400 mb-3" />
               <p className="text-gray-600 font-medium">Aucun événement à venir</p>
@@ -116,7 +114,7 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
                 <div
                   key={event.id}
                   className="cursor-pointer hover:shadow-md transition-all duration-200 border-l-4 border-l-emerald-500 bg-white/80 backdrop-blur-sm rounded-xl"
-                  onClick={() => navigate(`/suivi/health-event/${event.id}`)}
+                  onClick={() => setEditEventId(event.id)}
                 >
                   <div className="p-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -164,6 +162,12 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
             onCancel={() => setShowAdd(false)}
           />
         )}
+        <ReminderEdit
+          open={!!editEventId}
+          id={editEventId}
+          onSave={() => { setEditEventId(null); setLoading(true); axios.get(`/health-events/${petId}`).then(res => { const actifs = res.data.filter(e => !e.completed); setEvents(actifs.sort((a, b) => new Date(a.date) - new Date(b.date))); }).catch(() => setEvents([])).finally(() => setLoading(false)); }}
+          onCancel={() => setEditEventId(null)}
+        />
       </section>
     </div>
   );

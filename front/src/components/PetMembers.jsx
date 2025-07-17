@@ -11,7 +11,7 @@ const getInitials = (name, email) => {
 
 const PetMembers = ({ petId, currentUserId }) => {
   const [members, setMembers] = useState([]);
-  const [showConfirm, setShowConfirm] = useState(null); // userId à supprimer
+  const [showConfirm, setShowConfirm] = useState(null);
   const [removing, setRemoving] = useState(false);
   const [ownerId, setOwnerId] = useState(null);
   const [currentUserRole, setCurrentUserRole] = useState(null);
@@ -20,7 +20,6 @@ const PetMembers = ({ petId, currentUserId }) => {
     try {
       const res = await axios.get(`/pets/${petId}/members`);
       setMembers(res.data);
-      // Trouve l'owner et le rôle du user courant
       const owner = res.data.find(m => m.role === 'owner');
       setOwnerId(owner ? owner.id : null);
       const me = res.data.find(m => m.id === currentUserId);
@@ -44,7 +43,6 @@ const PetMembers = ({ petId, currentUserId }) => {
       setShowConfirm(null);
       fetchMembers();
     } catch (err) {
-      // Optionnel : gestion d'erreur
       setShowConfirm(null);
     } finally {
       setRemoving(false);

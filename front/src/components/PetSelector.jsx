@@ -139,8 +139,6 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
         onSuccess={() => {
           setShowCreateModal(false);
           if (typeof onSelectPet === 'function') {
-            // Optionnel : recharger la liste des animaux côté parent si possible
-            // Ici, on pourrait appeler une prop de rafraîchissement si elle existe
           }
         }}
       />

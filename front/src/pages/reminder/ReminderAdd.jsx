@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from '../../utils/axiosInstance';
 import { Stethoscope, Syringe, Pill, AlertCircle, Heart } from 'lucide-react';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 const healthTypes = [
   { value: 'vaccination', label: 'Vaccination', icon: Syringe, color: 'bg-blue-100 text-blue-700' },
@@ -75,31 +76,22 @@ export default function AddReminderForm({ petId, onSave, onCancel, initial }) {
         </div>
         <div>
           <label className="text-sm font-medium">Type d'événement</label>
-          <select value={healthType} onChange={e => setHealthType(e.target.value)} className="w-full border rounded p-2 mt-1">
-            {healthTypes.map(t => (
-              <option key={t.value} value={t.value}>
-                {initial ? '🔹 ' : ''}{t.label}
-              </option>
-            ))}
-          </select>
-          {initial && (
-            <div className="flex flex-wrap gap-2 mt-2">
-              {healthTypes.map(t => {
-                const Icon = t.icon;
-                return (
-                  <button
-                    key={t.value}
-                    type="button"
-                    className={`flex items-center gap-1 px-2 py-1 rounded border text-xs font-semibold transition ${healthType === t.value ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-500' : 'bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50'}`}
-                    onClick={() => setHealthType(t.value)}
-                  >
-                    <Icon className="h-4 w-4" />
-                    {t.label}
-                  </button>
-                );
-              })}
-            </div>
-          )}
+          <div className="flex flex-wrap gap-2 mt-2">
+            {healthTypes.map(t => {
+              const Icon = t.icon;
+              return (
+                <button
+                  key={t.value}
+                  type="button"
+                  className={`flex items-center gap-1 px-2 py-1 rounded border text-xs font-semibold transition ${healthType === t.value ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-500' : 'bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50'}`}
+                  onClick={() => setHealthType(t.value)}
+                >
+                  <Icon className="h-4 w-4" />
+                  {t.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
         <div>
           <label className="text-sm font-medium">Note</label>
@@ -132,6 +124,7 @@ export default function AddReminderForm({ petId, onSave, onCancel, initial }) {
             Annuler
           </button>
         </div>
+        {loading && <LoadingSpinner overlay />}
       </form>
     </div>
   );

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from '../../utils/axiosInstance';
-import { Weight, Plus, Edit, Trash2, ArrowLeft, TrendingUp, TrendingDown, Minus, ChevronLeft } from 'lucide-react';
+import { Weight, ChartSpline,ChartColumnDecreasing, Plus, Edit, Trash2, ArrowLeft, TrendingUp, TrendingDown, Minus, ChevronLeft } from 'lucide-react';
 import ConfirmModal from '../../components/ConfirmModal';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 function usePetId() {
   const location = useLocation();
@@ -139,57 +140,70 @@ export default function PoidsList() {
   };
 
   return (
-    <div className="min-h-screen p-6 sm:p-4 md:p-6 pb-24">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-100 p-3 sm:p-4 md:p-6 pb-24">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-4 flex items-center gap-2 text-emerald-700 hover:text-emerald-900 font-semibold px-3 py-2 rounded-lg hover:bg-emerald-50 transition"
-        >
-          <ChevronLeft className="h-5 w-5" />
-          Retour
-        </button>
-        <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-            <Weight className="h-6 w-6 text-white" />
+        {/* Header harmonisé */}
+        <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-4 mb-6 sm:mb-10 bg-gradient-to-r from-emerald-400/80 to-teal-400/80 rounded-xl sm:rounded-2xl shadow-lg px-3 sm:px-6 py-4 sm:py-8 border border-emerald-200 overflow-hidden">
+          <div className="absolute right-0 top-0 opacity-10 pointer-events-none select-none">
+            <Weight className="h-20 w-20 sm:h-32 sm:w-32 text-white" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 whitespace-pre-line font-ranille">Historique des poids</h1>
+          <button
+            onClick={() => navigate(-1)}
+            className="mb-2 sm:mb-4 flex items-center gap-2 text-white hover:text-emerald-100 font-semibold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-emerald-500/30 transition z-10 text-sm sm:text-base"
+          >
+            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+            Retour
+          </button>
+          <div className="flex items-center gap-2 sm:gap-3 z-10">
+            <div className="p-2 sm:p-3 bg-white/30 rounded-lg sm:rounded-xl shadow">
+              <Weight className="h-6 w-6 sm:h-10 sm:w-10 text-emerald-700" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-4xl font-extrabold text-white font-ranille drop-shadow leading-tight">Historique des poids</h1>
+              <p className="text-white/80 text-xs sm:text-sm mt-0.5 sm:mt-1 font-medium">Suivez l'évolution du poids de votre animal</p>
+            </div>
+          </div>
         </div>
-
-        {/* Stats rapides */}
-        <div className="grid grid-cols-2 gap-2 mb-6">
-          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-lg p-3 text-center">
-            <div className="flex items-center justify-center gap-1 text-emerald-600 mb-1">
-              <Weight className="h-4 w-4" />
-              <span className="text-xs font-medium">Poids actuel</span>
-            </div>
-            <div className="text-lg font-bold text-gray-900">{weights[0]?.value?.toFixed(1) || "--"} kg</div>
+        {/* Stats harmonisées */}
+        <div className="bg-white/80 border border-emerald-200 rounded-xl shadow p-3 sm:p-5 mb-4">
+        <div className="flex items-center gap-2 mb-4">
+            <ChartColumnDecreasing className="h-5 w-5 text-emerald-500" />
+            <span className="text-sm font-semibold text-emerald-700">Stats poids</span>
           </div>
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-lg p-3 text-center">
-            <div className="flex items-center justify-center gap-1 text-blue-600 mb-1">
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 3v18h18"></path></svg>
-              <span className="text-xs font-medium">Moyenne</span>
+          <div className="grid grid-cols-2 gap-2 sm:gap-4">
+            <div className="bg-gradient-to-br from-emerald-200/80 to-teal-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
+              <div className="flex items-center justify-center gap-1 sm:gap-2 text-emerald-700 mb-1 sm:mb-2">
+                <Weight className="h-4 w-4 sm:h-6 sm:w-6" />
+                <span className="text-[10px] sm:text-xs font-semibold">Poids actuel</span>
+              </div>
+              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{weights[0]?.value?.toFixed(1) || "--"} kg</div>
             </div>
-            <div className="text-lg font-bold text-gray-900">
-              {weights.length > 0 ? (weights.reduce((sum, w) => sum + w.value, 0) / weights.length).toFixed(1) : "--"} kg
+            <div className="bg-gradient-to-br from-blue-200/80 to-cyan-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
+              <div className="flex items-center justify-center gap-1 sm:gap-2 text-blue-700 mb-1 sm:mb-2">
+                <svg className="h-4 w-4 sm:h-6 sm:w-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 3v18h18"></path></svg>
+                <span className="text-[10px] sm:text-xs font-semibold">Moyenne</span>
+              </div>
+              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">
+                {weights.length > 0 ? (weights.reduce((sum, w) => sum + w.value, 0) / weights.length).toFixed(1) : "--"} kg
+              </div>
             </div>
-          </div>
-          <div className="bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-lg p-3 text-center">
-            <div className="flex items-center justify-center gap-1 text-orange-600 mb-1">
-              <TrendingUp className="h-4 w-4" />
-              <span className="text-xs font-medium">Maximum</span>
+            <div className="bg-gradient-to-br from-orange-200/80 to-amber-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
+              <div className="flex items-center justify-center gap-1 sm:gap-2 text-orange-700 mb-1 sm:mb-2">
+                <TrendingUp className="h-4 w-4 sm:h-6 sm:w-6" />
+                <span className="text-[10px] sm:text-xs font-semibold">Maximum</span>
+              </div>
+              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">
+                {weights.length > 0 ? Math.max(...weights.map(w => w.value)).toFixed(1) : "--"} kg
+              </div>
             </div>
-            <div className="text-lg font-bold text-gray-900">
-              {weights.length > 0 ? Math.max(...weights.map(w => w.value)).toFixed(1) : "--"} kg
-            </div>
-          </div>
-          <div className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-3 text-center">
-            <div className="flex items-center justify-center gap-1 text-purple-600 mb-1">
-              <TrendingDown className="h-4 w-4" />
-              <span className="text-xs font-medium">Minimum</span>
-            </div>
-            <div className="text-lg font-bold text-gray-900">
-              {weights.length > 0 ? Math.min(...weights.map(w => w.value)).toFixed(1) : "--"} kg
+            <div className="bg-gradient-to-br from-purple-200/80 to-pink-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
+              <div className="flex items-center justify-center gap-1 sm:gap-2 text-purple-700 mb-1 sm:mb-2">
+                <TrendingDown className="h-4 w-4 sm:h-6 sm:w-6" />
+                <span className="text-[10px] sm:text-xs font-semibold">Minimum</span>
+              </div>
+              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">
+                {weights.length > 0 ? Math.min(...weights.map(w => w.value)).toFixed(1) : "--"} kg
+              </div>
             </div>
           </div>
         </div>
@@ -199,8 +213,8 @@ export default function PoidsList() {
           <div className="mb-8 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow">
             <div className="p-6">
               <div className="flex items-center gap-2 mb-2">
-                <svg className="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 3v18h18"></path></svg>
-                <span className="font-semibold">Évolution du poids</span>
+              <ChartSpline className="h-5 w-5 text-emerald-500" />
+              <span className="font-semibold">Évolution du poids</span>
                 {/* Tendance globale */}
                 {(() => {
                   const totalChange = weights[0].value - weights[weights.length - 1].value;
@@ -304,23 +318,19 @@ export default function PoidsList() {
         )}
 
         {/* Liste détaillée */}
-        <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-3 sm:p-6 space-y-3 sm:space-y-4">
-          <div className="flex justify-between items-center mb-4">
-            <span className="font-semibold text-lg">Historique détaillé</span>
+        <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl sm:rounded-2xl shadow-xl">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 p-3 sm:p-6 border-b border-emerald-100">
+            <span className="font-semibold text-base sm:text-lg text-emerald-700">Historique détaillé</span>
             <button
               onClick={() => setEditWeight({})}
-              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 py-2 rounded-xl shadow flex items-center gap-2 text-sm sm:text-base"
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
             >
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="h-4 w-4 sm:h-5 sm:w-5 mr-1" />
               Ajouter
             </button>
           </div>
-          {loading ? (
-            <div className="flex items-center justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
-              <span className="ml-3 text-gray-600">Chargement...</span>
-            </div>
-          ) : weights.length === 0 ? (
+          {loading && <LoadingSpinner overlay />}
+          {weights.length === 0 ? (
             <div className="text-center py-12">
               <Weight className="h-16 w-16 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-600 font-medium text-lg">Aucune donnée de poids</p>
@@ -358,55 +368,55 @@ export default function PoidsList() {
               return (
                 <div
                   key={weight.id}
-                  className="border-l-4 border-l-emerald-500 bg-white rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer"
+                  className="group border border-emerald-100 border-l-4 border-l-emerald-400 bg-white/90 rounded-xl shadow-sm hover:shadow-lg transition-all cursor-pointer hover:-translate-y-0.5 sm:hover:-translate-y-1 duration-200 px-2 sm:px-4 py-3 sm:py-4 m-2"
                   onClick={() => setEditWeight(weight)}
                 >
-                  <div className="p-3 sm:p-6 flex items-center justify-between">
-                    <div className="flex items-center gap-3 sm:gap-4">
-                      <div className="p-2 sm:p-3 rounded-lg bg-teal-100 text-teal-700">
-                        <Weight className="h-5 w-5 sm:h-6 sm:w-6" />
+                  <div className="flex items-center gap-3 sm:gap-5">
+                    <div className="flex-shrink-0 p-2 sm:p-3 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center transition-transform group-hover:scale-105">
+                      <Weight className="h-6 w-6 sm:h-7 sm:w-7" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3 mb-0.5">
+                        <span className="font-semibold text-base sm:text-lg text-gray-900 truncate">{weight.value} kg</span>
+                        {trend}
                       </div>
-                      <div>
-                        <div className="flex items-center gap-3">
-                          <span className="font-semibold text-gray-900 text-lg sm:text-xl">{weight.value} kg</span>
-                          {trend}
-                        </div>
-                        <div className="flex items-center gap-1 text-sm mt-1 text-gray-600">
-                          <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M8 7V3M16 7V3M3 11h18M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z"></path></svg>
-                          {(() => {
-                            const date = new Date(weight.date);
-                            const now = new Date();
-                            const diffTime = now.getTime() - date.getTime();
-                            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                            if (diffDays === 0) {
-                              return `Aujourd'hui • ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
-                            } else if (diffDays === 1) {
-                              return `Hier • ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
-                            } else if (diffDays <= 7) {
-                              return `Il y a ${diffDays} jours • ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
-                            } else {
-                              return date.toLocaleDateString('fr-FR', {
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              });
-                            }
-                          })()}
-                        </div>
+                      <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 mb-1">
+                        <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M8 7V3M16 7V3M3 11h18M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z"></path></svg>
+                        {(() => {
+                          const date = new Date(weight.date);
+                          const now = new Date();
+                          const diffTime = now.getTime() - date.getTime();
+                          const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                          if (diffDays === 0) {
+                            return `Aujourd'hui • ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+                          } else if (diffDays === 1) {
+                            return `Hier • ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+                          } else if (diffDays <= 7) {
+                            return `Il y a ${diffDays} jours • ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+                          } else {
+                            return date.toLocaleDateString('fr-FR', {
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            });
+                          }
+                        })()}
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col gap-2 items-end ml-2">
                       <button
                         onClick={e => { e.stopPropagation(); setEditWeight(weight); }}
-                        className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded px-2 py-1 text-xs sm:text-sm flex items-center gap-1"
+                        className="text-emerald-500 hover:text-emerald-700 hover:bg-emerald-50 rounded p-1 text-xs flex items-center transition"
+                        title="Modifier"
                       >
                         <Edit className="h-4 w-4" />
                       </button>
                       <button
                         onClick={e => { e.stopPropagation(); handleDelete(weight.id); }}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded px-2 py-1 text-xs sm:text-sm flex items-center gap-1"
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50 rounded p-1 text-xs flex items-center transition"
+                        title="Supprimer"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>

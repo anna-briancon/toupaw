@@ -3,6 +3,8 @@ import axios from '../../utils/axiosInstance';
 import { Plus, ChevronRight, AlertCircle, Calendar, Camera } from 'lucide-react';
 import ConfirmModal from '../../components/ConfirmModal';
 import { useNavigate } from 'react-router-dom';
+import SymptomEdit from './SymptomEdit';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 function AddSymptomForm({ petId, onSave, onCancel, initial }) {
   const [form, setForm] = useState(() => {
@@ -160,9 +162,10 @@ export default function SymptomSection({ petId, onShowHistory }) {
           </button>
         </div>
         <div className="space-y-4 mb-6">
+          {loading && <LoadingSpinner overlay />}
           {lastSymptom ? (
             <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-6 flex items-center justify-between cursor-pointer hover:shadow-md"
-              onClick={() => navigate(`/suivi/symptome/${lastSymptom.id}`)}
+              onClick={() => setEditSymptom(lastSymptom)}
             >
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-lg bg-pink-100 text-pink-700">
@@ -209,9 +212,24 @@ export default function SymptomSection({ petId, onShowHistory }) {
         {showAdd && (
           <AddSymptomForm petId={petId} onSave={() => setShowAdd(false)} onCancel={() => setShowAdd(false)} />
         )}
-        {editSymptom && (
-          <AddSymptomForm petId={petId} onSave={() => setEditSymptom(null)} onCancel={() => setEditSymptom(null)} initial={editSymptom} />
-        )}
+        <SymptomEdit
+          open={!!editSymptom}
+          id={editSymptom?.id}
+          onSave={() => {
+            setEditSymptom(null);
+            if (petId) {
+              setLoading(true);
+              axios.get(`/symptoms/${petId}`)
+                .then(res => {
+                  const sorted = res.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+                  setSymptoms(sorted);
+                })
+                .catch(() => setSymptoms([]))
+                .finally(() => setLoading(false));
+            }
+          }}
+          onCancel={() => setEditSymptom(null)}
+        />
       </section>
     </div>
   );

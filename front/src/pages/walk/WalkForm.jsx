@@ -44,7 +44,6 @@ export default function WalkForm({ petId, initial, onSave, onCancel }) {
       const start = new Date(`${date}T${time}`);
       const durationSec = parseInt(durationMin, 10) * 60;
       const end = new Date(start.getTime() + durationSec * 1000);
-      // Events pipi/caca
       const events = [];
       if (pipi)
         events.push({

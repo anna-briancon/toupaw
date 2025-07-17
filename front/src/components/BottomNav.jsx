@@ -4,17 +4,17 @@ import { Home, BarChart, Settings } from 'lucide-react';
 const tabs = [
   {
     to: '/',
-    icon: <Home size={24} />, // Icône Home Lucide
+    icon: <Home size={24} />,
     label: 'Dashboard',
   },
   {
     to: '/suivi',
-    icon: <BarChart size={24} />, // Icône BarChart Lucide
+    icon: <BarChart size={24} />,
     label: 'Suivi',
   },
   {
     to: '/plus',
-    icon: <Settings size={24} />, // Icône Settings Lucide
+    icon: <Settings size={24} />, 
     label: 'Plus',
   },
 ];
@@ -30,11 +30,12 @@ export default function BottomNav() {
       }}
     >
       {tabs.map((tab) => {
-        // Custom active logic: /plus and all /multi-pets (and future /plus/*)
         const isActive =
           tab.to === '/plus'
-            ? location.pathname.startsWith('/plus') || location.pathname.startsWith('/multi-pets') || location.pathname.startsWith('/edit-pet')
-            : location.pathname === tab.to;
+            ? location.pathname.startsWith('/plus') || location.pathname.startsWith('/multi-pets') || location.pathname.startsWith('/edit-pet') || location.pathname.startsWith('/advice') || location.pathname.startsWith('/account-settings') || location.pathname.startsWith('/faq-support')
+          : tab.to === '/suivi'
+            ? location.pathname.startsWith('/suivi') || location.pathname.startsWith('/weight') || location.pathname.startsWith('/walk') || location.pathname.startsWith('/symptom') || location.pathname.startsWith('/meal') || location.pathname.startsWith('/health-event') || location.pathname.startsWith('/daily-event')
+          : location.pathname === tab.to;
         return (
           <NavLink
             key={tab.to}

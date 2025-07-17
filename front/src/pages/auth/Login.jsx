@@ -27,8 +27,7 @@ export default function Login() {
     try {
       const res = await axios.post('/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
-      await dispatch(getUser()); // Récupère l'utilisateur connecté et le stocke dans Redux
-      // La redirection sera déclenchée par le useEffect
+      await dispatch(getUser());
     } catch (err) {
       setError(err.response?.data?.error || 'Erreur de connexion');
     } finally {
