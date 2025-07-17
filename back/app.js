@@ -42,7 +42,7 @@ const shouldSeed = process.env.SEED_DB === 'true';
       // await seed();
     }
     console.log('Connexion DB OK');
-    app.listen(PORT, () => console.log(`API sur http://localhost:${PORT}`));
+    app.listen(PORT, '0.0.0.0', () => console.log(`API sur http://localhost:${PORT}`));
   } catch (e) {
     console.error('Erreur DB:', e);
     process.exit(1);
