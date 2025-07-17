@@ -165,7 +165,7 @@ export default function EditPetModal({ open, onClose, petId, onSuccess }) {
             className="w-full border rounded p-2 mt-1"
           />
           {(photoPreview || photo_url) && (
-            <img src={photoPreview || (photo_url && photo_url.startsWith('/uploads') ? `http://localhost:8081${photo_url}` : photo_url)} alt="Aperçu" className="mt-2 rounded-lg max-h-40 mx-auto" />
+            <img src={photoPreview || (photo_url && photo_url.startsWith('/uploads') ? `${window.location.origin}${photo_url}`: photo_url)} alt="Aperçu" className="mt-2 rounded-lg max-h-40 mx-auto" />
           )}
         </div>
         <div className="flex gap-3 pt-4">

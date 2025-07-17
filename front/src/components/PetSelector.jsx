@@ -49,7 +49,7 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
           selectedPet.photo_url ? (
             <img
               src={selectedPet.photo_url.startsWith('/uploads')
-                ? `http://localhost:8081${selectedPet.photo_url}`
+                ? `${window.location.origin}${selectedPet.photo_url}`
                 : selectedPet.photo_url}
               alt={selectedPet.name}
               className="w-10 h-10 rounded-full object-cover border border-emerald-200"
@@ -91,7 +91,7 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
                     {pet.photo_url ? (
                       <img
                         src={pet.photo_url.startsWith('/uploads')
-                          ? `http://localhost:8081${pet.photo_url}`
+                          ? `${window.location.origin}${pet.photo_url}`
                           : pet.photo_url}
                         alt={pet.name}
                         className="w-8 h-8 rounded-full object-cover border border-emerald-200"

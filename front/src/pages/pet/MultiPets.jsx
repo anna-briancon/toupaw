@@ -226,7 +226,7 @@ export default function MultiPets() {
               let imageSrc = null;
               if (pet.photo_url) {
                 imageSrc = pet.photo_url.startsWith('/uploads')
-                  ? `http://localhost:8081${pet.photo_url}`
+                  ? `${window.location.origin}${pet.photo_url}`
                   : pet.photo_url;
               }
               return (

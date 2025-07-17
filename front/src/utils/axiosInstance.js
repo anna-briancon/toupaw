@@ -3,7 +3,7 @@ import store from "../store";
 import { logout } from "../store/features/auth/authSlice";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8081/api",
+  baseURL: "/api",
 });
 
 instance.interceptors.request.use((config) => {
