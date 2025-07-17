@@ -1,6 +1,5 @@
 import React from "react";
 import PetSelector from "./PetSelector";
-import logo from "/assets/logo.png";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +12,7 @@ const Header = ({ pets, selectedPet, onSelectPet }) => {
     <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-2 bg-white shadow-md border-b border-emerald-100">
       {/* Logo + Sélecteur d'animal */}
       <div className="flex items-center gap-4 h-14">
-        <img src={logo} alt="Logo" className="h-14 w-auto object-contain" />
+        <img src="/assets/logo.png" alt="Logo" className="h-14 w-auto object-contain" />
         <div className="flex items-center h-full">
           <PetSelector pets={pets} selectedPet={selectedPet} onSelectPet={onSelectPet} />
         </div>
