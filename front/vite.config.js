@@ -12,7 +12,7 @@ export default defineConfig({
         name: 'Toupaw',
         short_name: 'Toupaw',
         description: 'Application de suivi pour animaux de compagnie.',
-        theme_color: '#4f46e5',
+        theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '.',
