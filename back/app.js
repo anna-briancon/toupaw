@@ -12,12 +12,13 @@ app.use(express.json());
 // Servir les fichiers uploadés
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-// Auth routes (non protégées)
+// Auth routes (publiques)
 app.use('/api/auth', require('./src/routes/auth'));
 
 // Middleware d'auth pour toutes les autres routes
 app.use(authMiddleware);
 
+// Routes protégées
 app.use('/api/pets', require('./src/routes/pets'));
 app.use('/api/health-events', require('./src/routes/healthEvents'));
 app.use('/api/meals', require('./src/routes/meals'));
@@ -31,7 +32,7 @@ app.use('/api/symptoms', require('./src/routes/symptoms'));
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
-const PORT = process.env.APP_PORT || 8081;
+const PORT = process.env.APP_PORT || 8082;
 const shouldSeed = process.env.SEED_DB === 'true';
 
 (async () => {
