@@ -173,21 +173,21 @@ export default function PromenadesList() {
                   <Footprints className="h-4 w-4 sm:h-6 sm:w-6" />
                   <span className="text-[10px] sm:text-xs font-semibold">Balades du jour</span>
                 </div>
-                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{walksOfDay.length}</div>
+                <div className="text-base sm:text-2xl font-extrabold text-gray-900">{walksOfDay.length}</div>
               </div>
               <div className="bg-gradient-to-br from-blue-200/80 to-cyan-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
                 <div className="flex items-center justify-center gap-1 sm:gap-2 text-blue-700 mb-1 sm:mb-2">
                   <Route className="h-4 w-4 sm:h-6 sm:w-6" />
                   <span className="text-[10px] sm:text-xs font-semibold">Distance du jour</span>
                 </div>
-                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{(dayDistance/1000).toFixed(2)} km</div>
+                <div className="text-base sm:text-2xl font-extrabold text-gray-900">{(dayDistance/1000).toFixed(2)} km</div>
               </div>
               <div className="bg-gradient-to-br from-orange-200/80 to-amber-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
                 <div className="flex items-center justify-center gap-1 sm:gap-2 text-orange-700 mb-1 sm:mb-2">
                   <Clock className="h-4 w-4 sm:h-6 sm:w-6" />
                   <span className="text-[10px] sm:text-xs font-semibold">Temps du jour</span>
                 </div>
-                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{formatTime(dayDuration)}</div>
+                <div className="text-base sm:text-2xl font-extrabold text-gray-900">{formatTime(dayDuration)}</div>
               </div>
             </div>
           </div>
@@ -204,28 +204,28 @@ export default function PromenadesList() {
                 <Footprints className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Total balades</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{walks.length}</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{walks.length}</div>
             </div>
             <div className="bg-gradient-to-br from-blue-200/80 to-cyan-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
               <div className="flex items-center justify-center gap-1 sm:gap-2 text-blue-700 mb-1 sm:mb-2">
                 <Route className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Distance totale</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{(totalDistance/1000).toFixed(1)} km</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{(totalDistance/1000).toFixed(1)} km</div>
             </div>
             <div className="bg-gradient-to-br from-orange-200/80 to-amber-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
               <div className="flex items-center justify-center gap-1 sm:gap-2 text-orange-700 mb-1 sm:mb-2">
                 <Clock className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Temps total</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{formatTime(totalDuration)}</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{formatTime(totalDuration)}</div>
             </div>
           </div>
         </div>
         {/* Liste des balades modernisée */}
         <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl sm:rounded-2xl shadow-xl">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 p-3 sm:p-6 border-b border-emerald-100">
-            <span className="font-semibold text-base sm:text-lg text-emerald-700">Balades récentes</span>
+            <span className="font-semibold text-base sm:text-base text-emerald-700">Balades récentes</span>
             <button
               onClick={() => setEditWalk({})}
               className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
@@ -239,7 +239,7 @@ export default function PromenadesList() {
             {walks.length === 0 ? (
               <div className="text-center py-10 sm:py-16 flex flex-col items-center">
                 <span className="text-4xl sm:text-6xl mb-2 sm:mb-4">🐾</span>
-                <p className="text-gray-700 font-bold text-lg sm:text-xl mb-1">Aucune promenade enregistrée</p>
+                <p className="text-gray-700 font-bold text-base sm:text-xl mb-1">Aucune promenade enregistrée</p>
                 <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-4">Commencez à enregistrer vos balades !</p>
                 <button
                   onClick={() => setEditWalk({})}
@@ -262,7 +262,7 @@ export default function PromenadesList() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className="font-semibold text-base sm:text-lg text-gray-900 truncate">{formatDate(walk.start_time)}</span>
+                          <span className="font-semibold text-base sm:text-base text-gray-900 truncate">{formatDate(walk.start_time)}</span>
                           {positions.length > 0 && (
                             <span className="bg-emerald-50 text-emerald-600 text-xs px-2 py-0.5 rounded font-medium border border-emerald-100 flex items-center gap-1 ml-1 animate-pulse">
                               <Navigation className="h-3 w-3" />GPS

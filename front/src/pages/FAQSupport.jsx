@@ -87,7 +87,7 @@ function Accordion({ title, icon, questions }) {
         className="w-full flex items-center justify-between px-5 py-4 focus:outline-none"
         onClick={() => setOpen(o => !o)}
       >
-        <span className="flex items-center gap-3 font-semibold text-lg text-gray-900">{icon}{title}</span>
+        <span className="flex items-center gap-3 font-semibold text-base text-gray-900">{icon}{title}</span>
         {open ? <ChevronUp className="h-5 w-5 text-emerald-500" /> : <ChevronDown className="h-5 w-5 text-emerald-500" />}
       </button>
       {open && (
@@ -134,7 +134,7 @@ export default function FAQSupport() {
         </div>
         {/* Introduction */}
         <div className="bg-white/80 rounded-xl border border-emerald-100 shadow p-6 mb-8">
-          <div className="text-lg font-semibold text-emerald-700 mb-2">“Une question ? Un doute ? On est là pour toi et ton compagnon.”</div>
+          <div className="text-base font-semibold text-emerald-700 mb-2">“Une question ? Un doute ? On est là pour toi et ton compagnon.”</div>
           <div className="text-gray-700">Retrouve ici les réponses aux questions fréquentes, des conseils d’utilisation, et tous les moyens de contacter notre équipe. Notre mission : t’accompagner au quotidien pour le bien-être de ton animal.</div>
         </div>
         {/* FAQ Catégorisée */}

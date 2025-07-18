@@ -167,28 +167,28 @@ export default function RappelsList() {
                 <Clock className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Actifs</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{activeEvents.length}</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{activeEvents.length}</div>
             </div>
             <div className="bg-gradient-to-br from-blue-200/80 to-cyan-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
               <div className="flex items-center justify-center gap-1 sm:gap-2 text-blue-700 mb-1 sm:mb-2">
                 <Stethoscope className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Total</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{healthEvents.length}</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{healthEvents.length}</div>
             </div>
             <div className="bg-gradient-to-br from-green-200/80 to-emerald-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
               <div className="flex items-center justify-center gap-1 sm:gap-2 text-green-700 mb-1 sm:mb-2">
                 <Calendar className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Terminés</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{completedEvents.length}</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{completedEvents.length}</div>
             </div>
             <div className="bg-gradient-to-br from-orange-200/80 to-amber-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
               <div className="flex items-center justify-center gap-1 sm:gap-2 text-orange-700 mb-1 sm:mb-2">
                 <AlertCircle className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">En retard</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{lateEvents.length}</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{lateEvents.length}</div>
             </div>
           </div>
         </div>
@@ -238,7 +238,7 @@ export default function RappelsList() {
           {items.length === 0 ? (
             <div className="text-center py-10 sm:py-16 flex flex-col items-center">
               <span className="text-4xl sm:text-6xl mb-2 sm:mb-4">🩺</span>
-              <p className="text-gray-700 font-bold text-lg sm:text-xl mb-1">Aucun événement</p>
+              <p className="text-gray-700 font-bold text-base sm:text-xl mb-1">Aucun événement</p>
               <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-4">Tous vos rappels sont à jour !</p>
               <button
                 onClick={() => setShowAdd(true)}
@@ -264,7 +264,7 @@ export default function RappelsList() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className={`font-semibold text-base sm:text-lg text-gray-900 truncate`}>{event.title || getEventLabel(event.type)}</span>
+                          <span className={`font-semibold text-base sm:text-base text-gray-900 truncate`}>{event.title || getEventLabel(event.type)}</span>
                           {completedFilter === 'completed' && <span className="bg-green-50 text-green-600 text-xs px-2 py-0.5 rounded font-medium border border-green-100">Terminé</span>}
                           {isLate && !event.completed && (
                             <span className="flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-orange-50 text-orange-600 border border-orange-100">

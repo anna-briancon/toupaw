@@ -80,7 +80,7 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
               {pets && pets.length > 0 ? pets.map(pet => (
                 <button
                   key={pet.id}
-                  className={`w-full text-left px-6 py-4 hover:bg-couleur-principale/10 text-couleur-texte font-semibold text-lg ${selectedPet?.id === pet.id ? 'bg-couleur-principale/20' : ''}`}
+                  className={`w-full text-left px-6 py-4 hover:bg-couleur-principale/10 text-couleur-texte font-semibold text-base ${selectedPet?.id === pet.id ? 'bg-couleur-principale/20' : ''}`}
                   onClick={() => {
                     onSelectPet(pet);
                     localStorage.setItem('selectedPetId', pet.id);
@@ -111,7 +111,7 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
               )}
               <div className="border-t my-2" />
               <button
-                className="w-full text-left px-6 py-4 hover:bg-couleur-principale/10 text-couleur-principale font-bold flex items-center gap-2 text-lg"
+                className="w-full text-left px-6 py-4 hover:bg-couleur-principale/10 text-couleur-principale font-bold flex items-center gap-2 text-base"
                 onClick={() => {
                   setOpen(false);
                   setShowCreateModal(true);
@@ -120,7 +120,7 @@ export default function PetSelector({ pets, selectedPet, onSelectPet }) {
                 <span>+ Ajouter un animal</span>
               </button>
               <button
-                className="w-full text-left px-6 py-4 hover:bg-couleur-principale/10 text-emerald-700 font-bold flex items-center gap-2 text-lg border-t"
+                className="w-full text-left px-6 py-4 hover:bg-couleur-principale/10 text-emerald-700 font-bold flex items-center gap-2 text-base border-t"
                 onClick={() => {
                   setOpen(false);
                   navigate('/multi-pets');

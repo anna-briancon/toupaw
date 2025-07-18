@@ -52,7 +52,7 @@ function EditWeightForm({ petId, initial, onSave, onCancel }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <Weight className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">{initial ? 'Modifier' : 'Ajouter'} un poids</span>
+          <span className="text-base font-semibold">{initial ? 'Modifier' : 'Ajouter'} un poids</span>
         </div>
         <div>
           <label className="text-sm font-medium">Poids (kg)</label>
@@ -176,14 +176,14 @@ export default function PoidsList() {
                 <Weight className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Poids actuel</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{weights[0]?.value?.toFixed(1) || "--"} kg</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{weights[0]?.value?.toFixed(1) || "--"} kg</div>
             </div>
             <div className="bg-gradient-to-br from-blue-200/80 to-cyan-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
               <div className="flex items-center justify-center gap-1 sm:gap-2 text-blue-700 mb-1 sm:mb-2">
                 <svg className="h-4 w-4 sm:h-6 sm:w-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 3v18h18"></path></svg>
                 <span className="text-[10px] sm:text-xs font-semibold">Moyenne</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">
                 {weights.length > 0 ? (weights.reduce((sum, w) => sum + w.value, 0) / weights.length).toFixed(1) : "--"} kg
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function PoidsList() {
                 <TrendingUp className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Maximum</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">
                 {weights.length > 0 ? Math.max(...weights.map(w => w.value)).toFixed(1) : "--"} kg
               </div>
             </div>
@@ -201,7 +201,7 @@ export default function PoidsList() {
                 <TrendingDown className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Minimum</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">
                 {weights.length > 0 ? Math.min(...weights.map(w => w.value)).toFixed(1) : "--"} kg
               </div>
             </div>
@@ -320,7 +320,7 @@ export default function PoidsList() {
         {/* Liste détaillée */}
         <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl sm:rounded-2xl shadow-xl">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 p-3 sm:p-6 border-b border-emerald-100">
-            <span className="font-semibold text-base sm:text-lg text-emerald-700">Historique détaillé</span>
+            <span className="font-semibold text-base sm:text-base text-emerald-700">Historique détaillé</span>
             <button
               onClick={() => setEditWeight({})}
               className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
@@ -333,7 +333,7 @@ export default function PoidsList() {
           {weights.length === 0 ? (
             <div className="text-center py-12">
               <Weight className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 font-medium text-lg">Aucune donnée de poids</p>
+              <p className="text-gray-600 font-medium text-base">Aucune donnée de poids</p>
               <p className="text-sm text-gray-500 mt-2">Ajoutez le premier poids de votre animal !</p>
             </div>
           ) : (
@@ -377,7 +377,7 @@ export default function PoidsList() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-0.5">
-                        <span className="font-semibold text-base sm:text-lg text-gray-900 truncate">{weight.value} kg</span>
+                        <span className="font-semibold text-base sm:text-base text-gray-900 truncate">{weight.value} kg</span>
                         {trend}
                       </div>
                       <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 mb-1">

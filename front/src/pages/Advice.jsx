@@ -103,7 +103,7 @@ function Accordion({ title, icon, children, quote, resources }) {
         className="w-full flex items-center justify-between px-5 py-4 focus:outline-none"
         onClick={() => setOpen(o => !o)}
       >
-        <span className="flex items-center gap-3 font-semibold text-lg text-gray-900">{icon}{title}</span>
+        <span className="flex items-center gap-3 font-semibold text-base text-gray-900">{icon}{title}</span>
         {open ? <ChevronUp className="h-5 w-5 text-emerald-500" /> : <ChevronDown className="h-5 w-5 text-emerald-500" />}
       </button>
       {open && (
@@ -150,7 +150,7 @@ export default function Advice() {
           <h1 className="text-2xl sm:text-3xl font-bold text-couleur-titre font-ranille">Conseils bien-être & éducation</h1>
         </div>
         <div className="bg-white/80 rounded-xl border border-emerald-100 shadow p-6 mb-8">
-          <div className="text-lg font-semibold text-emerald-700 mb-2">“Le bien-être animal commence par la connaissance et l’amour.”</div>
+          <div className="text-base font-semibold text-emerald-700 mb-2">“Le bien-être animal commence par la connaissance et l’amour.”</div>
           <div className="text-gray-700">Retrouve ici des conseils pratiques, des astuces d’experts et des ressources fiables pour offrir à ton compagnon une vie épanouie, équilibrée et pleine de complicité.</div>
         </div>
         {/* Conseils catégorisés */}

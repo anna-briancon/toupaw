@@ -54,7 +54,7 @@ function AddMealForm({ petId, onSave, onCancel, initial }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <UtensilsCrossed className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">{initial && initial.id ? 'Modifier un repas' : 'Ajouter un repas'}</span>
+          <span className="text-base font-semibold">{initial && initial.id ? 'Modifier un repas' : 'Ajouter un repas'}</span>
         </div>
         <div>
           <label className="text-sm font-medium">Type d'aliment</label>

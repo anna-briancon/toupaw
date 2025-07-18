@@ -241,7 +241,7 @@ export default function PromenadeSection({ petId, onShowHistory }) {
                 <div className="fixed inset-0 bg-black bg-opacity-40 z-[999]"></div>
                 <div className="fixed inset-0 flex items-center justify-center z-[1000]">
                   <div className="bg-white rounded-2xl shadow-lg p-6 w-80 max-w-full animate-fade-in">
-                    <div className="text-lg font-bold mb-2 text-center text-gray-900">Enregistrer la balade</div>
+                    <div className="text-base font-bold mb-2 text-center text-gray-900">Enregistrer la balade</div>
                     <div className="mb-4 text-gray-500 text-sm text-center">Voulez-vous enregistrer cette balade&nbsp;?</div>
                     {(!events.some(e => e.type === 'pipi') || !events.some(e => e.type === 'caca')) && (
                       <div className="mb-4">
@@ -294,13 +294,13 @@ export default function PromenadeSection({ petId, onShowHistory }) {
           </div>
         )}
         {isTracking && (
-          <div className="flex gap-4 text-lg justify-center mb-2 text-gray-500">
+          <div className="flex gap-4 text-base justify-center mb-2 text-gray-500">
             <div>⏱ {formatTime(elapsed)}</div>
             <div>📏 {(distance/1000).toFixed(2)} km</div>
           </div>
         )}
         {!isTracking && (
-          <div className="flex gap-6 text-lg justify-center">
+          <div className="flex gap-6 text-base justify-center">
             {loading && <LoadingSpinner overlay />}
             {loading ? (
               <div className="text-gray-500 text-sm">Chargement...</div>

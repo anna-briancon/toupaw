@@ -61,7 +61,7 @@ export default function SymptomEdit({ open, id, onSave, onCancel }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <AlertCircle className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">Éditer le symptôme</span>
+          <span className="text-base font-semibold">Éditer le symptôme</span>
         </div>
         {loading ? (
           <div className="flex items-center justify-center py-8">

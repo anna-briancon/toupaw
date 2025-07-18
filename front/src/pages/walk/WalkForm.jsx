@@ -100,7 +100,7 @@ export default function WalkForm({ petId, initial, onSave, onCancel }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <Footprints className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">
+          <span className="text-base font-semibold">
             {isEdit ? 'Modifier' : 'Ajouter'} une balade
           </span>
         </div>
@@ -159,7 +159,7 @@ export default function WalkForm({ petId, initial, onSave, onCancel }) {
               checked={pipi}
               onChange={(e) => setPipi(e.target.checked)}
             />
-            <span className="text-lg">💧</span> Pipi
+            <span className="text-base">💧</span> Pipi
           </label>
           <label className="flex items-center gap-2">
             <input
@@ -167,7 +167,7 @@ export default function WalkForm({ petId, initial, onSave, onCancel }) {
               checked={caca}
               onChange={(e) => setCaca(e.target.checked)}
             />
-            <span className="text-lg">💩</span> Caca
+            <span className="text-base">💩</span> Caca
           </label>
         </div>
         {error && (

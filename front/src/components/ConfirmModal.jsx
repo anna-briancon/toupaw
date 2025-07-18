@@ -4,8 +4,8 @@ export default function ConfirmModal({ open, title = 'Confirmation', message, on
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="bg-white rounded-2xl shadow-lg p-6 w-80 max-w-full animate-fade-in">
-        <div className="text-lg font-bold mb-2 text-center text-gray-900">{title}</div>
+      <div className="bg-white rounded-2xl shadow-base p-6 w-80 max-w-full animate-fade-in">
+        <div className="text-base font-bold mb-2 text-center text-gray-900">{title}</div>
         <div className="mb-4 text-gray-500 text-sm text-center">{message}</div>
         <div className="flex gap-3 pt-2">
           <button

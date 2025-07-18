@@ -56,7 +56,7 @@ function AddSymptomFormModal({ petId, onSave, onCancel, initial }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <AlertCircle className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">{initial ? 'Modifier' : 'Ajouter'} un symptôme</span>
+          <span className="text-base font-semibold">{initial ? 'Modifier' : 'Ajouter'} un symptôme</span>
         </div>
         <div>
           <label className="text-sm font-medium">Description</label>
@@ -196,21 +196,21 @@ export default function SymptomesList() {
                 <AlertCircle className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Total symptômes</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{symptoms.length}</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{symptoms.length}</div>
             </div>
             <div className="bg-gradient-to-br from-orange-200/80 to-amber-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
               <div className="flex items-center justify-center gap-1 sm:gap-2 text-orange-700 mb-1 sm:mb-2">
                 <Calendar className="h-4 w-4 sm:h-6 sm:w-6" />
                 <span className="text-[10px] sm:text-xs font-semibold">Dernier symptôme</span>
               </div>
-              <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{symptoms[0]?.date ? formatDateFR(symptoms[0].date) : '-'}</div>
+              <div className="text-base sm:text-2xl font-extrabold text-gray-900">{symptoms[0]?.date ? formatDateFR(symptoms[0].date) : '-'}</div>
             </div>
           </div>
         </div>
         {/* Liste groupée par date modernisée */}
         <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl sm:rounded-2xl shadow-xl p-2 sm:p-6 space-y-3 sm:space-y-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-2 sm:mb-4">
-            <span className="font-semibold text-base sm:text-lg text-emerald-700">Historique détaillé</span>
+            <span className="font-semibold text-base sm:text-base text-emerald-700">Historique détaillé</span>
             <button
               onClick={() => setShowAdd(true)}
               className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
@@ -221,12 +221,12 @@ export default function SymptomesList() {
           {loading ? (
             <div className="flex items-center justify-center py-8 sm:py-12">
               <div className="animate-spin rounded-full h-7 w-7 sm:h-10 sm:w-10 border-b-2 border-emerald-500"></div>
-              <span className="ml-2 sm:ml-4 text-gray-600 text-base sm:text-lg font-semibold">Chargement...</span>
+              <span className="ml-2 sm:ml-4 text-gray-600 text-base sm:text-base font-semibold">Chargement...</span>
             </div>
           ) : symptoms.length === 0 ? (
             <div className="text-center py-10 sm:py-16 flex flex-col items-center">
               <AlertCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-700 font-bold text-lg sm:text-xl mb-1">Aucun symptôme enregistré</p>
+              <p className="text-gray-700 font-bold text-base sm:text-xl mb-1">Aucun symptôme enregistré</p>
               <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-4">Ajoutez le premier symptôme de votre animal !</p>
               <button
                 onClick={() => setShowAdd(true)}
@@ -238,7 +238,7 @@ export default function SymptomesList() {
           ) : (
             Object.entries(grouped).sort((a, b) => b[0].localeCompare(a[0])).map(([dateKey, items]) => (
               <div key={dateKey} className="mb-6">
-                <div className="font-semibold text-lg mb-2 text-emerald-700 flex items-center gap-3">
+                <div className="font-semibold text-base mb-2 text-emerald-700 flex items-center gap-3">
                   {formatDateFR(dateKey)}
                 </div>
                 <div className="space-y-3">
@@ -254,7 +254,7 @@ export default function SymptomesList() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-0.5">
-                            <span className="font-semibold text-base sm:text-lg text-gray-900 truncate">{s.description}</span>
+                            <span className="font-semibold text-base sm:text-base text-gray-900 truncate">{s.description}</span>
                             {s.intensity && <span className="text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded ml-2">{s.intensity}</span>}
                           </div>
                           <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 mb-1">

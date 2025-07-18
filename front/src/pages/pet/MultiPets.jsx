@@ -47,7 +47,7 @@ function Accordion({ title, icon, children }) {
         className="w-full flex items-center justify-between px-5 py-4 focus:outline-none"
         onClick={() => setOpen(o => !o)}
       >
-        <span className="flex items-center gap-3 font-semibold text-lg text-gray-900">{icon}{title}</span>
+        <span className="flex items-center gap-3 font-semibold text-base text-gray-900">{icon}{title}</span>
         {open ? <ChevronUp className="h-5 w-5 text-emerald-500" /> : <ChevronDown className="h-5 w-5 text-emerald-500" />}
       </button>
       {open && (
@@ -211,7 +211,7 @@ export default function MultiPets() {
         ) : filteredPets.length === 0 ? (
           <div className="text-center py-12">
             <PawPrint className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600 font-medium text-lg">Aucun animal enregistré</p>
+            <p className="text-gray-600 font-medium text-base">Aucun animal enregistré</p>
             <button
               onClick={handleAdd}
               className="mt-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-4 py-2 rounded-xl flex items-center gap-2 shadow"
@@ -347,7 +347,7 @@ export default function MultiPets() {
         {showConfirmDelete && (
           <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
             <div className="bg-white rounded-xl p-6 shadow-xl max-w-sm w-full">
-              <h2 className="text-lg font-bold mb-4">Supprimer cet animal ?</h2>
+              <h2 className="text-base font-bold mb-4">Supprimer cet animal ?</h2>
               <p className="mb-6 text-gray-600">Cette action est irréversible.</p>
               <div className="flex gap-4 justify-end">
                 <button

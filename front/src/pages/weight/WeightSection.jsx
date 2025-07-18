@@ -35,7 +35,7 @@ function AddWeightForm({ petId, onSave, onCancel }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <Weight className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">Ajouter un poids</span>
+          <span className="text-base font-semibold">Ajouter un poids</span>
         </div>
         <div>
           <label className="text-sm font-medium">Poids (kg)</label>

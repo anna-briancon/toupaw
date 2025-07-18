@@ -221,21 +221,21 @@ export default function Plus() {
         </div>
         {/* Sections principales */}
         <div className="space-y-2 mb-8">
-          <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-4">Fonctionnalités</h2>
+          <h2 className="font-ranille text-base font-semibold text-gray-900 mb-4">Fonctionnalités</h2>
           <AdviceSection onClick={handleAdviceClick} />
           <MultiPetsSection onClick={handleMultiPetsClick} />
           {/* <GallerySection onClick={handleGalleryClick} /> */}
         </div>
         {/* Paramètres */}
         <div className="space-y-2 mb-8">
-          <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-4">Paramètres</h2>
+          <h2 className="font-ranille text-base font-semibold text-gray-900 mb-4">Paramètres</h2>
           <SettingsSection onClick={handleSettingsClick} />
           {/* <NotificationsSection onClick={handleNotificationsClick} /> */}
           {/* <PrivacySection onClick={handlePrivacyClick} /> */}
         </div>
         {/* Support */}
         <div className="space-y-2 mb-8">
-          <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-4">Aide</h2>
+          <h2 className="font-ranille text-base font-semibold text-gray-900 mb-4">Aide</h2>
           <SupportSection onClick={handleSupportClick} />
         </div>
         {/* Informations de l'app */}
@@ -245,7 +245,7 @@ export default function Plus() {
               <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
                 <Heart className="h-5 w-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-gray-900">Toupaw</span>
+              <span className="text-base font-bold text-gray-900">Toupaw</span>
             </div>
             <p className="text-base font-semibold text-emerald-700 mb-1">Gérez le bien-être de vos animaux en famille ou entre amis</p>
             <p className="text-sm text-gray-600 mb-2">L'application collaborative pour suivre, partager et chouchouter vos compagnons à quatre pattes.</p>

@@ -105,7 +105,7 @@ export default function ReminderEdit({ open, id, onSave, onCancel }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <IconComponent className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">Modifier un événement santé</span>
+          <span className="text-base font-semibold">Modifier un événement santé</span>
         </div>
         {loading && <LoadingSpinner overlay />}
         {!event ? (

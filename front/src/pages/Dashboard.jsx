@@ -41,7 +41,7 @@ function SummaryCard({ icon, label, value, unit, time, onClick }) {
       <span className="text-2xl mb-1">{icon}</span>
       <span className="font-medium text-sm mb-1">{label}</span>
       {value !== undefined && (
-        <span className="text-emerald-600 font-bold text-lg">{value}{unit}</span>
+        <span className="text-emerald-600 font-bold text-base">{value}{unit}</span>
       )}
       {time && <span className="text-xs text-gray-400 mt-1">{time}</span>}
     </div>
@@ -240,7 +240,7 @@ function EventCard({ event, onClick }) {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-900">{labelFr}</span>
+              <span className="font-semibold text-gray-900 text-sm">{labelFr}</span>
               {isLate && !event.completed && (
                 <span className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700 ml-2">
                   <Clock className="h-3 w-3" />
@@ -248,15 +248,15 @@ function EventCard({ event, onClick }) {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-1 text-sm mt-1 text-gray-600">
+            <div className="flex items-center gap-1 text-xs mt-1 text-gray-600">
               <Clock className="h-3 w-3" />
               {formatDate(event.date)}
             </div>
-            {event.note && <p className="text-sm mt-2 text-gray-500">{event.note}</p>}
+            {event.note && <p className="text-xs mt-2 text-gray-500">{event.note}</p>}
             {event.quantity && (
-              <div className="text-gray-700 text-sm">{event.quantity} {event.unit}</div>
+              <div className="text-gray-700 text-xs">{event.quantity} {event.unit}</div>
             )}
-            {event.distance && <div className="text-gray-700 text-sm">{(event.distance / 1000).toFixed(2)} km</div>}
+            {event.distance && <div className="text-gray-700 text-xs">{(event.distance / 1000).toFixed(2)} km</div>}
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -475,7 +475,7 @@ export default function Dashboard() {
       }} />
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-6 sm:mb-4">
+        <div>
           <SectionTitle>Tableau de bord</SectionTitle>
         </div>
 
@@ -496,10 +496,10 @@ export default function Dashboard() {
         {/* {pet && <DashboardHeader pet={pet} user={user} />} */}
 
         {/* À venir */}
-        <div className="mb-4 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow">
-          <div className="p-4 sm:p-6">
-            <h2 className="font-semibold text-lg mb-4 text-gray-900">À venir</h2>
-            <div className="space-y-3">
+        <div className="mb-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow">
+          <div className="p-4 sm:p-4">
+            <h2 className="font-semibold text-base mb-2 text-gray-900">À venir</h2>
+            <div className="space-y-2">
               {(() => {
                 // Séparer événements en retard et à venir
                 const now = new Date();
@@ -525,9 +525,9 @@ export default function Dashboard() {
                       );
                     })}
                     {(isLate ? lateEvents.length : upcomingEvents.length) > 3 && (
-                      <div className="flex justify-center mt-2">
+                      <div className="flex justify-center">
                         <button
-                          className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
+                          className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 sm:px-2 py-1.5 sm:py-1 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
                           onClick={() => navigate(`/suivi/rappels${pet ? `?pet=${pet.id}` : ''}`)}
                         >
                           Voir plus
@@ -542,10 +542,10 @@ export default function Dashboard() {
         </div>
 
         {/* Résumé du jour */}
-        <div className="mb-4 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow">
+        <div className="mb-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow">
           <div className="p-4 sm:p-6">
             <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-              <h2 className="font-semibold text-lg text-gray-900">Résumé du jour</h2>
+              <h2 className="font-semibold text-base text-gray-900">Résumé du jour</h2>
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setSelectedSummaryDate(d => {
@@ -733,7 +733,7 @@ export default function Dashboard() {
           <div className="p-4 sm:p-6">
             {/* Header calendrier : titre à gauche, chevrons à droite */}
             <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
-              <h2 className="font-semibold text-lg text-gray-900">Calendrier</h2>
+              <h2 className="font-semibold text-base text-gray-900">Calendrier</h2>
               <div className="flex gap-2 items-center">
                 {calendarView === 'month' && (
                   <>
@@ -833,7 +833,7 @@ export default function Dashboard() {
               </div>
             </div>
             {/* Filtres sous le header */}
-            <div className="flex justify-center gap-2 mb-4">
+            <div className="flex justify-center gap-2 mb-4 text-sm">
               <button
                 onClick={() => setCalendarView('month')}
                 className={`px-2 py-1 rounded ${calendarView === 'month' ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-700'}`}
@@ -858,7 +858,7 @@ export default function Dashboard() {
               <div className="overflow-x-auto">
                 <div className="grid grid-cols-7 gap-2 min-w-[560px]">
                   {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map(d => (
-                    <div key={d} className="text-center font-semibold text-emerald-700 p-2">{d}</div>
+                    <div key={d} className="text-center font-semibold text-emerald-700 p-2 text-xs">{d}</div>
                   ))}
                   {/* Décalage du premier jour */}
                   {Array((calendarFirstDayOfWeek + 6) % 7)
@@ -882,12 +882,23 @@ export default function Dashboard() {
                         }}
                       >
                         <div className={`font-bold text-sm mb-1 ${isToday ? 'text-emerald-700' : 'text-gray-900'}`}>{day.getDate()}</div>
-                        <div className="flex flex-wrap gap-1 justify-center">
-                          {evts.map((e, i) => (
-                            <span key={i} title={e.type} className="text-lg">
+                        <div className="flex flex-wrap gap-1 justify-center items-center">
+                          {evts.length <= 2 && evts.map((e, i) => (
+                            <span key={i} title={e.type} className="text-base">
                               {CALENDAR_LUCIDE_ICONS[e.type] || <CalendarIcon className="w-5 h-5 text-orange-500" />}
                             </span>
                           ))}
+                          {evts.length > 2 && (
+                            <>
+                              <span title={evts[0].type} className="text-base">
+                                {CALENDAR_LUCIDE_ICONS[evts[0].type] || <CalendarIcon className="w-5 h-5 text-orange-500" />}
+                              </span>
+                              <span title={evts[1].type} className="text-base">
+                                {CALENDAR_LUCIDE_ICONS[evts[1].type] || <CalendarIcon className="w-5 h-5 text-orange-500" />}
+                              </span>
+                              <span className="text-base text-orange-500">•</span>
+                            </>
+                          )}
                         </div>
                       </div>
                     );
@@ -916,7 +927,7 @@ export default function Dashboard() {
                         <div className={`font-bold text-sm mb-1 ${isToday ? 'text-emerald-700' : 'text-gray-900'}`}>{day.getDate()}</div>
                         <div className="flex flex-wrap gap-1 justify-center">
                           {evts.map((e, i) => (
-                            <span key={i} title={e.type} className="text-lg">
+                            <span key={i} title={e.type} className="text-base">
                               {CALENDAR_LUCIDE_ICONS[e.type] || <CalendarIcon className="w-5 h-5 text-orange-500" />}
                             </span>
                           ))}

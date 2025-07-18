@@ -58,43 +58,45 @@ const PetMembers = ({ petId, currentUserId }) => {
         <div className="text-gray-400 text-sm">Aucun membre pour cet animal.</div>
       ) : (
         <ul className="divide-y divide-emerald-50">
-          {members.map(member => (
-            <li key={member.id} className="flex items-center gap-3 py-2">
-              <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center font-bold text-emerald-700 text-lg">
-                {getInitials(member.name, member.email)}
-              </div>
-              <div className="flex-1">
-                <div className="font-medium text-gray-900 flex items-center gap-1">
-                  {member.name || <span className="italic text-gray-400">(sans nom)</span>}
-                  {member.id === currentUserId && <span className="text-xs text-emerald-700 font-bold ml-1">(vous)</span>}
+          {members.map(member => {
+            return (
+              <li key={member.id} className="flex items-center gap-3 py-2">
+                <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center font-bold text-emerald-700 text-base">
+                  {getInitials(member.name, member.email)}
                 </div>
-                <div className="text-xs text-gray-500">{member.email}</div>
-              </div>
-              {member.role && (
-                <span className="text-xs px-2 py-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-100 font-semibold mr-2">
-                  {member.role === 'owner' ? 'Propriétaire' : member.role === 'member' ? 'Membre' : member.role}
-                </span>
-              )}
-              {/* Bouton supprimer : visible seulement si user courant est owner, membre n'est pas owner ni soi-même */}
-              {currentUserRole === 'owner' && member.role !== 'owner' && member.id !== currentUserId && (
-                <button
-                  className="p-2 rounded-lg hover:bg-red-50 text-red-600"
-                  title="Supprimer ce membre"
-                  onClick={() => setShowConfirm(member.id)}
-                  disabled={removing}
-                >
-                  <Trash2 className="h-5 w-5" />
-                </button>
-              )}
-            </li>
-          ))}
+                <div className="flex-1">
+                  <div className="font-medium text-gray-900 flex items-center gap-1">
+                    {member.name || <span className="italic text-gray-400">(sans nom)</span>}
+                    {member.id === currentUserId && <span className="text-xs text-emerald-700 font-bold ml-1">(vous)</span>}
+                  </div>
+                  <div className="text-xs text-gray-500">{member.email}</div>
+                </div>
+                {member.role && (
+                  <span className="text-xs px-2 py-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-100 font-semibold mr-2">
+                    {member.role === 'owner' ? 'Propriétaire' : member.role === 'member' ? 'Membre' : member.role}
+                  </span>
+                )}
+                {/* Bouton supprimer : visible seulement si user courant est owner, membre n'est pas owner ni soi-même */}
+                {currentUserRole === 'owner' && member.role !== 'owner' && member.id !== currentUserId && (
+                  <button
+                    className="p-2 rounded-lg hover:bg-red-50 text-red-600"
+                    title="Supprimer ce membre"
+                    onClick={() => setShowConfirm(member.id)}
+                    disabled={removing}
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
       {/* Popup de confirmation */}
       {showConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
           <div className="bg-white rounded-xl p-6 shadow-xl max-w-sm w-full border border-emerald-100">
-            <h2 className="text-lg font-bold mb-4">Retirer ce membre ?</h2>
+            <h2 className="text-base font-bold mb-4">Retirer ce membre ?</h2>
             <p className="mb-6 text-gray-600">Cette action est irréversible. Le membre n'aura plus accès à cet animal.</p>
             <div className="flex gap-4 justify-end">
               <button

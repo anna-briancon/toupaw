@@ -33,7 +33,7 @@ function Accordion({ title, icon, children }) {
         className="w-full flex items-center justify-between px-5 py-4 focus:outline-none"
         onClick={() => setOpen(o => !o)}
       >
-        <span className="flex items-center gap-3 font-semibold text-lg text-gray-900">{icon}{title}</span>
+        <span className="flex items-center gap-3 font-semibold text-base text-gray-900">{icon}{title}</span>
         {open ? <ChevronUp className="h-5 w-5 text-emerald-500" /> : <ChevronDown className="h-5 w-5 text-emerald-500" />}
       </button>
       {open && (
@@ -176,7 +176,7 @@ export default function AccountSettings() {
                     <span className="text-gray-700 font-semibold">Avatar</span>
                   </div>
                   <form onSubmit={handleProfileSubmit} className="flex-1 w-full">
-                    <h2 className="font-semibold text-lg mb-2 flex items-center gap-2"><MailIcon className="h-5 w-5 text-emerald-400" />Profil</h2>
+                    <h2 className="font-semibold text-base mb-2 flex items-center gap-2"><MailIcon className="h-5 w-5 text-emerald-400" />Profil</h2>
                     <div className="mb-4">
                       <label className="block mb-1">Nom</label>
                       <input type="text" name="name" value={profile.name} onChange={handleProfileChange} className="w-full border rounded px-3 py-2" />
@@ -193,7 +193,7 @@ export default function AccountSettings() {
                 {/* Mot de passe */}
                 <div className="bg-white rounded-2xl shadow p-6 mb-6 border border-emerald-100">
                   <form onSubmit={handlePasswordSubmit} className="mb-8">
-                    <h2 className="font-semibold text-lg mb-2 flex items-center gap-2"><Lock className="h-5 w-5 text-emerald-400" />Changer le mot de passe</h2>
+                    <h2 className="font-semibold text-base mb-2 flex items-center gap-2"><Lock className="h-5 w-5 text-emerald-400" />Changer le mot de passe</h2>
                     <div className="mb-4">
                       <label className="block mb-1">Mot de passe actuel</label>
                       <input type="password" name="currentPassword" value={passwords.currentPassword} onChange={handlePasswordChange} className="w-full border rounded px-3 py-2" />
@@ -211,7 +211,7 @@ export default function AccountSettings() {
                 </div>
                 {/* Préférences (placeholders) */}
                 <div className="bg-white rounded-2xl shadow p-6 mb-6 border border-emerald-100">
-                  <h2 className="font-semibold text-lg mb-2 flex items-center gap-2"><Sun className="h-5 w-5 text-yellow-400" />Préférences</h2>
+                  <h2 className="font-semibold text-base mb-2 flex items-center gap-2"><Sun className="h-5 w-5 text-yellow-400" />Préférences</h2>
                   <div className="flex flex-col sm:flex-row gap-6">
                     <div className="flex items-center gap-2">
                       <Moon className="h-5 w-5 text-gray-500" />
@@ -226,7 +226,7 @@ export default function AccountSettings() {
                 {/* Suppression du compte */}
                 <div className="bg-white rounded-2xl shadow p-6 mb-6 border border-emerald-100">
                   <div className="mb-4">
-                    <h2 className="font-semibold text-lg mb-2 flex items-center gap-2 text-red-700"><Trash2 className="h-5 w-5" />Supprimer le compte</h2>
+                    <h2 className="font-semibold text-base mb-2 flex items-center gap-2 text-red-700"><Trash2 className="h-5 w-5" />Supprimer le compte</h2>
                     <div className="text-sm text-gray-500 mb-2">Cette action est <span className="font-bold text-red-700">irréversible</span>. Toutes tes données seront supprimées définitivement.</div>
                     {deleteError && <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-2">{deleteError}</div>}
                     <button onClick={handleDeleteAccount} className="bg-red-100 text-red-800 border border-red-300 hover:bg-red-200 px-4 py-2 rounded-xl font-bold" disabled={loading}>Supprimer mon compte</button>

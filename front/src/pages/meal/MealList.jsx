@@ -58,7 +58,7 @@ function EditMealForm({ petId, initial, onSave, onCancel }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <Utensils className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">{initial ? 'Modifier' : 'Ajouter'} un repas</span>
+          <span className="text-base font-semibold">{initial ? 'Modifier' : 'Ajouter'} un repas</span>
         </div>
         <div>
           <label className="text-sm font-medium">Type d'aliment</label>
@@ -163,7 +163,7 @@ function AddDrinkForm({ petId, onSave, onCancel }) {
           <div className="p-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg">
             <GlassWater className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">Ajouter consommation d'eau</span>
+          <span className="text-base font-semibold">Ajouter consommation d'eau</span>
         </div>
         <div>
           <label className="text-sm font-medium">Date</label>
@@ -382,28 +382,28 @@ export default function AlimentationList() {
                   <Utensils className="h-4 w-4 sm:h-6 sm:w-6" />
                   <span className="text-[10px] sm:text-xs font-semibold">Repas du jour</span>
                 </div>
-                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{totalMealsOfDay}</div>
+                <div className="text-base sm:text-2xl font-extrabold text-gray-900">{totalMealsOfDay}</div>
               </div>
               <div className="bg-gradient-to-br from-violet-200/80 to-violet-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
                 <div className="flex items-center justify-center gap-1 sm:gap-2 text-violet-700 mb-1 sm:mb-2">
                   <BarChart3 className="h-4 w-4 sm:h-6 sm:w-6" />
                   <span className="text-[10px] sm:text-xs font-semibold">Quantité du jour</span>
                 </div>
-                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{totalQuantityOfDay.toFixed(0)} g</div>
+                <div className="text-base sm:text-2xl font-extrabold text-gray-900">{totalQuantityOfDay.toFixed(0)} g</div>
               </div>
               <div className="bg-gradient-to-br from-blue-200/80 to-cyan-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
                 <div className="flex items-center justify-center gap-1 sm:gap-2 text-blue-700 mb-1 sm:mb-2">
                   <GlassWater className="h-4 w-4 sm:h-6 sm:w-6" />
                   <span className="text-[10px] sm:text-xs font-semibold">Verres du jour</span>
                 </div>
-                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{totalDrinksOfDay}</div>
+                <div className="text-base sm:text-2xl font-extrabold text-gray-900">{totalDrinksOfDay}</div>
               </div>
               <div className="bg-gradient-to-br from-orange-200/80 to-amber-100 border-0 rounded-lg sm:rounded-2xl shadow p-2 sm:p-4 text-center flex flex-col items-center">
                 <div className="flex items-center justify-center gap-1 sm:gap-2 text-orange-700 mb-1 sm:mb-2">
                   <Calendar className="h-4 w-4 sm:h-6 sm:w-6" />
                   <span className="text-[10px] sm:text-xs font-semibold">Moyenne/repas</span>
                 </div>
-                <div className="text-lg sm:text-2xl font-extrabold text-gray-900">{averageQuantityAll.toFixed(0)} g</div>
+                <div className="text-base sm:text-2xl font-extrabold text-gray-900">{averageQuantityAll.toFixed(0)} g</div>
               </div>
             </div>
           </div>
@@ -411,7 +411,7 @@ export default function AlimentationList() {
         {/* Liste des repas modernisée */}
         <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl sm:rounded-2xl shadow-xl">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 p-3 sm:p-6 border-b border-emerald-100">
-            <span className="font-semibold text-base sm:text-lg text-emerald-700">Repas & boissons récents</span>
+            <span className="font-semibold text-base sm:text-base text-emerald-700">Repas & boissons récents</span>
             <div className="flex gap-2">
               <button
                 onClick={() => setEditMeal({})}
@@ -433,12 +433,12 @@ export default function AlimentationList() {
             {loading ? (
               <div className="flex items-center justify-center py-8 sm:py-12">
                 <div className="animate-spin rounded-full h-7 w-7 sm:h-10 sm:w-10 border-b-2 border-emerald-500"></div>
-                <span className="ml-2 sm:ml-4 text-gray-600 text-base sm:text-lg font-semibold">Chargement...</span>
+                <span className="ml-2 sm:ml-4 text-gray-600 text-base sm:text-base font-semibold">Chargement...</span>
               </div>
             ) : meals.length === 0 && drinks.length === 0 ? (
               <div className="text-center py-10 sm:py-16 flex flex-col items-center">
                 <Utensils className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-700 font-bold text-lg sm:text-xl mb-1">Aucun repas ou verre enregistré</p>
+                <p className="text-gray-700 font-bold text-base sm:text-xl mb-1">Aucun repas ou verre enregistré</p>
                 <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-4">Ajoutez le premier repas ou verre de votre animal !</p>
                 <button
                   onClick={() => setEditMeal({})}
@@ -458,7 +458,7 @@ export default function AlimentationList() {
                 const drinksForDate = groupDrinksByDate(drinks)[dateKey] || [];
                 return (
                   <div key={dateKey} className="mb-6">
-                    <div className="font-semibold text-lg mb-2 text-emerald-700 flex items-center gap-3">
+                    <div className="font-semibold text-base mb-2 text-emerald-700 flex items-center gap-3">
                       {getDateLabel(dateKey)}
                       {drinksForDate.length > 0 && (
                         <span className="flex items-center gap-1 text-blue-600 text-base ml-2">
@@ -492,8 +492,8 @@ export default function AlimentationList() {
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-0.5">
-                                <span className="font-semibold text-base sm:text-lg text-gray-900 truncate">{meal.food_type}</span>
-                                <span className="text-lg">🍽️</span>
+                                <span className="font-semibold text-base sm:text-base text-gray-900 truncate">{meal.food_type}</span>
+                                <span className="text-base">🍽️</span>
                               </div>
                               <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 mb-1">
                                 <Calendar className="h-3 w-3" />

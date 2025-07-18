@@ -69,7 +69,7 @@ export default function AddReminderForm({ petId, onSave, onCancel, initial }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <IconComponent className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-semibold">{initial ? 'Modifier' : 'Créer'} un événement santé</span>
+          <span className="text-base font-semibold">{initial ? 'Modifier' : 'Créer'} un événement santé</span>
         </div>
         <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg border border-blue-200">
           Un événement santé sera {initial ? 'modifié' : 'ajouté'} à l'historique (ex : vaccination, vermifuge, etc). Vous pourrez le retrouver dans l'onglet santé.
