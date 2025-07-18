@@ -46,14 +46,7 @@ export function CreatePetForm({ onSuccess, onCancel }) {
       });
       if (onSuccess) onSuccess();
     } catch (err) {
-      let debugError = '';
-      if (err.response) {
-        debugError = `Erreur API: ${err.response.status} - ${JSON.stringify(err.response.data)}\n`;
-      }
-      debugError += `\nMessage: ${err.message}`;
-      debugError += `\nStack: ${err.stack}`;
-      debugError += `\nObjet complet: ${JSON.stringify(err, Object.getOwnPropertyNames(err))}`;
-      setError(debugError);
+      setError(err.response?.data?.error || 'Erreur lors de la création du chien');
     } finally {
       setLoading(false);
     }

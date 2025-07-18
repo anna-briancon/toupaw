@@ -62,8 +62,8 @@ function SectionCard({ icon, title, description, onClick }) {
         <div className="flex items-center gap-4">
           <div className="p-3 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-xl text-emerald-600">{icon}</div>
           <div className="flex-1">
-            <h3 className="font-semibold text-base text-gray-900 mb-1">{title}</h3>
-            <p className="text-sm text-gray-500">{description}</p>
+            <h3 className="font-semibold text-sm text-gray-900 mb-1">{title}</h3>
+            <p className="text-xs text-gray-500">{description}</p>
           </div>
           <ChevronRight className="h-5 w-5 text-emerald-500" />
         </div>

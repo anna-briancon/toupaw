@@ -108,10 +108,10 @@ function Accordion({ title, icon, children, quote, resources }) {
       </button>
       {open && (
         <div className="px-6 pb-5">
-          <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-3">
+          <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-3 text-sm">
             {children}
           </ul>
-          {quote && <div className="italic text-emerald-700 border-l-4 border-emerald-200 pl-4 mb-2">“{quote}”</div>}
+          {quote && <div className="italic text-emerald-700 border-l-4 border-emerald-200 pl-4 mb-2 text-sm">“{quote}”</div>}
           {resources && resources.length > 0 && (
             <div className="mt-2">
               <span className="font-semibold text-emerald-700">Ressources utiles :</span>
@@ -151,7 +151,7 @@ export default function Advice() {
         </div>
         <div className="bg-white/80 rounded-xl border border-emerald-100 shadow p-6 mb-8">
           <div className="text-base font-semibold text-emerald-700 mb-2">“Le bien-être animal commence par la connaissance et l’amour.”</div>
-          <div className="text-gray-700">Retrouve ici des conseils pratiques, des astuces d’experts et des ressources fiables pour offrir à ton compagnon une vie épanouie, équilibrée et pleine de complicité.</div>
+          <div className="text-gray-700 text-sm">Retrouve ici des conseils pratiques, des astuces d’experts et des ressources fiables pour offrir à ton compagnon une vie épanouie, équilibrée et pleine de complicité.</div>
         </div>
         {/* Conseils catégorisés */}
         {CATEGORIES.map((cat, idx) => (
@@ -161,22 +161,22 @@ export default function Advice() {
         ))}
         {/* FAQ */}
         <div className="mt-10 mb-6">
-          <h2 className="font-semibold text-xl text-emerald-700 mb-4 flex items-center gap-2"><PawPrint className="h-6 w-6 text-emerald-400" />FAQ éducation & comportement</h2>
+          <h2 className="font-semibold text-lg text-emerald-700 mb-4 flex items-center gap-2"><PawPrint className="h-6 w-6 text-emerald-400" />FAQ éducation & comportement</h2>
           <div className="space-y-3">
             {FAQ.map((item, idx) => (
               <div key={idx} className="bg-white rounded-lg border border-emerald-100 p-4 shadow-sm">
-                <div className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                <div className="font-semibold text-gray-900 mb-1 flex items-center gap-2 text-base">
                   <span className="text-emerald-600">Q.</span> {item.q}
                 </div>
-                <div className="text-gray-700 pl-6">{item.a}</div>
+                <div className="text-gray-700 pl-6 text-sm">{item.a}</div>
               </div>
             ))}
           </div>
         </div>
         {/* Ressources externes */}
         <div className="mb-10">
-          <h2 className="font-semibold text-xl text-emerald-700 mb-4 flex items-center gap-2"><ExternalLink className="h-6 w-6 text-emerald-400" />Ressources recommandées</h2>
-          <ul className="list-disc pl-7 space-y-2 text-gray-700">
+          <h2 className="font-semibold text-lg text-emerald-700 mb-4 flex items-center gap-2"><ExternalLink className="h-6 w-6 text-emerald-400" />Ressources recommandées</h2>
+          <ul className="list-disc pl-7 space-y-2 text-gray-700 text-sm">
             <li><a href="https://www.fondation30millionsdamis.fr/conseils/" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-700">Fondation 30 Millions d’Amis : Conseils pratiques</a></li>
             <li><a href="https://www.wanimo.com/veterinaire/" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-700">Wanimo : Conseils vétérinaires</a></li>
             <li><a href="https://www.purina.fr/articles/chien/education" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-700">Purina : Éducation et bien-être</a></li>

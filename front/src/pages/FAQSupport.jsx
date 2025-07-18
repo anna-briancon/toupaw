@@ -98,7 +98,7 @@ function Accordion({ title, icon, questions }) {
                 <div className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
                   <span className="text-emerald-600">Q.</span> {q.q}
                 </div>
-                <div className="text-gray-700 pl-6">{q.a}</div>
+                <div className="text-gray-700 pl-6 text-sm">{q.a}</div>
               </div>
             ))}
           </div>
@@ -135,7 +135,7 @@ export default function FAQSupport() {
         {/* Introduction */}
         <div className="bg-white/80 rounded-xl border border-emerald-100 shadow p-6 mb-8">
           <div className="text-base font-semibold text-emerald-700 mb-2">“Une question ? Un doute ? On est là pour toi et ton compagnon.”</div>
-          <div className="text-gray-700">Retrouve ici les réponses aux questions fréquentes, des conseils d’utilisation, et tous les moyens de contacter notre équipe. Notre mission : t’accompagner au quotidien pour le bien-être de ton animal.</div>
+          <div className="text-gray-700 text-sm">Retrouve ici les réponses aux questions fréquentes, des conseils d’utilisation, et tous les moyens de contacter notre équipe. Notre mission : t’accompagner au quotidien pour le bien-être de ton animal.</div>
         </div>
         {/* FAQ Catégorisée */}
         {FAQ_CATEGORIES.map((cat, idx) => (
@@ -148,9 +148,11 @@ export default function FAQSupport() {
             <div className="flex items-center text-gray-900">
               <Mail className="h-5 w-5 text-emerald-600" />
               <span className="select-all font-medium">{supportEmail}</span>
+            </div>
+            <div className="flex items-center text-gray-900">
               <button
                 onClick={handleCopy}
-                className="ml-2 px-2 py-1 bg-emerald-50 border border-emerald-200 rounded text-emerald-700 hover:bg-emerald-100 text-sm flex items-center gap-1"
+                className="px-2 py-1 bg-emerald-50 border border-emerald-200 rounded text-emerald-700 hover:bg-emerald-100 text-sm flex items-center gap-1"
               >
                 {copied ? <CheckCircle className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />} {copied ? 'Copié !' : 'Copier'}
               </button>
@@ -167,7 +169,7 @@ export default function FAQSupport() {
             </div>
           </div>
         </div>
-       
+
         {/* Illustration */}
         <div className="flex justify-center mt-8">
           <img src="/assets/logo2.png" alt="Toupaw" className="h-24 w-auto opacity-80" />

@@ -224,9 +224,10 @@ export default function MultiPets() {
             {filteredPets.map(pet => {
               const isSelected = String(selectedPetId) === String(pet.id);
               let imageSrc = null;
+              const API_URL = import.meta.env.VITE_API_URL;
               if (pet.photo_url) {
                 imageSrc = pet.photo_url.startsWith('/uploads')
-                  ? `${window.location.origin}${pet.photo_url}`
+                  ? `${API_URL}${pet.photo_url}`
                   : pet.photo_url;
               }
               return (
@@ -235,7 +236,7 @@ export default function MultiPets() {
                   className={`relative group bg-white border rounded-2xl p-5 shadow-md transition cursor-pointer hover:shadow-lg ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-200' : 'border-emerald-100'}`}
                   onClick={() => handleSelect(pet)}
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
                     {imageSrc ? (
                       <img
                         src={imageSrc}
@@ -250,7 +251,7 @@ export default function MultiPets() {
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-xl text-gray-900 flex items-center gap-2">{pet.name} <span className="text-gray-500 font-normal text-base">{getAgeString(pet.birthdate)}</span></div>
+                      <div className="font-bold text-lg text-gray-900 flex items-center gap-2">{pet.name} <span className="text-gray-500 font-normal text-sm">{getAgeString(pet.birthdate)}</span></div>
                       <div className="text-gray-500 text-sm">
                         {getSpeciesLabel(pet.species, pet.gender)}
                         {pet.gender && (
