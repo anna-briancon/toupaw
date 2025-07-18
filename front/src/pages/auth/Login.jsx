@@ -57,6 +57,11 @@ export default function Login() {
             </ul>
           </div>
         )}
+        {error && (
+          <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-4 text-xs">
+            {error}
+          </div>
+        )}
         <input
           type="email"
           placeholder="Email"
