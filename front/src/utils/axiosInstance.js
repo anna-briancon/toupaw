@@ -1,9 +1,6 @@
 import axios from "axios";
 import store from "../store";
 import { logout } from "../store/features/auth/authSlice";
-import { createBrowserHistory } from 'history';
-
-const history = createBrowserHistory();
 
 const instance = axios.create({
   baseURL: "/api",
@@ -23,7 +20,6 @@ instance.interceptors.response.use(
     const state = store.getState();
     if (error.response.status === 401 && !state.auth.isGuest) {
       store.dispatch(logout());
-      history.push('/login');
     }
     return Promise.reject(error);
   }
