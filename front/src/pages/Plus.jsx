@@ -220,22 +220,22 @@ export default function Plus() {
           </Button>
         </div>
         {/* Sections principales */}
-        <div className="space-y-2 mb-8">
-          <h2 className="font-ranille text-base font-semibold text-gray-900 mb-4">Fonctionnalités</h2>
+        <div className="space-y-2 mb-4">
+          <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-2">Fonctionnalités</h2>
           <AdviceSection onClick={handleAdviceClick} />
           <MultiPetsSection onClick={handleMultiPetsClick} />
           {/* <GallerySection onClick={handleGalleryClick} /> */}
         </div>
         {/* Paramètres */}
-        <div className="space-y-2 mb-8">
-          <h2 className="font-ranille text-base font-semibold text-gray-900 mb-4">Paramètres</h2>
+        <div className="space-y-2 mb-4">
+          <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-2">Paramètres</h2>
           <SettingsSection onClick={handleSettingsClick} />
           {/* <NotificationsSection onClick={handleNotificationsClick} /> */}
           {/* <PrivacySection onClick={handlePrivacyClick} /> */}
         </div>
         {/* Support */}
-        <div className="space-y-2 mb-8">
-          <h2 className="font-ranille text-base font-semibold text-gray-900 mb-4">Aide</h2>
+        <div className="space-y-2 mb-6">
+          <h2 className="font-ranille text-lg font-semibold text-gray-900 mb-2">Aide</h2>
           <SupportSection onClick={handleSupportClick} />
         </div>
         {/* Informations de l'app */}
@@ -260,7 +260,7 @@ export default function Plus() {
           </CardContent>
         </Card> */}
         {/* Actions rapides */}
-        <div className="mt-8 grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <Button
             variant="outline"
             className="border-emerald-200 text-emerald-700 hover:bg-emerald-50 bg-transparent"

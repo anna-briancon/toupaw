@@ -4,6 +4,7 @@ const petsController = require('../controllers/pets');
 const multer = require('multer');
 const path = require('path');
 const { inviteUserToPet } = require('../controllers/pets');
+const authMiddleware = require('../middlewares/auth');
 
 // Configurer le stockage des fichiers
 const storage = multer.diskStorage({
@@ -16,6 +17,8 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage });
+
+router.use(authMiddleware);
 
 router.get('/', petsController.list);
 router.post('/', upload.single('photo'), petsController.create);
