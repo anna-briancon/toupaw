@@ -152,6 +152,34 @@ export default function PromenadeSection({ petId, onShowHistory }) {
     }
   };
 
+  // Auto-reprise du tracking GPS si l'utilisateur revient sur la page
+  React.useEffect(() => {
+    function handleVisibility() {
+      if (document.visibilityState === 'visible' && isTracking && !watchId.current && navigator.geolocation) {
+        watchId.current = navigator.geolocation.watchPosition(
+          pos => {
+            setPositions(prev => {
+              if (!prev.length) return [[pos.coords.latitude, pos.coords.longitude]];
+              const last = prev[prev.length - 1];
+              const d = haversineDistance(last[0], last[1], pos.coords.latitude, pos.coords.longitude);
+              if (d > 2) {
+                setDistance(dist => dist + d);
+                return [...prev, [pos.coords.latitude, pos.coords.longitude]];
+              }
+              return prev;
+            });
+          },
+          err => alert('Erreur GPS: ' + err.message),
+          { enableHighAccuracy: true, maximumAge: 1000, timeout: 10000 }
+        );
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [isTracking]);
+
   // Stop and save
   const stopAndSave = () => {
     setShowConfirm(true);
