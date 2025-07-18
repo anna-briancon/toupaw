@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../utils/axiosInstance';
 import SectionTitle from '../../components/SectionTitle';
-import { ArrowLeft, User, Mail as MailIcon, Lock, Sun, Moon, Bell, Trash2, ChevronDown, ChevronUp, Info, HelpCircle, LogOut } from 'lucide-react';
+import { ArrowLeft, User, Mail as MailIcon, Lock, Sun, Moon, Bell, Trash2, ChevronDown, ChevronUp, Info, HelpCircle, LogOut, X } from 'lucide-react';
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/features/auth/authSlice";
+import ReminderSettings from '../pet/ReminderSettings';
 
 const FAQ = [
   {
@@ -74,6 +75,7 @@ export default function AccountSettings() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [notifOpen, setNotifOpen] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -217,12 +219,22 @@ export default function AccountSettings() {
                       <Moon className="h-5 w-5 text-gray-500" />
                       <span className="text-gray-700">Mode sombre (bientôt)</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <button type="button" onClick={() => setNotifOpen(true)} className="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold px-4 py-2 rounded-xl border border-emerald-200 transition">
                       <Bell className="h-5 w-5 text-emerald-400" />
-                      <span className="text-gray-700">Notifications (bientôt)</span>
-                    </div>
+                      Notifications
+                    </button>
                   </div>
                 </div>
+                {notifOpen && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+                    <div className="relative w-full max-w-lg mx-auto">
+                      <button onClick={() => setNotifOpen(false)} className="absolute top-2 right-2 bg-gray-100 hover:bg-gray-200 rounded-full p-2 z-10 flex items-center justify-center shadow">
+                        <X className="h-6 w-6 text-gray-500 hover:text-emerald-600 transition" />
+                      </button>
+                      <ReminderSettings />
+                    </div>
+                  </div>
+                )}
                 {/* Suppression du compte */}
                 <div className="bg-white rounded-2xl shadow p-6 mb-6 border border-emerald-100">
                   <div className="mb-4">

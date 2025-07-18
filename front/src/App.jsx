@@ -21,6 +21,7 @@ import EditPet from './pages/pet/EditPet.jsx';
 import AccountSettings from './pages/auth/AccountSettings';
 import FAQSupport from './pages/FAQSupport';
 import Advice from './pages/Advice';
+import ReminderSettings from './pages/pet/ReminderSettings';
 
 
 function PrivateRoute({ children }) {
@@ -61,6 +62,7 @@ function AppRoutes() {
         <Route path="/account-settings" element={<PrivateRoute><AccountSettings /></PrivateRoute>} />
         <Route path="/faq-support" element={<PrivateRoute><FAQSupport /></PrivateRoute>} />
         <Route path="/advice" element={<PrivateRoute><Advice /></PrivateRoute>} />
+        <Route path="/pet/reminder-settings" element={<PrivateRoute><ReminderSettings /></PrivateRoute>} />
         {/* ...autres routes */}
       </Routes>
       {!hideNav && <BottomNav />}

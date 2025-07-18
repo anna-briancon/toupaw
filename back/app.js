@@ -6,6 +6,7 @@ const { sequelize } = require('./src/models');
 const authMiddleware = require('./src/middlewares/auth');
 const rateLimit = require('express-rate-limit');
 // const seed = require('./src/seeds/seed');
+require('./src/services/reminderMailer');
 
 const app = express();
 app.use(helmet({
@@ -86,6 +87,7 @@ app.use('/api/reminders', require('./src/routes/reminders'));
 app.use('/api/photos', require('./src/routes/photos'));
 app.use('/api/weights', require('./src/routes/weights'));
 app.use('/api/symptoms', require('./src/routes/symptoms'));
+app.use('/api/notification-settings', require('./src/routes/notificationSettings'));
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));

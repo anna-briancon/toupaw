@@ -31,7 +31,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Comment signaler un problème de sécurité ?",
-        a: "Contacte-nous immédiatement via l'email support@toupaw.app en décrivant le problème rencontré.",
+        a: "Contacte-nous immédiatement via l'email contact@toupaw.fr en décrivant le problème rencontré.",
       },
     ],
   },
@@ -63,7 +63,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Je rencontre un bug, comment le signaler ?",
-        a: "Envoie-nous un email à support@toupaw.app avec une capture d'écran et la description du bug. Nous corrigerons au plus vite !",
+        a: "Envoie-nous un email à contact@toupaw.fr avec une capture d'écran et la description du bug. Nous corrigerons au plus vite !",
       },
     ],
   },
@@ -73,7 +73,7 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "Puis-je proposer une fonctionnalité ?",
-        a: "Oui ! Nous sommes à l'écoute de la communauté. Envoie-nous tes idées à support@toupaw.app, nous les étudierons avec attention.",
+        a: "Oui ! Nous sommes à l'écoute de la communauté. Envoie-nous tes idées à contact@toupaw.fr, nous les étudierons avec attention.",
       },
     ],
   },
@@ -110,7 +110,7 @@ function Accordion({ title, icon, questions }) {
 
 export default function FAQSupport() {
   const [copied, setCopied] = useState(false);
-  const supportEmail = "support@toupaw.app";
+  const supportEmail = "contact@toupaw.fr";
   const navigate = useNavigate();
 
   const handleCopy = () => {

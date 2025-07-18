@@ -1,98 +1,64 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from '../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { LogIn } from 'lucide-react';
-import { useSelector, useDispatch } from "react-redux";
-import { getUser } from '../../store/features/auth/authActions';
+import { User } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const auth = useSelector(state => state.auth);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (auth.user) {
-      navigate("/");
-    }
-  }, [auth.user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setErrors([]);
     setLoading(true);
     try {
       const res = await axios.post('/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
-      await dispatch(getUser());
+      navigate('/');
     } catch (err) {
-      if (err.response?.data?.errors) {
-        setErrors(err.response.data.errors.map(e => e.msg));
-      } else {
-        setError(err.response?.data?.error || 'Erreur de connexion');
-      }
+      setError(err.response?.data?.error || 'Erreur lors de la connexion');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-couleur-fond p-6 pb-24 flex items-center justify-center">
-      <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-6 sm:p-8 w-full max-w-md mx-auto">
-        <div className="flex items-center gap-3 mb-6 justify-center">
-          <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-            <LogIn className="h-6 w-6 text-white" />
-          </div>
-          <h2 className="font-ranille text-2xl sm:text-3xl font-bold text-gray-900">Connexion</h2>
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-100 flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-md mx-auto bg-white/90 rounded-2xl shadow-xl p-6 sm:p-10 flex flex-col items-center">
+        <img src="/assets/logo2.png" alt="Toupaw" className="w-auto h-20 mb-4" />
+        <h1 className="text-2xl sm:text-3xl font-bold text-emerald-700 mb-1 flex items-center gap-2 font-ranille"><User className="inline h-7 w-7 text-emerald-400" />Connexion</h1>
+        <p className="text-gray-600 text-center mb-6">Ravi de te revoir sur <b>Toupaw</b> !<br/>Connecte-toi pour retrouver tes animaux et tous tes rappels 🐾</p>
+        <form onSubmit={handleSubmit} className="w-full space-y-4">
+          {error && (
+            <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-2 text-xs text-center">{error}</div>
+          )}
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400 text-base"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Mot de passe"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400 text-base"
+            required
+          />
+          <button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 text-lg">
+            {loading ? 'Connexion...' : 'Se connecter'}
+          </button>
+        </form>
+        <div className="mt-6 text-sm text-center">
+          Pas encore de compte ? <a href="/register" className="text-emerald-600 hover:underline font-semibold">Créer un compte</a>
         </div>
-        {errors.length > 0 && (
-          <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-4 text-xs">
-            <ul className="list-disc pl-5">
-              {errors.map((errMsg, i) => <li key={i}>{errMsg}</li>)}
-            </ul>
-          </div>
-        )}
-        {error && (
-          <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-4 text-xs">
-            {error}
-          </div>
-        )}
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          className="w-full mb-4 p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          className="w-full mb-4 p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400"
-          required
-        />
-        <button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2">
-          {loading ? 'Connexion...' : 'Se connecter'}
-        </button>
-        <div className="mt-4 text-sm text-center">
-          Pas de compte ? <a href="/register" className="text-emerald-600 hover:underline">Créer un compte</a>
-        </div>
-      </form>
-      {loading && (
-        <div className="fixed inset-0 bg-couleur-fond bg-opacity-70 flex items-center justify-center z-50">
-          <svg className="animate-spin h-12 w-12 text-couleur-principale" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-          </svg>
-        </div>
-      )}
+      </div>
     </div>
   );
 } 
