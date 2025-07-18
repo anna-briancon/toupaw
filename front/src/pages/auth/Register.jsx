@@ -8,19 +8,25 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setErrors([]);
     setLoading(true);
     try {
       const res = await axios.post('/auth/register', { name, email, password });
       localStorage.setItem('token', res.data.token);
       navigate('/create-pet');
     } catch (err) {
-      setError(err.response?.data?.error || 'Erreur lors de la création du compte');
+      if (err.response?.data?.errors) {
+        setErrors(err.response.data.errors.map(e => e.msg));
+      } else {
+        setError(err.response?.data?.error || 'Erreur lors de la création du compte');
+      }
     } finally {
       setLoading(false);
     }
@@ -35,9 +41,11 @@ export default function Register() {
           </div>
           <h2 className="font-ranille text-2xl sm:text-3xl font-bold text-gray-900">Créer un compte</h2>
         </div>
-        {error && (
-          <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-4">
-            {error}
+        {errors.length > 0 && (
+          <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-4 text-xs">
+            <ul className="list-disc pl-5">
+              {errors.map((errMsg, i) => <li key={i}>{errMsg}</li>)}
+            </ul>
           </div>
         )}
         <input

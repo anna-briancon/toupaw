@@ -33,11 +33,12 @@ function AppRoutes() {
   const hideNav = ['/login', '/register'].includes(location.pathname);
   const token = useSelector(state => state.auth.token);
   const navigate = useNavigate();
+  const publicRoutes = ['/login', '/register'];
   React.useEffect(() => {
-    if (!token) {
+    if (!token && !publicRoutes.includes(location.pathname)) {
       navigate('/login');
     }
-  }, [token, navigate]);
+  }, [token, navigate, location.pathname]);
   return (
     <>
       <Routes>

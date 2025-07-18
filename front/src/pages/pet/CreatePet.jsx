@@ -13,6 +13,7 @@ export function CreatePetForm({ onSuccess, onCancel }) {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [gender, setGender] = useState('male');
   const [error, setError] = useState('');
+  const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handlePhotoChange = (e) => {
@@ -28,6 +29,7 @@ export function CreatePetForm({ onSuccess, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setErrors([]);
     setLoading(true);
     try {
       const formData = new FormData();
@@ -46,7 +48,21 @@ export function CreatePetForm({ onSuccess, onCancel }) {
       });
       if (onSuccess) onSuccess();
     } catch (err) {
-      setError(err.response?.data?.error || 'Erreur lors de la création du chien');
+      // Gestion des erreurs d'upload (multer)
+      if (err.response?.data) {
+        // Erreur envoyée par multer (backend)
+        if (typeof err.response.data === 'string' && err.response.data.includes('Seuls les fichiers')) {
+          setError('Seuls les fichiers jpg, jpeg, png, webp de moins de 5 Mo sont autorisés.');
+        } else if (typeof err.response.data === 'string' && err.response.data.includes('File too large')) {
+          setError('Le fichier est trop volumineux (max 10 Mo).');
+        } else if (err.response.data?.errors) {
+          setErrors(err.response.data.errors.map(e => e.msg));
+        } else {
+          setError(err.response?.data?.error || 'Erreur lors de la création du chien');
+        }
+      } else {
+        setError('Erreur lors de la création du chien');
+      }
     } finally {
       setLoading(false);
     }
@@ -60,8 +76,12 @@ export function CreatePetForm({ onSuccess, onCancel }) {
         </div>
         <span className="text-base font-semibold m-2">Créer mon animal</span>
       </div>
-      {error && (
-        <div className="text-red-600 text-sm bg-red-50 p-2 sm:p-3 rounded-lg border border-red-200 mb-2">{error}</div>
+      {errors.length > 0 && (
+        <div className="text-red-600 text-sm bg-red-50 p-2 sm:p-3 rounded-lg border border-red-200 mb-2 text-xs">
+          <ul className="list-disc pl-5">
+            {errors.map((errMsg, i) => <li key={i}>{errMsg}</li>)}
+          </ul>
+        </div>
       )}
       <div>
         <label className="text-sm font-medium">Nom</label>

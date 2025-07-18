@@ -86,7 +86,6 @@ export default function PromenadesList() {
           return parsed.map(p => [p.lat, p.lng]);
         }
       } catch (e) {
-        console.warn('Erreur parsing geojson_path', walk.geojson_path, e);
       }
     }
     return [];

@@ -1,6 +1,17 @@
 const { models } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
+
+// Limite plus stricte sur l'auth (10 requêtes par 15 min par IP)
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: 'Trop de tentatives, réessayez plus tard.',
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => req.ip, // Par défaut, mais on l'explicite
+});
 
 exports.register = async (req, res) => {
   try {
@@ -26,6 +37,11 @@ exports.login = async (req, res) => {
     const valid = await bcrypt.compare(password, user.password_hash);
     if (!valid) return res.status(401).json({ error: 'Email ou mot de passe invalide' });
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    // Après avoir généré le token et avant de répondre :
+    const store = req.app.get('authLimiterStore');
+    if (store && store.resetKey) {
+      store.resetKey(req.ip); // Réinitialise le compteur pour cette IP
+    }
     res.json({ token });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -180,7 +180,6 @@ export default function Plus() {
         url: window.location.origin,
       }).catch((error) => {
         // Optionnel : gérer l'annulation ou l'erreur
-        console.log("Erreur lors du partage :", error);
       });
     } else {
       alert("La fonctionnalité de partage n'est pas supportée sur cet appareil.");
@@ -195,7 +194,6 @@ export default function Plus() {
     // Récupère la liste des animaux de l'utilisateur connecté
     const fetchPets = async () => {
       try {
-        console.log("Token utilisé :", localStorage.getItem('token'));
         const res = await axios.get("/pets");
         setPets(res.data);
       } catch (err) {

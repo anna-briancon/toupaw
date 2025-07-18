@@ -35,11 +35,13 @@ export default function WalkForm({ petId, initial, onSave, onCancel }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showDelete, setShowDelete] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setErrors([]);
     try {
       const start = new Date(`${date}T${time}`);
       const durationSec = parseInt(durationMin, 10) * 60;
@@ -82,9 +84,11 @@ export default function WalkForm({ petId, initial, onSave, onCancel }) {
       }
       onSave && onSave();
     } catch (err) {
-      setError(
-        err.response?.data?.error || "Erreur lors de l'enregistrement"
-      );
+      if (err.response?.data?.errors) {
+        setErrors(err.response.data.errors.map(e => e.msg));
+      } else {
+        setError(err.response?.data?.error || "Erreur lors de l'enregistrement");
+      }
     } finally {
       setLoading(false);
     }
@@ -170,6 +174,13 @@ export default function WalkForm({ petId, initial, onSave, onCancel }) {
             <span className="text-base">💩</span> Caca
           </label>
         </div>
+        {errors.length > 0 && (
+          <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200 mb-2 text-xs">
+            <ul className="list-disc pl-5">
+              {errors.map((errMsg, i) => <li key={i}>{errMsg}</li>)}
+            </ul>
+          </div>
+        )}
         {error && (
           <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">
             {error}

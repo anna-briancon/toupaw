@@ -9,6 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const auth = useSelector(state => state.auth);
@@ -23,13 +24,18 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setErrors([]);
     setLoading(true);
     try {
       const res = await axios.post('/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
       await dispatch(getUser());
     } catch (err) {
-      setError(err.response?.data?.error || 'Erreur de connexion');
+      if (err.response?.data?.errors) {
+        setErrors(err.response.data.errors.map(e => e.msg));
+      } else {
+        setError(err.response?.data?.error || 'Erreur de connexion');
+      }
     } finally {
       setLoading(false);
     }
@@ -44,9 +50,11 @@ export default function Login() {
           </div>
           <h2 className="font-ranille text-2xl sm:text-3xl font-bold text-gray-900">Connexion</h2>
         </div>
-        {error && (
-          <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-4">
-            {error}
+        {errors.length > 0 && (
+          <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-4 text-xs">
+            <ul className="list-disc pl-5">
+              {errors.map((errMsg, i) => <li key={i}>{errMsg}</li>)}
+            </ul>
           </div>
         )}
         <input

@@ -27,11 +27,13 @@ export default function AddReminderForm({ petId, onSave, onCancel, initial }) {
   const [recurrence, setRecurrence] = useState(initial?.recurrence || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setErrors([]);
     try {
       const date = new Date(`${healthDate}T${healthTime}`);
       if (initial?.id) {
@@ -53,7 +55,11 @@ export default function AddReminderForm({ petId, onSave, onCancel, initial }) {
       }
       onSave();
     } catch (err) {
-      setError(err.response?.data?.error || "Erreur lors de l'enregistrement");
+      if (err.response?.data?.errors) {
+        setErrors(err.response.data.errors.map(e => e.msg));
+      } else {
+        setError(err.response?.data?.error || "Erreur lors de l'enregistrement");
+      }
     } finally {
       setLoading(false);
     }
@@ -115,7 +121,8 @@ export default function AddReminderForm({ petId, onSave, onCancel, initial }) {
             ))}
           </select>
         </div>
-        {error && <div className="text-red-600 text-sm bg-red-50 p-2 sm:p-3 rounded-lg border border-red-200">{error}</div>}
+        {errors.length > 0 && <div className="text-red-600 text-xs bg-red-50 p-2 sm:p-3 rounded-lg border border-red-200 mb-2"><ul className="list-disc pl-5">{errors.map((errMsg, i) => <li key={i}>{errMsg}</li>)}</ul></div>}
+        {error && <div className="text-red-600 text-xs bg-red-50 p-2 sm:p-3 rounded-lg border border-red-200">{error}</div>}
         <div className="flex gap-2 sm:gap-3 pt-2 sm:pt-4">
           <button type="submit" disabled={loading} className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-1.5 sm:py-2 rounded-xl shadow hover:from-emerald-600 hover:to-teal-600 transition text-sm">
             {loading ? 'Enregistrement...' : (initial ? 'Modifier' : 'Ajouter')}

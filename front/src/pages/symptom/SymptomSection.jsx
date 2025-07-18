@@ -23,6 +23,7 @@ function AddSymptomForm({ petId, onSave, onCancel, initial }) {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [errors, setErrors] = useState([]);
   const [showDelete, setShowDelete] = useState(false);
 
   const handleChange = e => {
@@ -33,6 +34,7 @@ function AddSymptomForm({ petId, onSave, onCancel, initial }) {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setErrors([]);
     try {
       const eventDate = new Date(`${form.date}T${form.time}`);
       if (initial && initial.id) {
@@ -42,7 +44,11 @@ function AddSymptomForm({ petId, onSave, onCancel, initial }) {
       }
       onSave();
     } catch (err) {
-      setError(err.response?.data?.error || "Erreur lors de l'enregistrement");
+      if (err.response?.data?.errors) {
+        setErrors(err.response.data.errors.map(e => e.msg));
+      } else {
+        setError(err.response?.data?.error || "Erreur lors de l'enregistrement");
+      }
     } finally {
       setLoading(false);
     }
@@ -83,7 +89,8 @@ function AddSymptomForm({ petId, onSave, onCancel, initial }) {
           <label className="text-sm font-medium">URL photo (optionnel)</label>
           <input name="photo_url" value={form.photo_url} onChange={handleChange} className="w-full border rounded p-2 mt-1" />
         </div>
-        {error && <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">{error}</div>}
+        {errors.length > 0 && <div className="text-red-600 text-xs bg-red-50 p-3 rounded-lg border border-red-200 mb-2"><ul className="list-disc pl-5">{errors.map((errMsg, i) => <li key={i}>{errMsg}</li>)}</ul></div>}
+        {error && <div className="text-red-600 text-xs bg-red-50 p-3 rounded-lg border border-red-200">{error}</div>}
         <div className="flex gap-3 pt-4">
           <button type="submit" disabled={loading} className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-2 rounded-xl shadow hover:from-emerald-600 hover:to-teal-600 transition">
             {loading ? 'Enregistrement...' : (initial ? 'Modifier' : 'Ajouter')}
