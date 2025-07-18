@@ -47,18 +47,17 @@ const globalLimiter = rateLimit({
 app.use(globalLimiter);
 
 // Limite plus stricte sur l'auth (10 requêtes par 15 min par IP)
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
-  message: 'Trop de tentatives, réessayez plus tard.',
-  standardHeaders: true,
-  legacyHeaders: false,
-  keyGenerator: (req) => req.ip, // Par défaut, mais on l'explicite
-});
-app.use('/api/auth', authLimiter);
-
+// const authLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000,
+//   max: 10,
+//   message: 'Trop de tentatives, réessayez plus tard.',
+//   standardHeaders: true,
+//   legacyHeaders: false,
+//   keyGenerator: (req) => req.ip, // Par défaut, mais on l'explicite
+// });
+// app.use('/api/auth', authLimiter);
 // Expose le store pour pouvoir le réinitialiser dans le contrôleur
-app.set('authLimiterStore', authLimiter.store);
+// app.set('authLimiterStore', authLimiter.store);
 
 // Autoriser CORS sur les fichiers uploadés
 app.use('/uploads', (req, res, next) => {
