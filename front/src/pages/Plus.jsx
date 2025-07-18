@@ -263,7 +263,7 @@ export default function Plus() {
         <div className="grid grid-cols-2 gap-4">
           <Button
             variant="outline"
-            className="border-emerald-200 text-emerald-700 hover:bg-emerald-50 bg-transparent"
+            className="border-emerald-200 text-emerald-700 hover:bg-emerald-50 bg-transparent text-sm"
             onClick={handleShare}
           >
             Partager l'app

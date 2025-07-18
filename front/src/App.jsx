@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from 'react-redux';
-import { Navigate, BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Navigate, BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import BottomNav from './components/BottomNav';
@@ -31,6 +31,13 @@ function PrivateRoute({ children }) {
 function AppRoutes() {
   const location = useLocation();
   const hideNav = ['/login', '/register'].includes(location.pathname);
+  const token = useSelector(state => state.auth.token);
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
   return (
     <>
       <Routes>

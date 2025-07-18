@@ -47,6 +47,9 @@ function MapAutoCenter({ position }) {
 }
 
 export default function PromenadeSection({ petId, onShowHistory }) {
+  // Ajout d'une clé unique pour le localStorage par utilisateur/animal
+  const walkStorageKey = petId ? `walk_in_progress_${petId}` : 'walk_in_progress';
+
   const [lastWalk, setLastWalk] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
@@ -61,6 +64,42 @@ export default function PromenadeSection({ petId, onShowHistory }) {
   const [confirmPipi, setConfirmPipi] = useState(false);
   const [confirmCaca, setConfirmCaca] = useState(false);
   const watchId = useRef(null);
+
+  // Restaure l'état de la balade en cours au montage
+  useEffect(() => {
+    if (!petId) return;
+    const saved = localStorage.getItem(walkStorageKey);
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        setIsTracking(data.isTracking || false);
+        setPositions(data.positions || []);
+        setStartTime(data.startTime || null);
+        setElapsed(data.elapsed || 0);
+        setDistance(data.distance || 0);
+        setEvents(data.events || []);
+      } catch (e) {
+        // Si erreur, on ignore
+      }
+    }
+  }, [petId]);
+
+  // Sauvegarde l'état de la balade en cours à chaque changement
+  useEffect(() => {
+    if (!petId) return;
+    if (isTracking) {
+      localStorage.setItem(walkStorageKey, JSON.stringify({
+        isTracking,
+        positions,
+        startTime,
+        elapsed,
+        distance,
+        events,
+      }));
+    } else {
+      localStorage.removeItem(walkStorageKey);
+    }
+  }, [isTracking, positions, startTime, elapsed, distance, events, petId]);
 
   useEffect(() => {
     if (!petId) return;
@@ -164,6 +203,8 @@ export default function PromenadeSection({ petId, onShowHistory }) {
       setElapsed(0);
       setStartTime(null);
       setEvents([]);
+      // Nettoie le localStorage après enregistrement
+      localStorage.removeItem(walkStorageKey);
       await axios.get(`/walks/${petId}`).then(res => {
         const sorted = res.data.sort((a, b) => new Date(b.start_time) - new Date(a.start_time));
         setLastWalk(sorted[0] || null);
@@ -238,8 +279,8 @@ export default function PromenadeSection({ petId, onShowHistory }) {
             </button>
             {showConfirm && (
               <>
-                <div className="fixed inset-0 bg-black bg-opacity-40 z-[999]"></div>
-                <div className="fixed inset-0 flex items-center justify-center z-[1000]">
+                <div className="fixed inset-0 bg-black bg-opacity-40 z-[2000]"></div>
+                <div className="fixed inset-0 flex items-center justify-center z-[3000]">
                   <div className="bg-white rounded-2xl shadow-lg p-6 w-80 max-w-full animate-fade-in">
                     <div className="text-base font-bold mb-2 text-center text-gray-900">Enregistrer la balade</div>
                     <div className="mb-4 text-gray-500 text-sm text-center">Voulez-vous enregistrer cette balade&nbsp;?</div>
