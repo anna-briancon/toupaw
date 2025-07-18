@@ -48,7 +48,9 @@ export function CreatePetForm({ onSuccess, onCancel }) {
       });
       if (onSuccess) onSuccess();
     } catch (err) {
+      // Gestion des erreurs d'upload (multer)
       if (err.response?.data) {
+        // Erreur envoyée par multer (backend)
         if (typeof err.response.data === 'string' && err.response.data.includes('Seuls les fichiers')) {
           setError('Seuls les fichiers jpg, jpeg, png, webp de moins de 5 Mo sont autorisés.');
         } else if (typeof err.response.data === 'string' && err.response.data.includes('File too large')) {
@@ -67,85 +69,98 @@ export function CreatePetForm({ onSuccess, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto bg-white rounded-2xl p-6 sm:p-10 flex flex-col items-center space-y-4 relative max-h-[90vh] overflow-y-auto">
-      <div className="flex items-center gap-1 mb-1 sm:mb-2">
+    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-xl p-4 sm:p-8 w-full max-w-[95vw] sm:w-96 space-y-2 sm:space-y-4 relative max-h-[90vh] overflow-y-auto">
+      <div className="flex items-center gap-2 mb-1 sm:mb-2">
         <div className="p-1.5 sm:p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-          <PawPrint className="h-5 w-5 sm:h-5 sm:w-5 text-white" />
+          <PawPrint className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
         </div>
-        <span className="text-2xl font-semibold m-2 font-ranille">Créer mon animal</span>
+        <span className="text-base font-semibold m-2">Créer mon animal</span>
       </div>
       {errors.length > 0 && (
-        <div className="text-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-2 text-xs text-center">
+        <div className="text-red-600 text-sm bg-red-50 p-2 sm:p-3 rounded-lg border border-red-200 mb-2 text-xs">
           <ul className="list-disc pl-5">
             {errors.map((errMsg, i) => <li key={i}>{errMsg}</li>)}
           </ul>
         </div>
       )}
-      {error && (
-        <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 mb-2 text-xs text-center">{error}</div>
-      )}
-      <input
-        type="text"
-        placeholder="Nom"
-        value={name}
-        onChange={e => setName(e.target.value)}
-        className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400 text-base"
-        required
-      />
-      <input
-        type="date"
-        value={birthdate}
-        onChange={e => setBirthdate(e.target.value)}
-        className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400 text-base"
-        required
-      />
-      <select
-        value={species}
-        onChange={e => setSpecies(e.target.value)}
-        className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400 text-base"
-      >
-        <option value="dog">Chien</option>
-        <option value="cat">Chat</option>
-        <option value="other">Autre</option>
-      </select>
-      <select
-        value={gender}
-        onChange={e => setGender(e.target.value)}
-        className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400 text-base"
-      >
-        <option value="male">Mâle</option>
-        <option value="female">Femelle</option>
-        <option value="other">Autre</option>
-      </select>
-      <input
-        type="text"
-        placeholder="Race"
-        value={breed}
-        onChange={e => setBreed(e.target.value)}
-        className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400 text-base"
-        required
-      />
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handlePhotoChange}
-        className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-emerald-400 text-base"
-      />
-      {photoPreview && (
-        <img src={photoPreview} alt="Aperçu" className="mt-2 rounded-lg max-h-40 mx-auto" />
-      )}
-      <button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-3 rounded-xl shadow-lg hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 flex items-center justify-center gap-2 text-base">
-        {loading ? 'Création...' : 'Créer mon animal'}
-      </button>
-      {onCancel && (
-        <button
-          type="button"
-          onClick={onCancel}
-          className="w-full mt-2 bg-gray-100 text-gray-700 font-semibold py-3 rounded-xl border border-gray-300 hover:bg-gray-200 transition text-base"
+      <div>
+        <label className="text-sm font-medium">Nom</label>
+        <input
+          type="text"
+          placeholder="Nom"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          className="w-full border rounded p-2 mt-1 text-sm"
+          required
+        />
+      </div>
+      <div>
+        <label className="text-sm font-medium">Date de naissance</label>
+        <input
+          type="date"
+          value={birthdate}
+          onChange={e => setBirthdate(e.target.value)}
+          className="w-full border rounded p-2 mt-1 text-sm"
+          required
+        />
+      </div>
+      <div>
+        <label className="text-sm font-medium">Espèce</label>
+        <select
+          value={species}
+          onChange={e => setSpecies(e.target.value)}
+          className="w-full border rounded p-2 mt-1 text-sm"
         >
-          Annuler
+          <option value="dog">Chien</option>
+          <option value="cat">Chat</option>
+          <option value="other">Autre</option>
+        </select>
+      </div>
+      <div>
+        <label className="text-sm font-medium">Sexe</label>
+        <select
+          value={gender}
+          onChange={e => setGender(e.target.value)}
+          className="w-full border rounded p-2 mt-1 text-sm"
+        >
+          <option value="male">Mâle</option>
+          <option value="female">Femelle</option>
+          <option value="other">Autre</option>
+        </select>
+      </div>
+      <div>
+        <label className="text-sm font-medium">Race</label>
+        <input
+          type="text"
+          placeholder="Race"
+          value={breed}
+          onChange={e => setBreed(e.target.value)}
+          className="w-full border rounded p-2 mt-1 text-sm"
+          required
+        />
+      </div>
+      <div>
+        <label className="text-sm font-medium">Photo</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handlePhotoChange}
+          className="w-full border rounded p-2 mt-1 text-sm"
+        />
+        {photoPreview && (
+          <img src={photoPreview} alt="Aperçu" className="mt-2 rounded-lg max-h-40 mx-auto" />
+        )}
+      </div>
+      <div className="flex gap-2 sm:gap-3 pt-2 sm:pt-4">
+        <button type="submit" disabled={loading} className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-1.5 sm:py-2 rounded-xl shadow hover:from-emerald-600 hover:to-teal-600 transition text-sm">
+          {loading ? 'Création...' : 'Créer mon animal'}
         </button>
-      )}
+        {onCancel && (
+          <button type="button" onClick={onCancel} className="flex-1 bg-gray-100 text-gray-700 font-semibold py-1.5 sm:py-2 rounded-xl border border-gray-300 hover:bg-gray-200 transition text-sm">
+            Annuler
+          </button>
+        )}
+      </div>
       {loading && <LoadingSpinner overlay />}
     </form>
   );
@@ -154,12 +169,8 @@ export function CreatePetForm({ onSuccess, onCancel }) {
 export function CreatePetModal({ open, onClose, onSuccess }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 p-3">
-      <div className="w-full max-w-xl h-[80vh] bg-white rounded-2xl flex flex-col justify-center items-center p-0 overflow-hidden">
-        <div className="w-full h-full overflow-y-auto p-6 sm:p-10 flex flex-col items-center">
-          <CreatePetForm onSuccess={onSuccess} onCancel={onClose} />
-        </div>
-      </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+      <CreatePetForm onSuccess={onSuccess} onCancel={onClose} />
     </div>
   );
 }
