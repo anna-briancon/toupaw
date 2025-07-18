@@ -41,14 +41,14 @@ function SummaryCard({ icon, label, value, unit, time, onClick }) {
       <span className="text-2xl mb-1">{icon}</span>
       <span className="font-medium text-sm mb-1">{label}</span>
       {value !== undefined && (
-        <span className="text-emerald-600 font-bold text-base">{value}{unit}</span>
+        <span className="text-emerald-600 font-bold text-sm">{value}{unit}</span>
       )}
       {time && <span className="text-xs text-gray-400 mt-1">{time}</span>}
     </div>
   );
 }
 
-// Dictionnaire de traduction des types et labels d'événements
+// Dictionnaire de traduction des types et labels des rappels
 const EVENT_LABELS_FR = {
   walk: 'Promenade',
   meal: 'Repas',
@@ -319,7 +319,7 @@ export default function Dashboard() {
         const now = new Date();
         const remindersFuture = remindersRes.data.filter(r => new Date(r.due_date) > now && !r.completed);
         setReminders(remindersFuture.slice(0, 7));
-        // Événements à venir (santé, repas, balades, daily events)
+        // Rappels à venir (santé, repas, balades, daily events)
         const [healthRes, mealsRes, walksRes, dailyRes, symptomsRes] = await Promise.all([
           axios.get(`/health-events/${pet.id}`),
           axios.get(`/meals/${pet.id}`),
@@ -327,10 +327,10 @@ export default function Dashboard() {
           axios.get(`/daily-events/${pet.id}`),
           axios.get(`/symptoms/${pet.id}`),
         ]);
-        // Filtrer pour ne garder que les événements futurs
+        // Filtrer pour ne garder que les rappels futurs
         const healthFuture = healthRes.data.filter(e => new Date(e.date) > now).map(e => ({
           id: e.id, // <-- ajoute l'id ici !
-          type: e.type, // Utilise le vrai type d'événement santé
+          type: e.type, // Utilise le vrai type de rappel santé
           label: e.type, // OK si type est déjà une clé fr, sinon voir ci-dessous
           date: e.date,
           note: e.note,
@@ -501,7 +501,7 @@ export default function Dashboard() {
             <h2 className="font-semibold text-base mb-2 text-gray-900">À venir</h2>
             <div className="space-y-2">
               {(() => {
-                // Séparer événements en retard et à venir
+                // Séparer rappels en retard et à venir
                 const now = new Date();
                 const lateEvents = futureEvents.filter(evt => new Date(evt.date) < now && !evt.completed);
                 const upcomingEvents = futureEvents.filter(evt => new Date(evt.date) >= now);
@@ -514,7 +514,7 @@ export default function Dashboard() {
                   displayEvents = upcomingEvents.slice(0, 3);
                 }
                 if (futureEvents.length === 0) {
-                  return <span className="text-gray-400">Aucun événement à venir</span>;
+                  return <span className="text-gray-400">Aucun rappel à venir</span>;
                 }
                 return (
                   <>
@@ -544,7 +544,7 @@ export default function Dashboard() {
         {/* Résumé du jour */}
         <div className="mb-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow">
           <div className="p-4 sm:p-6">
-            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
               <h2 className="font-semibold text-base text-gray-900">Résumé du jour</h2>
               <div className="flex items-center gap-1">
                 <button
@@ -833,7 +833,7 @@ export default function Dashboard() {
               </div>
             </div>
             {/* Filtres sous le header */}
-            <div className="flex justify-center gap-2 mb-4 text-sm">
+            <div className="flex justify-center gap-2 mb-2 text-sm">
               <button
                 onClick={() => setCalendarView('month')}
                 className={`px-2 py-1 rounded ${calendarView === 'month' ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-700'}`}
@@ -947,7 +947,7 @@ export default function Dashboard() {
                   {(() => {
                     const key = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
                     const evts = calendarEvents[key] || [];
-                    if (evts.length === 0) return <div className="text-gray-400">Aucun événement ce jour</div>;
+                    if (evts.length === 0) return <div className="text-gray-400">Aucun rappel ce jour</div>;
                     return evts.map((e, i) => (
                       <div key={i} className="flex items-center gap-3 bg-emerald-50 border border-emerald-100 rounded-lg px-3 py-2">
                         <span className="text-2xl">{CALENDAR_LUCIDE_ICONS[e.type] || <CalendarIcon className="w-6 h-6 text-orange-500" />}</span>
@@ -969,7 +969,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Modale d'édition d'événement */}
+        {/* Modale d'édition de rappel */}
         {editEvent && (
           <>
             {/* Rappel (reminder) */}

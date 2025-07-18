@@ -100,32 +100,31 @@ export default function ReminderEdit({ open, id, onSave, onCancel }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <form onSubmit={handleSave} className="bg-white rounded-2xl shadow-xl p-8 w-96 max-w-full space-y-4 relative">
-        <div className="flex items-center gap-2 mb-2">
-          <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-            <IconComponent className="h-5 w-5 text-white" />
+      <form onSubmit={handleSave} className="bg-white rounded-2xl shadow-xl p-4 sm:p-8 w-full max-w-[95vw] sm:w-96 space-y-2 sm:space-y-4 relative max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center gap-2 mb-1 sm:mb-2">
+          <div className="p-1.5 sm:p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
+            <IconComponent className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
           </div>
-          <span className="text-base font-semibold">Modifier un événement santé</span>
+          <span className="text-base font-semibold m-2">Modifier un rappel santé</span>
         </div>
         {loading && <LoadingSpinner overlay />}
         {!event ? (
-          <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">Événement introuvable</div>
+          <div className="text-red-600 text-sm bg-red-50 p-2 sm:p-3 rounded-lg border border-red-200">Rappel introuvable</div>
         ) : (
           <>
             <div>
-              <label className="text-sm font-medium">Type d'événement</label>
-            
-              <div className="flex flex-wrap gap-2 mt-2">
+              <label className="text-sm font-medium">Type de rappel</label>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-1">
                 {HEALTH_TYPES.map(t => {
                   const Icon = t.icon;
                   return (
                     <button
                       key={t.value}
                       type="button"
-                      className={`flex items-center gap-1 px-2 py-1 rounded border text-xs font-semibold transition ${event.type === t.value ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-500' : 'bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50'}`}
+                      className={`flex items-center gap-1 px-1.5 py-0.5 rounded border text-xs font-semibold transition ${event.type === t.value ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-500' : 'bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50'}`}
                       onClick={() => setEvent(ev => ({ ...ev, type: t.value }))}
                     >
-                      <Icon className="h-4 w-4" />
+                      <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       {t.label}
                     </button>
                   );
@@ -134,12 +133,12 @@ export default function ReminderEdit({ open, id, onSave, onCancel }) {
             </div>
             <div>
               <label className="text-sm font-medium">Note</label>
-              <textarea name="note" value={event.note || ''} onChange={handleChange} className="w-full border rounded p-2 mt-1" rows={2} />
+              <textarea name="note" value={event.note || ''} onChange={handleChange} className="w-full border rounded p-2 mt-1 text-sm" rows={2} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
               <div>
                 <label className="text-sm font-medium">Date</label>
-                <input type="date" name="date" value={event.date ? event.date.slice(0, 10) : ''} onChange={e => setEvent(ev => ({ ...ev, date: e.target.value + (event.date ? event.date.slice(10) : 'T12:00') }))} className="w-full border rounded p-2 mt-1" required />
+                <input type="date" name="date" value={event.date ? event.date.slice(0, 10) : ''} onChange={e => setEvent(ev => ({ ...ev, date: e.target.value + (event.date ? event.date.slice(10) : 'T12:00') }))} className="w-full border rounded p-2 mt-1 text-sm" required />
               </div>
               <div>
                 <label className="text-sm font-medium">Heure</label>
@@ -148,12 +147,12 @@ export default function ReminderEdit({ open, id, onSave, onCancel }) {
                     const date = ev.date ? ev.date.slice(0, 10) : '';
                     return { ...ev, date: date + 'T' + e.target.value };
                   });
-                }} className="w-full border rounded p-2 mt-1" required />
+                }} className="w-full border rounded p-2 mt-1 text-sm" required />
               </div>
             </div>
             <div>
               <label className="text-sm font-medium">Répétition</label>
-              <select name="recurrence" value={event.recurrence || ''} onChange={handleChange} className="w-full border rounded p-2 mt-1">
+              <select name="recurrence" value={event.recurrence || ''} onChange={handleChange} className="w-full border rounded p-2 mt-1 text-sm">
                 {RECURRENCE_OPTIONS.map(opt => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
@@ -161,37 +160,37 @@ export default function ReminderEdit({ open, id, onSave, onCancel }) {
             </div>
             <div className="text-xs text-gray-500">Statut : {event.completed ? <span className="text-green-600 font-semibold">Terminé</span> : <span className="text-yellow-600 font-semibold">Actif</span>}</div>
             {event.group_id && (
-              <div className="flex items-center gap-2 mt-2">
+              <div className="flex items-center gap-2 mt-1">
                 <input type="checkbox" id="editSeries" checked={editSeries} onChange={e => setEditSeries(e.target.checked)} />
                 <label htmlFor="editSeries" className="text-xs text-gray-700 cursor-pointer">Modifier toute la série</label>
               </div>
             )}
-            {error && <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">{error}</div>}
-            <div className="flex gap-3 pt-4">
-              <button type="submit" disabled={saving} className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-2 rounded-xl shadow hover:from-emerald-600 hover:to-teal-600 transition">
+            {error && <div className="text-red-600 text-sm bg-red-50 p-2 sm:p-3 rounded-lg border border-red-200">{error}</div>}
+            <div className="flex gap-2 sm:gap-3 pt-2 sm:pt-4">
+              <button type="submit" disabled={saving} className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-1.5 sm:py-2 rounded-xl shadow hover:from-emerald-600 hover:to-teal-600 transition text-sm">
                 {saving ? 'Enregistrement...' : 'Enregistrer'}
               </button>
-              <button type="button" onClick={onCancel} className="flex-1 bg-gray-100 text-gray-700 font-semibold py-2 rounded-xl border border-gray-300 hover:bg-gray-200 transition">
+              <button type="button" onClick={onCancel} className="flex-1 bg-gray-100 text-gray-700 font-semibold py-1.5 sm:py-2 rounded-xl border border-gray-300 hover:bg-gray-200 transition text-sm">
                 Annuler
               </button>
             </div>
-            <div className="flex gap-3 pt-2">
+            <div className="flex gap-2 sm:gap-3 pt-1 sm:pt-2">
               {!event.completed && (
-                <button type="button" onClick={handleMarkCompleted} className="flex-1 bg-green-100 text-green-700 font-semibold py-2 rounded-xl border border-green-200 hover:bg-green-200 transition">
+                <button type="button" onClick={handleMarkCompleted} className="flex-1 bg-green-100 text-green-700 font-semibold py-1.5 sm:py-2 rounded-xl border border-green-200 hover:bg-green-200 transition text-sm">
                   Marquer comme terminé
                 </button>
               )}
               {event.completed && (
-                <button type="button" onClick={handleMarkActive} className="flex-1 bg-yellow-50 text-yellow-700 font-semibold py-2 rounded-xl border border-yellow-200 hover:bg-yellow-100 transition">
+                <button type="button" onClick={handleMarkActive} className="flex-1 bg-yellow-50 text-yellow-700 font-semibold py-1.5 sm:py-2 rounded-xl border border-yellow-200 hover:bg-yellow-100 transition text-sm">
                   Repasser en actif
                 </button>
               )}
               <button
                 type="button"
                 onClick={handleDelete}
-                className="flex-1 bg-red-100 text-red-700 font-semibold py-2 rounded-xl border border-red-200 hover:bg-red-200 transition"
+                className="flex-1 bg-red-100 text-red-700 font-semibold py-1.5 sm:py-2 rounded-xl border border-red-200 hover:bg-red-200 transition text-sm"
               >
-                Supprimer l'événement
+                Supprimer le rappel
               </button>
             </div>
           </>
@@ -199,8 +198,8 @@ export default function ReminderEdit({ open, id, onSave, onCancel }) {
       </form>
       <ConfirmModal
         open={confirmDeleteOpen}
-        title="Supprimer cet événement ?"
-        message="Cette action est irréversible. Voulez-vous vraiment supprimer cet événement santé ?"
+        title="Supprimer ce rappel ?"
+        message="Cette action est irréversible. Voulez-vous vraiment supprimer ce rappel santé ?"
         onConfirm={confirmDelete}
         onCancel={() => setConfirmDeleteOpen(false)}
         confirmText="Supprimer"

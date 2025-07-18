@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from '../../utils/axiosInstance';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PawPrint } from 'lucide-react';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 export function CreatePetForm({ onSuccess, onCancel }) {
   const [name, setName] = useState('');
@@ -52,15 +53,15 @@ export function CreatePetForm({ onSuccess, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-xl p-8 w-96 max-w-full space-y-4">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-          <PawPrint className="h-6 w-6 text-white" />
+    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-xl p-4 sm:p-8 w-full max-w-[95vw] sm:w-96 space-y-2 sm:space-y-4 relative max-h-[90vh] overflow-y-auto">
+      <div className="flex items-center gap-2 mb-1 sm:mb-2">
+        <div className="p-1.5 sm:p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
+          <PawPrint className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
         </div>
-        <h2 className="font-ranille text-2xl sm:text-3xl font-bold text-gray-900">Créer mon animal</h2>
+        <span className="text-base font-semibold m-2">Créer mon animal</span>
       </div>
       {error && (
-        <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200 mb-2">{error}</div>
+        <div className="text-red-600 text-sm bg-red-50 p-2 sm:p-3 rounded-lg border border-red-200 mb-2">{error}</div>
       )}
       <div>
         <label className="text-sm font-medium">Nom</label>
@@ -69,7 +70,7 @@ export function CreatePetForm({ onSuccess, onCancel }) {
           placeholder="Nom"
           value={name}
           onChange={e => setName(e.target.value)}
-          className="w-full border rounded p-2 mt-1"
+          className="w-full border rounded p-2 mt-1 text-sm"
           required
         />
       </div>
@@ -79,7 +80,7 @@ export function CreatePetForm({ onSuccess, onCancel }) {
           type="date"
           value={birthdate}
           onChange={e => setBirthdate(e.target.value)}
-          className="w-full border rounded p-2 mt-1"
+          className="w-full border rounded p-2 mt-1 text-sm"
           required
         />
       </div>
@@ -88,7 +89,7 @@ export function CreatePetForm({ onSuccess, onCancel }) {
         <select
           value={species}
           onChange={e => setSpecies(e.target.value)}
-          className="w-full border rounded p-2 mt-1"
+          className="w-full border rounded p-2 mt-1 text-sm"
         >
           <option value="dog">Chien</option>
           <option value="cat">Chat</option>
@@ -100,7 +101,7 @@ export function CreatePetForm({ onSuccess, onCancel }) {
         <select
           value={gender}
           onChange={e => setGender(e.target.value)}
-          className="w-full border rounded p-2 mt-1"
+          className="w-full border rounded p-2 mt-1 text-sm"
         >
           <option value="male">Mâle</option>
           <option value="female">Femelle</option>
@@ -114,7 +115,7 @@ export function CreatePetForm({ onSuccess, onCancel }) {
           placeholder="Race"
           value={breed}
           onChange={e => setBreed(e.target.value)}
-          className="w-full border rounded p-2 mt-1"
+          className="w-full border rounded p-2 mt-1 text-sm"
           required
         />
       </div>
@@ -124,30 +125,23 @@ export function CreatePetForm({ onSuccess, onCancel }) {
           type="file"
           accept="image/*"
           onChange={handlePhotoChange}
-          className="w-full border rounded p-2 mt-1"
+          className="w-full border rounded p-2 mt-1 text-sm"
         />
         {photoPreview && (
           <img src={photoPreview} alt="Aperçu" className="mt-2 rounded-lg max-h-40 mx-auto" />
         )}
       </div>
-      <div className="flex gap-3 pt-4">
-        <button type="submit" disabled={loading} className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-2 rounded-xl shadow hover:from-emerald-600 hover:to-teal-600 transition">
+      <div className="flex gap-2 sm:gap-3 pt-2 sm:pt-4">
+        <button type="submit" disabled={loading} className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-1.5 sm:py-2 rounded-xl shadow hover:from-emerald-600 hover:to-teal-600 transition text-sm">
           {loading ? 'Création...' : 'Créer mon animal'}
         </button>
         {onCancel && (
-          <button type="button" onClick={onCancel} className="flex-1 bg-gray-100 text-gray-700 font-semibold py-2 rounded-xl border border-gray-300 hover:bg-gray-200 transition">
+          <button type="button" onClick={onCancel} className="flex-1 bg-gray-100 text-gray-700 font-semibold py-1.5 sm:py-2 rounded-xl border border-gray-300 hover:bg-gray-200 transition text-sm">
             Annuler
           </button>
         )}
       </div>
-      {loading && (
-        <div className="fixed inset-0 bg-couleur-fond bg-opacity-70 flex items-center justify-center z-50">
-          <svg className="animate-spin h-12 w-12 text-couleur-principale" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-          </svg>
-        </div>
-      )}
+      {loading && <LoadingSpinner overlay />}
     </form>
   );
 }

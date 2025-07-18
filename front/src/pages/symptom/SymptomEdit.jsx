@@ -56,7 +56,7 @@ export default function SymptomEdit({ open, id, onSave, onCancel }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <form onSubmit={handleSave} className="bg-white rounded-2xl shadow-xl p-8 w-96 max-w-full space-y-4 relative">
+      <form onSubmit={handleSave} className="bg-white rounded-2xl shadow-xl p-6 w-96 max-w-full space-y-4 relative">
         <div className="flex items-center gap-2 mb-2">
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <AlertCircle className="h-5 w-5 text-white" />

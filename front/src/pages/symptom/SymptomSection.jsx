@@ -151,11 +151,11 @@ export default function SymptomSection({ petId, onShowHistory }) {
             <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
               <AlertCircle className="h-6 w-6 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 font-ranille">Symptômes</h2>
+            <h2 className="text-xl font-bold text-gray-900 font-ranille">Symptômes</h2>
           </div>
           <button
             onClick={onShowHistory}
-            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition"
+            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition text-sm"
           >
             Historique
             <ChevronRight className="ml-1 h-4 w-4" />
@@ -164,24 +164,24 @@ export default function SymptomSection({ petId, onShowHistory }) {
         <div className="space-y-4 mb-6">
           {loading && <LoadingSpinner overlay />}
           {lastSymptom ? (
-            <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-6 flex items-center justify-between cursor-pointer hover:shadow-md"
+            <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-4 flex items-center justify-between cursor-pointer hover:shadow-md"
               onClick={() => setEditSymptom(lastSymptom)}
             >
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-lg bg-pink-100 text-pink-700">
-                  <AlertCircle className="h-6 w-6" />
+                <div className="p-2 rounded-lg bg-pink-100 text-pink-700">
+                  <AlertCircle className="h-5 w-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-gray-900">{lastSymptom.description}</span>
+                    <span className="font-semibold text-gray-900 text-sm">{lastSymptom.description}</span>
                     {lastSymptom.intensity && <span className="text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded ml-2">{lastSymptom.intensity}</span>}
                   </div>
-                  <div className="text-sm text-gray-600 mt-1 flex items-center gap-2">
+                  <div className="text-xs text-gray-600 mt-1 flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
                     {new Date(lastSymptom.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                     <span>{new Date(lastSymptom.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
                   </div>
-                  <div className="text-sm text-gray-600 mt-1 flex items-center gap-2">
+                  <div className="text-xs text-gray-600 mt-1 flex items-center gap-2">
                     {lastSymptom.location && <span>({lastSymptom.location})</span>}
                   </div>
                   {lastSymptom.photo_url && (
@@ -204,7 +204,7 @@ export default function SymptomSection({ petId, onShowHistory }) {
         </div>
         <button
           onClick={() => setShowAdd(true)}
-          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 text-sm"
         >
           <Plus className="mr-2 h-5 w-5" />
           Ajouter un symptôme

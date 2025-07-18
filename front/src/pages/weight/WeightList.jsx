@@ -220,7 +220,7 @@ export default function PoidsList() {
                   const totalChange = weights[0].value - weights[weights.length - 1].value;
                   if (Math.abs(totalChange) < 0.1) {
                     return (
-                      <span className="ml-auto flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700">
+                      <span className="ml-auto flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
                         <Minus className="h-3 w-3" />
                         Stable
                       </span>
@@ -228,14 +228,14 @@ export default function PoidsList() {
                   }
                   if (totalChange > 0) {
                     return (
-                      <span className="ml-auto flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-700">
+                      <span className="ml-auto flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
                         <TrendingUp className="h-3 w-3" />
                         +{totalChange.toFixed(1)} kg
                       </span>
                     );
                   }
                   return (
-                    <span className="ml-auto flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700">
+                    <span className="ml-auto flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
                       <TrendingDown className="h-3 w-3" />
                       {totalChange.toFixed(1)} kg
                     </span>
@@ -344,21 +344,21 @@ export default function PoidsList() {
                 const diff = weight.value - weights[index + 1].value;
                 if (Math.abs(diff) < 0.1) {
                   trend = (
-                    <span className="flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700">
+                    <span className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
                       <Minus className="h-3 w-3" />
                       Stable
                     </span>
                   );
                 } else if (diff > 0) {
                   trend = (
-                    <span className="flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-700">
+                    <span className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
                       <TrendingUp className="h-3 w-3" />
                       +{diff.toFixed(1)} kg
                     </span>
                   );
                 } else {
                   trend = (
-                    <span className="flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700">
+                    <span className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
                       <TrendingDown className="h-3 w-3" />
                       {diff.toFixed(1)} kg
                     </span>
@@ -373,14 +373,14 @@ export default function PoidsList() {
                 >
                   <div className="flex items-center gap-3 sm:gap-5">
                     <div className="flex-shrink-0 p-2 sm:p-3 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center transition-transform group-hover:scale-105">
-                      <Weight className="h-6 w-6 sm:h-7 sm:w-7" />
+                      <Weight className="h-5 w-5 sm:h-7 sm:w-7" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-0.5">
-                        <span className="font-semibold text-base sm:text-base text-gray-900 truncate">{weight.value} kg</span>
+                        <span className="font-semibold text-sm sm:text-sm text-gray-900 truncate">{weight.value} kg</span>
                         {trend}
                       </div>
-                      <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 mb-1">
+                      <div className="flex items-center gap-1 text-xs sm:text-xs text-gray-500 mb-1">
                         <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M8 7V3M16 7V3M3 11h18M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z"></path></svg>
                         {(() => {
                           const date = new Date(weight.date);

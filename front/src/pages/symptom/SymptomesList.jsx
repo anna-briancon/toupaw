@@ -254,10 +254,10 @@ export default function SymptomesList() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-0.5">
-                            <span className="font-semibold text-base sm:text-base text-gray-900 truncate">{s.description}</span>
+                            <span className="font-semibold text-sm sm:text-sm text-gray-900 truncate">{s.description}</span>
                             {s.intensity && <span className="text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded ml-2">{s.intensity}</span>}
                           </div>
-                          <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 mb-1">
+                          <div className="flex items-center gap-1 text-xs sm:text-xs text-gray-500 mb-1">
                             <Calendar className="h-3 w-3" />
                             {formatDateFR(s.date)} {new Date(s.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', hour12: false })}
                             {s.location && <span>({s.location})</span>}

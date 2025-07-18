@@ -262,7 +262,7 @@ export default function PromenadesList() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className="font-semibold text-base sm:text-base text-gray-900 truncate">{formatDate(walk.start_time)}</span>
+                          <span className="font-semibold text-sm sm:text-sm text-gray-900 truncate">{formatDate(walk.start_time)}</span>
                           {positions.length > 0 && (
                             <span className="bg-emerald-50 text-emerald-600 text-xs px-2 py-0.5 rounded font-medium border border-emerald-100 flex items-center gap-1 ml-1 animate-pulse">
                               <Navigation className="h-3 w-3" />GPS

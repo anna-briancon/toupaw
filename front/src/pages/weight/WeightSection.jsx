@@ -93,11 +93,11 @@ export default function PoidsSection({ petId, onShowHistory }) {
             <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
               <Weight className="h-6 w-6 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 font-ranille">Poids</h2>
+            <h2 className="text-xl font-bold text-gray-900 font-ranille">Poids</h2>
           </div>
           <button
             onClick={onShowHistory}
-            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition"
+            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition text-sm"
           >
             Historique
             <ChevronRight className="ml-1 h-4 w-4" />
@@ -110,21 +110,21 @@ export default function PoidsSection({ petId, onShowHistory }) {
               <span className="ml-3 text-gray-600">Chargement...</span>
             </div>
           ) : lastWeight ? (
-            <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-6">
+            <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-4">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-teal-100 text-teal-700">
-                    <Weight className="h-8 w-8" />
+                  <div className="p-2 rounded-lg bg-teal-100 text-teal-700">
+                    <Weight className="h-5 w-5" />
                   </div>
                   <div>
                     <div className="flex items-center gap-3">
-                      <span className="text-2xl font-bold text-gray-900">{lastWeight.value} kg</span>
+                      <span className="text-lg font-bold text-gray-900">{lastWeight.value} kg</span>
                       {/* Tendance */}
                       {weights[1] && (() => {
                         const diff = lastWeight.value - weights[1].value;
                         if (Math.abs(diff) < 0.1) {
                           return (
-                            <span className="flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700">
+                            <span className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
                               <Minus className="h-3 w-3" />
                               Stable
                             </span>
@@ -132,21 +132,21 @@ export default function PoidsSection({ petId, onShowHistory }) {
                         }
                         if (diff > 0) {
                           return (
-                            <span className="flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-700">
+                            <span className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
                               <TrendingUp className="h-3 w-3" />
                               +{diff.toFixed(1)} kg
                             </span>
                           );
                         }
                         return (
-                          <span className="flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700">
+                          <span className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
                             <TrendingDown className="h-3 w-3" />
                             -{Math.abs(diff).toFixed(1)} kg
                           </span>
                         );
                       })()}
                     </div>
-                    <div className="text-sm text-gray-600 mt-1">
+                    <div className="text-xs text-gray-600 mt-1">
                       {new Date(lastWeight.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })} à {new Date(lastWeight.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>
@@ -155,8 +155,8 @@ export default function PoidsSection({ petId, onShowHistory }) {
               {/* Mini graphique */}
               {weights.length > 1 && (
                 <div className="mt-4">
-                  <div className="text-sm text-gray-600 mb-2">Évolution récente</div>
-                  <svg viewBox="0 0 200 60" width="100%" height="60" className="bg-emerald-50 rounded-lg">
+                  <div className="text-xs text-gray-600 mb-2">Évolution récente</div>
+                  <svg viewBox="0 0 230 40" width="100%" height="80" className="bg-emerald-50 rounded-lg">
                     {/* Grille de fond */}
                     <defs>
                       <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -218,7 +218,7 @@ export default function PoidsSection({ petId, onShowHistory }) {
 
         <button
           onClick={() => setShowAdd(true)}
-          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 text-sm"
         >
           <Plus className="mr-2 h-5 w-5" />
           Ajouter un poids

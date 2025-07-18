@@ -51,7 +51,7 @@ export default function Suivi() {
         localStorage.setItem('selectedPetId', p.id);
       }} />
       <div className="max-w-4xl mx-auto">
-        <div className="mb-6 sm:mb-8">
+        <div>
           <SectionTitle>Suivi</SectionTitle>
         </div>
         {/* <PetSelector

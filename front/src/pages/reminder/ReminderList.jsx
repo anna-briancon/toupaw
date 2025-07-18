@@ -88,7 +88,7 @@ export default function RappelsList() {
   const activeEvents = healthEvents.filter(e => !e.completed);
   const completedEvents = healthEvents.filter(e => !!e.completed);
 
-  // Calcul des événements en retard
+  // Calcul des rappels en retard
   const lateEvents = items.filter(e => new Date(e.date) < new Date());
 
   const getEventIcon = (type) => {
@@ -150,7 +150,7 @@ export default function RappelsList() {
               <Stethoscope className="h-6 w-6 sm:h-10 sm:w-10 text-emerald-700" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-white font-ranille drop-shadow leading-tight">Événements santé</h1>
+              <h1 className="text-2xl sm:text-4xl font-extrabold text-white font-ranille drop-shadow leading-tight">Rappels santé</h1>
               <p className="text-white/80 text-xs sm:text-sm mt-0.5 sm:mt-1 font-medium">Gardez un œil sur la santé de vos animaux</p>
             </div>
           </div>
@@ -222,10 +222,10 @@ export default function RappelsList() {
             </div>
           )}
         </div>
-        {/* Liste des événements modernisée */}
+        {/* Liste des rappels modernisée */}
         <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl sm:rounded-2xl shadow-xl p-2 sm:p-6 space-y-3 sm:space-y-4">
           <div className="flex items-center justify-between mb-2 sm:mb-4">
-            <span className="font-semibold text-base sm:text-xl text-emerald-700">{completedFilter === 'active' ? 'Événements actifs' : 'Événements terminés'}</span>
+            <span className="font-semibold text-base sm:text-xl text-emerald-700">{completedFilter === 'active' ? 'Rappels actifs' : 'Rappels terminés'}</span>
             <button
               onClick={() => setShowAdd(true)}
               className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow flex items-center gap-2 text-sm sm:text-base transition-transform hover:scale-105"
@@ -238,13 +238,13 @@ export default function RappelsList() {
           {items.length === 0 ? (
             <div className="text-center py-10 sm:py-16 flex flex-col items-center">
               <span className="text-4xl sm:text-6xl mb-2 sm:mb-4">🩺</span>
-              <p className="text-gray-700 font-bold text-base sm:text-xl mb-1">Aucun événement</p>
+              <p className="text-gray-700 font-bold text-base sm:text-xl mb-1">Aucun rappel</p>
               <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-4">Tous vos rappels sont à jour !</p>
               <button
                 onClick={() => setShowAdd(true)}
                 className="mt-1 sm:mt-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 sm:px-5 py-1.5 sm:py-2 rounded-full font-semibold shadow hover:scale-105 transition-transform text-xs sm:text-base"
               >
-                Ajouter un événement
+                Ajouter un rappel
               </button>
             </div>
           ) : (
@@ -264,7 +264,7 @@ export default function RappelsList() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className={`font-semibold text-base sm:text-base text-gray-900 truncate`}>{event.title || getEventLabel(event.type)}</span>
+                          <span className={`font-semibold text-sm sm:text-sm text-gray-900 truncate`}>{event.title || getEventLabel(event.type)}</span>
                           {completedFilter === 'completed' && <span className="bg-green-50 text-green-600 text-xs px-2 py-0.5 rounded font-medium border border-green-100">Terminé</span>}
                           {isLate && !event.completed && (
                             <span className="flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-orange-50 text-orange-600 border border-orange-100">

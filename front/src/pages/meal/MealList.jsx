@@ -492,14 +492,14 @@ export default function AlimentationList() {
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-0.5">
-                                <span className="font-semibold text-base sm:text-base text-gray-900 truncate">{meal.food_type}</span>
+                                <span className="font-semibold text-sm sm:text-base text-gray-900 truncate">{meal.food_type}</span>
                                 <span className="text-base">🍽️</span>
                               </div>
-                              <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 mb-1">
+                              <div className="flex items-center gap-1 text-xs sm:text-xs text-gray-500 mb-1">
                                 <Calendar className="h-3 w-3" />
                                 {meal.quantity} {meal.unit} • {formatDate(meal.datetime)}
                               </div>
-                              {meal.note && <p className="text-xs sm:text-sm text-gray-500 mt-1 line-clamp-2">{meal.note}</p>}
+                              {meal.note && <p className="text-xs sm:text-xs text-gray-500 mt-1 line-clamp-2">{meal.note}</p>}
                             </div>
                             <div className="flex flex-col gap-2 items-end ml-2">
                               <button

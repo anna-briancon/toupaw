@@ -157,11 +157,11 @@ export default function AlimentationSection({ petId, onShowHistory, onAddDrink, 
             <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
               <UtensilsCrossed className="h-6 w-6 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 font-ranille">Alimentation</h2>
+            <h2 className="text-xl font-bold text-gray-900 font-ranille">Alimentation</h2>
           </div>
           <button
             onClick={onShowHistory}
-            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition"
+            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition text-sm"
           >
             Historique
             <ChevronRight className="ml-1 h-4 w-4" />
@@ -172,21 +172,21 @@ export default function AlimentationSection({ petId, onShowHistory, onAddDrink, 
         <div className="mb-6 flex items-center justify-center">
           <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-4 flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <GlassWater className="h-6 w-6 text-blue-500" />
-              <span className="font-bold text-gray-900 text-xl">{drinks.length}</span>
+              <GlassWater className="h-5 w-5 text-blue-500" />
+              <span className="font-bold text-gray-900 text-lg">{drinks.length}</span>
               <span className="text-sm text-gray-600">verre{drinks.length > 1 ? "s" : ""} aujourd'hui</span>
             </div>
             <div className="flex gap-2">
               <button
                 onClick={handleAddDrink}
-                className="bg-blue-500 hover:bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xl"
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xl"
               >
                 +
               </button>
               <button
                 onClick={handleRemoveDrink}
                 disabled={drinks.length === 0}
-                className="border border-blue-200 text-blue-600 hover:bg-blue-50 rounded-full w-8 h-8 flex items-center justify-center text-xl bg-transparent"
+                className="border border-blue-200 text-blue-600 hover:bg-blue-50 rounded-full w-6 h-6 flex items-center justify-center text-xl bg-transparent"
               >
                 -
               </button>
@@ -199,25 +199,25 @@ export default function AlimentationSection({ petId, onShowHistory, onAddDrink, 
           {loading && <LoadingSpinner overlay />}
           {lastMeal ? (
             <div
-              className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-6 flex items-center justify-between cursor-pointer hover:shadow-md"
+              className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl shadow p-4 flex items-center justify-between cursor-pointer hover:shadow-md"
               onClick={() => setEditMeal(lastMeal)}
             >
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-lg bg-orange-100 text-orange-700">
-                  <UtensilsCrossed className="h-6 w-6" />
+                <div className="p-2 rounded-lg bg-orange-100 text-orange-700">
+                  <UtensilsCrossed className="h-5 w-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-gray-900">{lastMeal.food_type}</span>
+                    <span className="font-semibold text-gray-900 text-sm">{lastMeal.food_type}</span>
                   </div>
-                  <div className="text-sm text-gray-600 mt-1 flex items-center gap-2">
+                  <div className="text-xs text-gray-600 mt-1 flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
                     {new Date(lastMeal.datetime).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })} {formatTime(lastMeal.datetime)}
                   </div>
-                  <div className="text-sm text-gray-600 mt-1">
+                  <div className="text-xs text-gray-600 mt-1">
                     {lastMeal.quantity} {lastMeal.unit}
                   </div>
-                  {lastMeal.note && <p className="text-sm text-gray-500 mt-1">{lastMeal.note}</p>}
+                  {lastMeal.note && <p className="text-xs text-gray-500 mt-1">{lastMeal.note}</p>}
                 </div>
               </div>
               <ChevronRight className="h-5 w-5 text-emerald-500" />
@@ -233,7 +233,7 @@ export default function AlimentationSection({ petId, onShowHistory, onAddDrink, 
 
         <button
           onClick={() => setShowAdd(true)}
-          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 text-sm"
         >
           <Plus className="mr-2 h-5 w-5" />
           Ajouter un repas

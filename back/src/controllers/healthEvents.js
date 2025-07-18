@@ -123,7 +123,7 @@ exports.remove = async (req, res) => {
     const event = await models.HealthEvent.findByPk(req.params.id);
     if (!event || !await checkOwnership(event.pet_id, userId)) return res.status(404).json({ error: 'Not found or forbidden' });
     if (event.group_id) {
-      // Supprimer tous les événements du groupe
+      // Supprimer tous les rappel du groupe
       await models.HealthEvent.destroy({ where: { group_id: event.group_id } });
     } else {
       await event.destroy();

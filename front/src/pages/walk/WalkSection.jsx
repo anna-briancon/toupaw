@@ -202,11 +202,11 @@ export default function PromenadeSection({ petId, onShowHistory }) {
             <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
               <Footprints className="h-6 w-6 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 font-ranille">Promenades</h2>
+            <h2 className="text-xl font-bold text-gray-900 font-ranille">Promenades</h2>
           </div>
           <button
             onClick={onShowHistory}
-            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition"
+            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition text-sm"
           >
             Historique
             <ChevronRight className="ml-1 h-4 w-4" />
@@ -217,14 +217,14 @@ export default function PromenadeSection({ petId, onShowHistory }) {
           <>
             <button
               onClick={() => setShowAdd(true)}
-              className="w-full border-2 border-emerald-500 text-emerald-600 bg-transparent px-4 py-2 rounded-xl font-bold shadow-sm hover:bg-emerald-50 transition mb-2 flex items-center justify-center gap-2"
+              className="w-full border-2 border-emerald-500 text-emerald-600 bg-transparent px-4 py-2 rounded-xl font-bold shadow-sm hover:bg-emerald-50 transition mb-2 flex items-center justify-center gap-2 text-sm"
             >
               <Plus className="h-5 w-5" />
               Ajouter une balade manuellement
             </button>
             <button
               onClick={startTracking}
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-3 rounded-xl font-bold shadow hover:from-emerald-600 hover:to-teal-600 transition mb-4 flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-3 rounded-xl font-bold shadow hover:from-emerald-600 hover:to-teal-600 transition mb-4 flex items-center justify-center gap-2 text-sm"
             >
               <Footprints className="h-5 w-5" />
               Démarrer une balade
@@ -306,14 +306,14 @@ export default function PromenadeSection({ petId, onShowHistory }) {
               <div className="text-gray-500 text-sm">Chargement...</div>
             ) : lastWalk ? (
               <div className="bg-white/80 rounded-xl p-4 shadow border border-emerald-100">
-                <span className="block text-center font-semibold mb-2">Dernière balade</span>
+                <span className="block text-center font-semibold mb-2 text-sm">Dernière balade</span>
                 <div className="flex items-center gap-4 justify-center">
                   <Clock className="h-5 w-5 text-emerald-500" />
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-gray-900 text-sm">
                     {formatTime(Math.floor((new Date(lastWalk.end_time) - new Date(lastWalk.start_time))/1000))}
                   </span>
                   <MapPin className="h-5 w-5 text-emerald-500" />
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-gray-900 text-sm">
                     {((lastWalk.distance_m || 0)/1000).toFixed(2)} km
                   </span>
                 </div>

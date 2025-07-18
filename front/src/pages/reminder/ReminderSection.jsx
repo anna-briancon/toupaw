@@ -88,11 +88,11 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
             <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
               <Stethoscope className="h-6 w-6 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 font-ranille">Rappels santé</h2>
+            <h2 className="text-xl font-bold text-gray-900 font-ranille">Rappels santé</h2>
           </div>
           <button
             onClick={onShowAll}
-            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition"
+            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 font-semibold flex items-center gap-1 px-3 py-2 rounded transition text-sm"
           >
             Voir tout
             <ChevronRight className="ml-1 h-4 w-4" />
@@ -103,7 +103,7 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
           {events.length === 0 ? (
             <div className="border-dashed border-2 border-gray-300 rounded-xl flex flex-col items-center justify-center py-8 text-center bg-white/80">
               <Calendar className="h-12 w-12 text-gray-400 mb-3" />
-              <p className="text-gray-600 font-medium">Aucun événement à venir</p>
+              <p className="text-gray-600 font-medium">Aucun rappels à venir</p>
               <p className="text-sm text-gray-500 mt-1">Créez votre premier rappel santé</p>
             </div>
           ) : (
@@ -123,7 +123,7 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-gray-900">{getEventLabel(event.type)}</span>
+                          <span className="font-semibold text-gray-900 text-sm">{getEventLabel(event.type)}</span>
                           {event.recurrence && (
                             <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded ml-2">Récurrent</span>
                           )}
@@ -134,11 +134,11 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center gap-1 text-sm text-gray-600 mt-1">
+                        <div className="flex items-center gap-1 text-xs text-gray-600 mt-1">
                           <Clock className="h-3 w-3" />
                           {formatDate(event.date)}
                         </div>
-                        {event.note && <p className="text-sm text-gray-500 mt-1 line-clamp-1">{event.note}</p>}
+                        {event.note && <p className="text-xs text-gray-500 mt-1 line-clamp-1">{event.note}</p>}
                       </div>
                     </div>
                     <ChevronRight className="h-5 w-5 text-emerald-500" />
@@ -150,7 +150,7 @@ export default function RappelSanteSection({ petId, onShowAll, refreshKey }) {
         </div>
         <button
           onClick={() => setShowAdd(true)}
-          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 text-sm"
         >
           <Plus className="mr-2 h-5 w-5" />
           Créer un rappel
