@@ -5,7 +5,7 @@ import { Weight, Plus, ChevronRight, TrendingUp, TrendingDown, Minus } from 'luc
 function AddWeightForm({ petId, onSave, onCancel }) {
   const [weight, setWeight] = useState('');
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
-  const [time, setTime] = useState('12:00');
+  const [time, setTime] = useState(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [errors, setErrors] = useState([]);
@@ -16,11 +16,15 @@ function AddWeightForm({ petId, onSave, onCancel }) {
     setError('');
     setErrors([]);
     try {
-      const eventDate = new Date(`${date}T${time}`);
+      // Créer la date en heure locale et la convertir correctement
+      const [hours, minutes] = time.split(':');
+      const localDate = new Date(date);
+      localDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      
       await axios.post('/weights', {
         pet_id: petId,
         value: parseFloat(weight),
-        date: eventDate.toISOString(),
+        date: localDate.toISOString(),
       });
       onSave();
     } catch (err) {

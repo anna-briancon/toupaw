@@ -93,7 +93,23 @@ export default function MealEdit() {
             </div>
             <div>
               <label className="text-sm font-medium">Date et heure</label>
-              <input name="datetime" type="datetime-local" value={meal.datetime ? meal.datetime.slice(0,16) : ''} onChange={handleChange} className="w-full border rounded p-2 mt-1" required />
+              <input 
+                name="datetime" 
+                type="datetime-local" 
+                value={meal.datetime ? (() => {
+                  // Convertir la date UTC en heure locale pour datetime-local
+                  const date = new Date(meal.datetime);
+                  const year = date.getFullYear();
+                  const month = String(date.getMonth() + 1).padStart(2, '0');
+                  const day = String(date.getDate()).padStart(2, '0');
+                  const hours = String(date.getHours()).padStart(2, '0');
+                  const minutes = String(date.getMinutes()).padStart(2, '0');
+                  return `${year}-${month}-${day}T${hours}:${minutes}`;
+                })() : ''} 
+                onChange={handleChange} 
+                className="w-full border rounded p-2 mt-1" 
+                required 
+              />
             </div>
             <div>
               <label className="text-sm font-medium">Note</label>

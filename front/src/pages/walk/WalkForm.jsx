@@ -23,8 +23,8 @@ export default function WalkForm({ petId, initial, onSave, onCancel }) {
   );
   const [time, setTime] = useState(
     isEdit
-      ? new Date(initial.start_time).toISOString().slice(11, 16)
-      : '12:00'
+      ? new Date(initial.start_time).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+      : new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
   );
   const [pipi, setPipi] = useState(
     isEdit ? initial?.events?.some((e) => e.type === 'pipi') : false
@@ -43,7 +43,11 @@ export default function WalkForm({ petId, initial, onSave, onCancel }) {
     setError('');
     setErrors([]);
     try {
-      const start = new Date(`${date}T${time}`);
+      // Créer la date en heure locale et la convertir correctement
+      const [hours, minutes] = time.split(':');
+      const localDate = new Date(date);
+      localDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      const start = localDate;
       const durationSec = parseInt(durationMin, 10) * 60;
       const end = new Date(start.getTime() + durationSec * 1000);
       const events = [];

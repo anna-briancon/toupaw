@@ -38,14 +38,21 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Limite globale (100 requêtes par 15 min par IP)
-const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-app.use(globalLimiter);
+// RATE LIMITING COMPLÈTEMENT DÉSACTIVÉ
+// const globalLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 1000, // Augmenté de 100 à 1000
+//   standardHeaders: true,
+//   legacyHeaders: false,
+// });
+
+// // Appliquer le rate limiting seulement si pas désactivé
+// if (process.env.DISABLE_RATE_LIMIT !== 'true') {
+//   app.use(globalLimiter);
+//   console.log('Rate limiting activé: 1000 requêtes par 15 minutes');
+// } else {
+//   console.log('Rate limiting désactivé');
+// }
 
 // Limite plus stricte sur l'auth (10 requêtes par 15 min par IP)
 // const authLimiter = rateLimit({

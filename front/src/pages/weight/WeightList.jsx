@@ -14,7 +14,7 @@ function usePetId() {
 function EditWeightForm({ petId, initial, onSave, onCancel }) {
   const [value, setValue] = useState(initial?.value?.toString() || '');
   const [date, setDate] = useState(initial?.date ? new Date(initial.date).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10));
-  const [time, setTime] = useState(initial?.date ? new Date(initial.date).toISOString().slice(11, 16) : '12:00');
+  const [time, setTime] = useState(initial?.date ? new Date(initial.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showDelete, setShowDelete] = useState(false);
@@ -24,17 +24,21 @@ function EditWeightForm({ petId, initial, onSave, onCancel }) {
     setLoading(true);
     setError('');
     try {
-      const eventDate = new Date(`${date}T${time}`);
+      // Créer la date en heure locale et la convertir correctement
+      const [hours, minutes] = time.split(':');
+      const localDate = new Date(date);
+      localDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      
       if (initial?.id) {
         await axios.put(`/weights/${initial.id}`, {
           value: parseFloat(value),
-          date: eventDate.toISOString(),
+          date: localDate.toISOString(),
         });
       } else {
         await axios.post('/weights', {
           pet_id: petId,
           value: parseFloat(value),
-          date: eventDate.toISOString(),
+          date: localDate.toISOString(),
         });
       }
       onSave();

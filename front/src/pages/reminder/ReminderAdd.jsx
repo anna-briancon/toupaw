@@ -22,7 +22,7 @@ const RECURRENCE_OPTIONS = [
 export default function AddReminderForm({ petId, onSave, onCancel, initial }) {
   const [healthType, setHealthType] = useState(initial?.type || 'vaccination');
   const [healthDate, setHealthDate] = useState(initial?.date ? initial.date.slice(0, 10) : '');
-  const [healthTime, setHealthTime] = useState(initial?.date ? new Date(initial.date).toISOString().slice(11, 16) : '12:00');
+  const [healthTime, setHealthTime] = useState(initial?.date ? new Date(initial.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }));
   const [healthNote, setHealthNote] = useState(initial?.note || '');
   const [recurrence, setRecurrence] = useState(initial?.recurrence || '');
   const [loading, setLoading] = useState(false);
@@ -35,12 +35,16 @@ export default function AddReminderForm({ petId, onSave, onCancel, initial }) {
     setError('');
     setErrors([]);
     try {
-      const date = new Date(`${healthDate}T${healthTime}`);
+      // Créer la date en heure locale et la convertir correctement
+      const [hours, minutes] = healthTime.split(':');
+      const localDate = new Date(healthDate);
+      localDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      
       if (initial?.id) {
         await axios.put(`/health-events/${initial.id}`, {
           pet_id: petId,
           type: healthType,
-          date: date.toISOString(),
+          date: localDate.toISOString(),
           note: healthNote,
           recurrence: recurrence || null,
         });
@@ -48,7 +52,7 @@ export default function AddReminderForm({ petId, onSave, onCancel, initial }) {
         await axios.post('/health-events', {
           pet_id: petId,
           type: healthType,
-          date: date.toISOString(),
+          date: localDate.toISOString(),
           note: healthNote,
           recurrence: recurrence || null,
         });

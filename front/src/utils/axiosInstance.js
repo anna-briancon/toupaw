@@ -18,7 +18,19 @@ instance.interceptors.response.use(
   (response) => response,
   (error) => {
     const state = store.getState();
-    if (error.response.status === 401 && !state.auth.isGuest) {
+    
+    // Gestion spécifique des erreurs 429 (Too Many Requests)
+    if (error.response?.status === 429) {
+      console.warn('Rate limit atteint, attente avant retry...');
+      // Attendre 2 secondes avant de retry automatiquement
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(instance.request(error.config));
+        }, 2000);
+      });
+    }
+    
+    if (error.response?.status === 401 && !state.auth.isGuest) {
       store.dispatch(logout());
     }
     return Promise.reject(error);

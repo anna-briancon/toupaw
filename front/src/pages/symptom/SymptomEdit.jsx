@@ -14,7 +14,13 @@ export default function SymptomEdit({ open, id, onSave, onCancel }) {
     if (!open || !id) return;
     setLoading(true);
     axios.get(`/symptoms/id/${id}`)
-      .then(res => setSymptom(res.data))
+      .then(res => {
+        const symptomData = res.data;
+        // Ajouter le champ time basé sur la date
+        const date = new Date(symptomData.date);
+        symptomData.time = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        setSymptom(symptomData);
+      })
       .catch(() => setSymptom(null))
       .finally(() => setLoading(false));
   }, [id, open]);
@@ -28,10 +34,15 @@ export default function SymptomEdit({ open, id, onSave, onCancel }) {
     setSaving(true);
     setError('');
     try {
+      // Créer la date en heure locale et la convertir correctement
+      const [hours, minutes] = symptom.time.split(':');
+      const localDate = new Date(symptom.date);
+      localDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      
       await axios.put(`/symptoms/${id}`, {
         description: symptom.description,
         intensity: symptom.intensity,
-        date: symptom.date,
+        date: localDate.toISOString(),
         location: symptom.location,
         photo_url: symptom.photo_url,
       });
@@ -85,7 +96,17 @@ export default function SymptomEdit({ open, id, onSave, onCancel }) {
                 <label className="text-sm font-medium">Date</label>
                 <input name="date" type="date" value={symptom.date ? symptom.date.slice(0,10) : ''} onChange={handleChange} className="w-full border rounded p-2 mt-1" required />
               </div>
-              {/* Heure non modifiable ici pour simplifier, peut être ajouté si besoin */}
+              <div>
+                <label className="text-sm font-medium">Heure</label>
+                <input 
+                  name="time" 
+                  type="time" 
+                  value={symptom.time || ''} 
+                  onChange={handleChange} 
+                  className="w-full border rounded p-2 mt-1" 
+                  required 
+                />
+              </div>
             </div>
             <div>
               <label className="text-sm font-medium">Localisation (optionnel)</label>

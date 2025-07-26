@@ -14,7 +14,27 @@ function EditMealForm({ petId, initial, onSave, onCancel }) {
   const [foodType, setFoodType] = useState(initial?.food_type || '');
   const [quantity, setQuantity] = useState(initial?.quantity?.toString() || '');
   const [unit, setUnit] = useState(initial?.unit || 'g');
-  const [datetime, setDatetime] = useState(initial?.datetime ? new Date(initial.datetime).toISOString().slice(0,16) : new Date().toISOString().slice(0,16));
+  const [datetime, setDatetime] = useState(() => {
+    if (initial?.datetime) {
+      // Convertir la date UTC en heure locale pour datetime-local
+      const date = new Date(initial.datetime);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    } else {
+      // Créer une date locale pour datetime-local
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+  });
   const [note, setNote] = useState(initial?.note || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -137,13 +157,19 @@ function AddDrinkForm({ petId, onSave, onCancel }) {
     setLoading(true);
     setError('');
     try {
+      // Créer la date avec l'heure actuelle
+      const now = new Date();
+      const [hours, minutes] = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).split(':');
+      const localDate = new Date(date);
+      localDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      
       const promises = [];
       for (let i = 0; i < count; i++) {
         promises.push(
           axios.post('/daily-events', {
             pet_id: petId,
             type: 'drink',
-            datetime: new Date(date + 'T12:00').toISOString(),
+            datetime: localDate.toISOString(),
           })
         );
       }

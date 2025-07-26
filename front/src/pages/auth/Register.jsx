@@ -26,7 +26,7 @@ export default function Register() {
     try {
       const res = await axios.post('/auth/register', { name, email, password });
       localStorage.setItem('token', res.data.token);
-      dispatch(setUser(null));
+      dispatch(setUser(res.data.user || { email, name }));
       setStep('animal');
     } catch (err) {
       if (err.response?.data?.errors) {

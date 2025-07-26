@@ -25,8 +25,8 @@ function AddSymptomFormModal({ petId, onSave, onCancel, initial }) {
   const [form, setForm] = useState(() => initial ? {
     ...initial,
     date: initial.date ? initial.date.slice(0, 10) : new Date().toISOString().slice(0, 10),
-    time: initial.date ? new Date(initial.date).toISOString().slice(11, 16) : '12:00',
-  } : { description: '', intensity: '', date: new Date().toISOString().slice(0, 10), time: '12:00', location: '', photo_url: '' });
+    time: initial.date ? new Date(initial.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+  } : { description: '', intensity: '', date: new Date().toISOString().slice(0, 10), time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }), location: '', photo_url: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
@@ -35,11 +35,15 @@ function AddSymptomFormModal({ petId, onSave, onCancel, initial }) {
     setLoading(true);
     setError('');
     try {
-      const eventDate = new Date(`${form.date}T${form.time}`);
+      // Créer la date en heure locale et la convertir correctement
+      const [hours, minutes] = form.time.split(':');
+      const localDate = new Date(form.date);
+      localDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      
       if (initial && initial.id) {
-        await axios.put(`/symptoms/${initial.id}`, { ...form, date: eventDate.toISOString(), time: undefined, pet_id: petId });
+        await axios.put(`/symptoms/${initial.id}`, { ...form, date: localDate.toISOString(), time: undefined, pet_id: petId });
       } else {
-        await axios.post('/symptoms', { ...form, date: eventDate.toISOString(), time: undefined, pet_id: petId });
+        await axios.post('/symptoms', { ...form, date: localDate.toISOString(), time: undefined, pet_id: petId });
       }
       onSave();
     } catch (err) {

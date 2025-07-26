@@ -10,7 +10,27 @@ function AddMealForm({ petId, onSave, onCancel, initial }) {
   const [foodType, setFoodType] = useState(initial?.food_type || '');
   const [quantity, setQuantity] = useState(initial?.quantity || '');
   const [unit, setUnit] = useState(initial?.unit || 'g');
-  const [datetime, setDatetime] = useState(initial ? new Date(initial.datetime).toISOString().slice(0, 16) : new Date().toISOString().slice(0, 16));
+  const [datetime, setDatetime] = useState(() => {
+    if (initial) {
+      // Convertir la date UTC en heure locale pour datetime-local
+      const date = new Date(initial.datetime);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    } else {
+      // Créer une date locale pour datetime-local
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+  });
   const [note, setNote] = useState(initial?.note || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -151,7 +171,7 @@ export default function AlimentationSection({ petId, onShowHistory, onAddDrink, 
 
   const formatTime = (datetimeString) => {
     const date = new Date(datetimeString);
-    return date.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+    return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
   };
 
   const lastMeal = meals.length > 0 ? meals[0] : null;

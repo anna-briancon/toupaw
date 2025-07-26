@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from '../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/features/auth/authSlice';
 import { User } from 'lucide-react';
 
 export default function Login() {
@@ -9,6 +11,7 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +20,7 @@ export default function Login() {
     try {
       const res = await axios.post('/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
+      dispatch(setUser(res.data.user || { email }));
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.error || 'Erreur lors de la connexion');

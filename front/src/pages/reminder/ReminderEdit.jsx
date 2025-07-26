@@ -138,14 +138,20 @@ export default function ReminderEdit({ open, id, onSave, onCancel }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
               <div>
                 <label className="text-sm font-medium">Date</label>
-                <input type="date" name="date" value={event.date ? event.date.slice(0, 10) : ''} onChange={e => setEvent(ev => ({ ...ev, date: e.target.value + (event.date ? event.date.slice(10) : 'T12:00') }))} className="w-full border rounded p-2 mt-1 text-sm" required />
+                <input type="date" name="date" value={event.date ? event.date.slice(0, 10) : ''} onChange={e => {
+                  const currentTime = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+                  setEvent(ev => ({ ...ev, date: e.target.value + 'T' + currentTime }));
+                }} className="w-full border rounded p-2 mt-1 text-sm" required />
               </div>
               <div>
                 <label className="text-sm font-medium">Heure</label>
-                <input type="time" name="time" value={event.date ? new Date(event.date).toISOString().slice(11, 16) : '12:00'} onChange={e => {
+                <input type="time" name="time" value={event.date ? new Date(event.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })} onChange={e => {
                   setEvent(ev => {
                     const date = ev.date ? ev.date.slice(0, 10) : '';
-                    return { ...ev, date: date + 'T' + e.target.value };
+                    const [hours, minutes] = e.target.value.split(':');
+                    const localDate = new Date(date);
+                    localDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+                    return { ...ev, date: localDate.toISOString() };
                   });
                 }} className="w-full border rounded p-2 mt-1 text-sm" required />
               </div>

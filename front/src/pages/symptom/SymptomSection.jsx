@@ -14,12 +14,12 @@ function AddSymptomForm({ petId, onSave, onCancel, initial }) {
         description: initial.description || '',
         intensity: initial.intensity || '',
         date: dateObj.toISOString().slice(0, 10),
-        time: dateObj.toTimeString().slice(0, 5),
+        time: dateObj.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
         location: initial.location || '',
         photo_url: initial.photo_url || '',
       };
     }
-    return { description: '', intensity: '', date: new Date().toISOString().slice(0, 10), time: '12:00', location: '', photo_url: '' };
+    return { description: '', intensity: '', date: new Date().toISOString().slice(0, 10), time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }), location: '', photo_url: '' };
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -36,11 +36,15 @@ function AddSymptomForm({ petId, onSave, onCancel, initial }) {
     setError('');
     setErrors([]);
     try {
-      const eventDate = new Date(`${form.date}T${form.time}`);
+      // Créer la date en heure locale et la convertir correctement
+      const [hours, minutes] = form.time.split(':');
+      const localDate = new Date(form.date);
+      localDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      
       if (initial && initial.id) {
-        await axios.put(`/symptoms/${initial.id}`, { ...form, date: eventDate.toISOString(), time: undefined, pet_id: petId });
+        await axios.put(`/symptoms/${initial.id}`, { ...form, date: localDate.toISOString(), time: undefined, pet_id: petId });
       } else {
-        await axios.post('/symptoms', { ...form, date: eventDate.toISOString(), time: undefined, pet_id: petId });
+        await axios.post('/symptoms', { ...form, date: localDate.toISOString(), time: undefined, pet_id: petId });
       }
       onSave();
     } catch (err) {
@@ -61,7 +65,7 @@ function AddSymptomForm({ petId, onSave, onCancel, initial }) {
           <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
             <AlertCircle className="h-5 w-5 text-white" />
           </div>
-          <span className="text-base font-semibold">Ajouter un symptôme</span>
+          <span className="text-base font-semibold">{initial ? 'Modifier' : 'Ajouter'} un symptôme</span>
         </div>
         <div>
           <label className="text-sm font-medium">Description</label>
